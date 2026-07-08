@@ -3,9 +3,8 @@ site_description: >-
   A beginner-friendly, workshop-style learning series for the Microsoft
   Security product family — Purview, Entra, Intune, Defender, Sentinel,
   Security Copilot, and Agent 365. Every fact is grounded in Microsoft Learn.
-# Update site_url to match your GitHub Pages URL, e.g.
-# https://<your-org-or-user>.github.io/security-workshop/
-site_url: https://example.github.io/security-workshop/
+# GitHub Pages URL for this project site.
+site_url: https://indra-pr.github.io/security-workshop/
 docs_dir: docs
 copyright: >-
   Content grounded in Microsoft Learn. Microsoft, Purview, Entra, Intune,
