@@ -111,7 +111,7 @@ Also seed some documents to label — reuse the [DLM sample script](data-lifecyc
 
     Manage **contracts, trade records, and statements** as immutable records with mandated retention and disposition.
 
-=== "Telco"
+=== "Telecommunication"
 
     Retain **regulatory filings and subscriber agreements** on a defensible schedule.
 

@@ -116,7 +116,7 @@ Use the unique keyword (`Project-Falcon-LABMATTER`) as your search query.
 
     Respond to **regulator information requests** and litigation with preserved, searchable communications.
 
-=== "Telco"
+=== "Telecommunication"
 
     Handle **subpoenas and disputes** across email, Teams, and SharePoint at scale.
 

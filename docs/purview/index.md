@@ -102,13 +102,13 @@ Each solution below links to a deep-dive page that follows the same template: de
 
 | Solution | What it does | Deep dive |
 |---|---|---|
-| Data Loss Prevention (DLP) | Detect and prevent risky or inappropriate sharing of sensitive information across services and endpoints. | [Open](data-security/dlp/index.md) |
+| Data Loss Prevention | Detect and prevent risky or inappropriate sharing of sensitive information across services and endpoints. | [Open](data-security/dlp/index.md) |
 | Information Protection | Discover, classify, label, and protect sensitive information wherever it lives or travels. | [Open](data-security/information-protection/index.md) |
 | Insider Risk Management | Identify, triage, and act on risky user activity using service and third-party signals. | [Open](data-security/insider-risk-management/index.md) |
 | Information Barriers | Restrict two-way communication and collaboration between groups in Teams, SharePoint, and OneDrive. | [Open](data-security/information-barriers.md) |
 | Privileged Access Management | Enforce just-in-time, scoped, time-limited access to sensitive Exchange configuration tasks. | [Open](data-security/privileged-access-management.md) |
 | Data Security Investigations | Use generative AI to analyze and respond to data security incidents and breaches. | [Open](data-security/data-security-investigations.md) |
-| Data Security Posture Management (DSPM) | Discover, protect, and investigate sensitive-data risks across your digital estate (preview). | [Open](data-security/dspm.md) |
+| Data Security Posture Management | Discover, protect, and investigate sensitive-data risks across your digital estate (preview). | [Open](data-security/dspm.md) |
 
 ### Data Compliance solutions
 

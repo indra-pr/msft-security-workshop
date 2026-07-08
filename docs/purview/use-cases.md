@@ -2,7 +2,7 @@
 title: Industry Use Cases
 description: >-
   How the Microsoft Purview solution family applies across financial services,
-  telco, public sector & SOE, energy & resources, and manufacturing.
+  telecommunication, public sector & SOE, energy & resources, and manufacturing.
 ---
 
 # Microsoft Purview — Industry Use Cases
@@ -12,7 +12,7 @@ description: >-
 
 ## Solution-to-industry matrix
 
-| Solution | Financial services | Telco | Public sector & SOE | Energy & resources | Manufacturing & conglomerates |
+| Solution | Financial services | Telecommunication | Public sector & SOE | Energy & resources | Manufacturing & conglomerates |
 |---|---|---|---|---|---|
 | **DLP** | Block PAN/PCI leaks | Protect subscriber PII & CDRs | Enforce residency/classification | Protect OT & seismic data | Protect CAD/BOM & pricing |
 | **Information Protection** | Encrypt M&A docs | Standardize label taxonomy | Map to gov classification | Encrypt reservoir/plant IP | Label & encrypt designs |
@@ -38,9 +38,9 @@ Financial firms face **PCI DSS, market-conduct, and privacy** obligations. A typ
 5. **Retain** records for regulated periods and respond to **eDiscovery** requests.
 6. Measure posture with **Compliance Manager** (PCI/SOX assessments).
 
-## Telco
+## Telecommunication
 
-Telcos hold **massive subscriber datasets and CDRs**:
+Telecommunication companies hold **massive subscriber datasets and CDRs**:
 
 1. **DLP + endpoint DLP** to stop bulk export of subscriber PII from agent workstations.
 2. **Insider Risk** to detect abnormal mass-download by support staff.

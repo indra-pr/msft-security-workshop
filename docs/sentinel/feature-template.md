@@ -73,7 +73,7 @@ _Content hub solutions, custom connectors, playbooks, Security Copilot, and requ
 
 === "Financial services"
     _…_
-=== "Telco"
+=== "Telecommunication"
     _…_
 === "Public sector & SOE"
     _…_

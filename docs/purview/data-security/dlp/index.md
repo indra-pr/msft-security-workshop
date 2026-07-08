@@ -1,11 +1,11 @@
 ---
 title: DLP — Part 1 · Overview & prerequisites
 description: >-
-  Microsoft Purview Data Loss Prevention (DLP): what it is, when to use it,
+  Microsoft Purview Data Loss Prevention: what it is, when to use it,
   licensing and roles, and a sample-data script to exercise it in a lab.
 ---
 
-# Data Loss Prevention (DLP) — Part 1
+# Data Loss Prevention — Part 1
 
 !!! abstract "Step 1 of 4 · Overview & prerequisites"
     This walkthrough is split into four parts. Use the **Next** button at the bottom to move through them in order:
@@ -16,7 +16,7 @@ description: >-
 
 ## 1. Description
 
-**Microsoft Purview Data Loss Prevention (DLP)** helps protect your organization against the unintentional or accidental sharing of sensitive information — inside and outside your organization. Unintentional sharing of sensitive items can cause financial harm and may violate laws and regulations.
+**Microsoft Purview Data Loss Prevention** helps protect your organization against the unintentional or accidental sharing of sensitive information — inside and outside your organization. Unintentional sharing of sensitive items can cause financial harm and may violate laws and regulations.
 
 In a DLP policy, you define four things:
 

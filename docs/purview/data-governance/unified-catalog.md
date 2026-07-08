@@ -111,7 +111,7 @@ Unified Catalog builds on **Data Map assets**, so first complete a [Data Map sca
 
     Publish trusted **customer and risk** data products with quality scores for analytics and regulatory reporting.
 
-=== "Telco"
+=== "Telecommunication"
 
     Federate governance across **network, billing, and CRM** domains with clear ownership.
 

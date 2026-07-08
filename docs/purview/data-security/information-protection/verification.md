@@ -59,7 +59,7 @@ description: >-
 
     Apply **Highly Confidential** with encryption to M&A and client-portfolio documents so only deal-team members can open them, even if forwarded.
 
-=== "Telco"
+=== "Telecommunication"
 
     Standardize a **Public → Highly Confidential** taxonomy across the enterprise; auto-label engineering docs containing network topology as **Confidential**.
 

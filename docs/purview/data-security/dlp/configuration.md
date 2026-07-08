@@ -5,7 +5,7 @@ description: >-
   Security & Compliance PowerShell, in simulation mode first.
 ---
 
-# Data Loss Prevention (DLP) — Part 3
+# Data Loss Prevention — Part 3
 
 !!! abstract "Step 3 of 4 · Step-by-step configuration"
     1. Overview & prerequisites → 2. Recommended policy setup → **3. Step-by-step configuration** → 4. Verification.

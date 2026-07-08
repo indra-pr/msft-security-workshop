@@ -101,7 +101,7 @@ nav:
       - Overview: purview/index.md
       - Data Security:
           - Data Security overview: purview/data-security/index.md
-          - Data Loss Prevention (DLP):
+          - Data Loss Prevention:
               - "Part 1 · Overview & prerequisites": purview/data-security/dlp/index.md
               - "Part 2 · Recommended policy setup": purview/data-security/dlp/policy-setup.md
               - "Part 3 · Step-by-step configuration": purview/data-security/dlp/configuration.md
@@ -118,7 +118,7 @@ nav:
           - Information Barriers: purview/data-security/information-barriers.md
           - Privileged Access Management: purview/data-security/privileged-access-management.md
           - Data Security Investigations: purview/data-security/data-security-investigations.md
-          - Data Security Posture Management (DSPM): purview/data-security/dspm.md
+          - Data Security Posture Management: purview/data-security/dspm.md
       - Data Compliance:
           - Data Compliance overview: purview/data-compliance/index.md
           - Audit: purview/data-compliance/audit.md

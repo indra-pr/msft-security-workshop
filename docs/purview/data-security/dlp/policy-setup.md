@@ -5,7 +5,7 @@ description: >-
   first-time deployment, based on Microsoft Learn planning guidance.
 ---
 
-# Data Loss Prevention (DLP) — Part 2
+# Data Loss Prevention — Part 2
 
 !!! abstract "Step 2 of 4 · Recommended policy setup"
     1. Overview & prerequisites → **2. Recommended policy setup** → 3. Step-by-step configuration → 4. Verification.

@@ -27,7 +27,7 @@ flowchart LR
 
 <div class="grid cards" markdown>
 
--   :material-shield-alert:{ .lg .middle } __Data Loss Prevention (DLP)__
+-   :material-shield-alert:{ .lg .middle } __Data Loss Prevention__
 
     ---
 

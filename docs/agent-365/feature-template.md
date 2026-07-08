@@ -69,7 +69,7 @@ _SDK/CLI, MCP-connected services, third-party agents, and integration requiremen
 
 === "Financial services"
     _…_
-=== "Telco"
+=== "Telecommunication"
     _…_
 === "Public sector & SOE"
     _…_

@@ -124,7 +124,7 @@ For Teams/Viva Engage, post a benign test message containing your policy's keywo
 
     Supervise trader/advisor communications for **market-abuse and conduct** violations; detect **conflicts of interest** between deal and research teams.
 
-=== "Telco"
+=== "Telecommunication"
 
     Detect **harassment** and inappropriate content across a large frontline workforce in Teams.
 

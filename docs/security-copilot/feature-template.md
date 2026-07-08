@@ -69,7 +69,7 @@ _Plugins, custom promptbooks, agents, and integration requirements._
 
 === "Financial services"
     _…_
-=== "Telco"
+=== "Telecommunication"
     _…_
 === "Public sector & SOE"
     _…_

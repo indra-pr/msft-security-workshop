@@ -129,7 +129,7 @@ The `card` column contains a synthetic credit-card-format value so the scan's cl
 
     Map **databases and warehouses** holding PII/PCI data and classify columns for downstream protection.
 
-=== "Telco"
+=== "Telecommunication"
 
     Inventory **subscriber and network data** across clouds to know where sensitive data lives.
 

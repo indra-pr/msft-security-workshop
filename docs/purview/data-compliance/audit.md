@@ -132,7 +132,7 @@ To generate specific activity, sign in as a test user and view/download a docume
 
     Investigate access to deal rooms and mailboxes; retain audit records for **1+ year** to meet regulator expectations.
 
-=== "Telco"
+=== "Telecommunication"
 
     Trace admin changes to provisioning and billing systems during incident response.
 

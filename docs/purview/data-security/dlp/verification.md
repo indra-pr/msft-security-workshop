@@ -5,7 +5,7 @@ description: >-
   integrations and see industry use cases.
 ---
 
-# Data Loss Prevention (DLP) — Part 4
+# Data Loss Prevention — Part 4
 
 !!! abstract "Step 4 of 4 · Verification"
     1. Overview & prerequisites → 2. Recommended policy setup → 3. Step-by-step configuration → **4. Verification**. This final part also covers extensibility and industry use cases.
@@ -66,7 +66,7 @@ Use the [sample data from Part 1](index.md#3-generate-sample-data-for-your-lab) 
 
     Block outbound email and external SharePoint sharing that contains **primary account numbers (PAN)** to support **PCI DSS**; use **block with override** so brokers can still service clients with a logged justification.
 
-=== "Telco"
+=== "Telecommunication"
 
     Prevent leakage of **subscriber PII and CDR (call detail record)** exports to personal cloud storage from agent workstations using **endpoint DLP**.
 

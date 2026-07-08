@@ -85,7 +85,7 @@ _Customization options, third-party integrations, and the requirements/prerequis
 
 === "Financial services"
     _…_
-=== "Telco"
+=== "Telecommunication"
     _…_
 === "Public sector & SOE"
     _…_

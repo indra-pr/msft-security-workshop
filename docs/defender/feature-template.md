@@ -74,7 +74,7 @@ _Integrations (Sentinel, Security Copilot, third-party), APIs, and requirements.
 
 === "Financial services"
     _…_
-=== "Telco"
+=== "Telecommunication"
     _…_
 === "Public sector & SOE"
     _…_

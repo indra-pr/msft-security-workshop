@@ -107,7 +107,7 @@ flowchart LR
 
     Operationalize **PCI DSS**, **SOX**, and local banking regulations with tracked improvement actions and audit evidence.
 
-=== "Telco"
+=== "Telecommunication"
 
     Manage **privacy and lawful-intercept** obligations across regions with per-regulation assessments.
 

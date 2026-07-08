@@ -119,7 +119,7 @@ In practice, DSI investigations often start from data already identified by a **
 
     After a suspected leak of client PII, rapidly determine **which records and clients** are impacted for regulator notification timelines.
 
-=== "Telco"
+=== "Telecommunication"
 
     Investigate a **subscriber-data breach** to scope exposure across support and billing repositories.
 

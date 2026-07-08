@@ -71,7 +71,7 @@ _Customization, third-party integrations (for example Mobile Threat Defense part
 
 === "Financial services"
     _…_
-=== "Telco"
+=== "Telecommunication"
     _…_
 === "Public sector & SOE"
     _…_

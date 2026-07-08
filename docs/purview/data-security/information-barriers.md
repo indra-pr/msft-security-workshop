@@ -151,7 +151,7 @@ foreach ($upn in $assignments.Keys) {
 
     Classic **ethical wall** between investment banking and public-side research/trading to prevent conflicts of interest.
 
-=== "Telco"
+=== "Telecommunication"
 
     Separate **wholesale** and **retail** teams that serve competing downstream customers.
 

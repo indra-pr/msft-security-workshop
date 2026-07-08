@@ -1,11 +1,11 @@
 ---
-title: Data Security Posture Management (DSPM)
+title: Data Security Posture Management
 description: >-
   Microsoft Purview Data Security Posture Management — discover, protect, and
   investigate sensitive-data risks across your digital estate (preview).
 ---
 
-# Data Security Posture Management (DSPM)
+# Data Security Posture Management
 
 !!! warning "Preview & evolving"
     DSPM is generally referred to as **preview / evolving**, and there are **classic** versions (DSPM classic and DSPM for AI classic). This page covers the **current** DSPM. Verify capabilities on Microsoft Learn for your tenant.
@@ -15,7 +15,7 @@ description: >-
 
 ## 1. Description
 
-**Microsoft Purview Data Security Posture Management (DSPM)** helps you **discover, protect, and investigate** sensitive-data risks across your **digital estate** — Microsoft 365, Azure, Fabric, and integrated third-party SaaS — for both traditional apps and **AI apps and agents**. Rather than focusing on infrastructure or endpoints, DSPM centers on the **data itself**: where it resides, who can access it, how it's used, and whether it's adequately protected. It continuously scans to identify sensitive data, assess risk, and recommend actions, **consolidating insights** from other Purview solutions (DLP, Insider Risk Management, Information Protection).
+**Microsoft Purview Data Security Posture Management** helps you **discover, protect, and investigate** sensitive-data risks across your **digital estate** — Microsoft 365, Azure, Fabric, and integrated third-party SaaS — for both traditional apps and **AI apps and agents**. Rather than focusing on infrastructure or endpoints, DSPM centers on the **data itself**: where it resides, who can access it, how it's used, and whether it's adequately protected. It continuously scans to identify sensitive data, assess risk, and recommend actions, **consolidating insights** from other Purview solutions (DLP, Insider Risk Management, Information Protection).
 
 ```mermaid
 flowchart TB
@@ -133,7 +133,7 @@ Write-Host "Seeded $lab. Upload these to test SharePoint sites, then let DSPM sc
 
     Reduce **oversharing of client and deal data** in SharePoint before enabling Copilot for advisors.
 
-=== "Telco"
+=== "Telecommunication"
 
     Get a **data-centric risk map** across support, billing, and engineering repositories.
 

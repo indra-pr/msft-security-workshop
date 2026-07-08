@@ -58,7 +58,7 @@ description: >-
 
     Detect a departing **trader or analyst** exfiltrating client lists or models before joining a competitor; escalate to a case and legal hold.
 
-=== "Telco"
+=== "Telecommunication"
 
     Surface **mass export of subscriber data** by an agent, correlating DLP high-severity matches with unusual download volume.
 

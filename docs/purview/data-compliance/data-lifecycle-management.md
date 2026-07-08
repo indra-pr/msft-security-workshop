@@ -125,7 +125,7 @@ Write-Host "Created $((Get-ChildItem $lab).Count) files in $lab. Upload to a tes
 
     Retain communications and records for **regulated periods** (for example 5–7 years) and delete afterward to reduce liability.
 
-=== "Telco"
+=== "Telecommunication"
 
     Apply **CDR / subscriber-data** retention and defensible deletion at scale.
 

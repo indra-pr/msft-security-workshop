@@ -145,7 +145,7 @@ A good **test task** to gate is `Exchange\New-MoveRequest` (mailbox moves) — v
 
     Require approval for **journaling and transport-rule** changes that could affect regulatory capture of communications.
 
-=== "Telco"
+=== "Telecommunication"
 
     Gate **mailbox export/move** operations on executive mailboxes to prevent silent data access.
 
