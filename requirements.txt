@@ -1,7 +1,11 @@
 # Microsoft Security Workshop — documentation build dependencies
 # Pinned for reproducible builds on GitHub Actions and local previews.
 
-mkdocs-material==9.5.44
+mkdocs-material==9.7.6
 mkdocs-glightbox==0.4.0
 mkdocs-git-revision-date-localized-plugin==1.2.9
-pymdown-extensions==10.12
+pymdown-extensions==11.0.1
+# Markdown is pinned explicitly: pymdownx.superfences (fenced code blocks) breaks
+# if Markdown floats to an incompatible release, so keep this pinned to a version
+# verified to work with the pinned pymdown-extensions above.
+markdown==3.10.2
