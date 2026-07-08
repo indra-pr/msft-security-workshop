@@ -51,3 +51,47 @@
   margin: 1.2rem auto;
   text-align: center;
 }
+
+/* ---------------------------------------------------------------------------
+   Collapsible left navigation panel
+   A header button (added by javascripts/nav-toggle.js) toggles body.nav-collapsed.
+   Hidden on small screens, where the sidebar is already a slide-in drawer.
+--------------------------------------------------------------------------- */
+.nav-collapse-btn {
+  display: none;
+  cursor: pointer;
+}
+.nav-collapse-btn svg {
+  transition: transform 0.25s ease;
+}
+
+@media screen and (min-width: 76.25em) {
+  /* Show the toggle only where a persistent left sidebar exists. */
+  .nav-collapse-btn {
+    display: inline-flex;
+  }
+
+  .md-sidebar--primary {
+    transition: transform 0.25s ease, width 0.25s ease, opacity 0.2s ease;
+  }
+
+  /* Collapsed state: hide the left panel and reclaim its space. */
+  body.nav-collapsed .md-sidebar--primary {
+    width: 0 !important;
+    min-width: 0;
+    transform: translateX(-100%);
+    opacity: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  /* Let the article grow into the reclaimed width. */
+  body.nav-collapsed .md-main__inner {
+    max-width: 68rem;
+  }
+
+  /* Flip the icon to signal "expand" when collapsed. */
+  body.nav-collapsed .nav-collapse-btn svg {
+    transform: rotate(180deg);
+  }
+}

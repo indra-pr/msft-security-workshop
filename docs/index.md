@@ -1,7 +1,5 @@
 ---
 title: Microsoft Security Workshop
-hide:
-  - toc
 ---
 
 # Microsoft Security Workshop
