@@ -99,7 +99,8 @@ Security products are deep, and the hardest part for a newcomer is knowing *wher
 
 <div class="grid cards" markdown>
 
--   :material-account-tie:{ .lg .middle } __Indra Permana Rusli__
+-   ![Indra Permana Rusli](assets/images/author.jpg){ .author-photo }
+    __Indra Permana Rusli__
 
     ---
 

@@ -68,6 +68,9 @@ plugins:
       height: auto
       zoomable: true
       draggable: true
+      # Don't turn the author avatar into a click-to-zoom lightbox.
+      skip_classes:
+        - author-photo
   # Per-page "Last updated" (and creation) dates, pulled from git history.
   # Requires the CI checkout to use fetch-depth: 0 for accurate dates.
   - git-revision-date-localized:
