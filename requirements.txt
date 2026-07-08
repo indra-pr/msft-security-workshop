@@ -1,0 +1,7 @@
+# Microsoft Security Workshop — documentation build dependencies
+# Pinned for reproducible builds on GitHub Actions and local previews.
+
+mkdocs-material==9.5.44
+mkdocs-glightbox==0.4.0
+mkdocs-git-revision-date-localized-plugin==1.2.9
+pymdown-extensions==10.12

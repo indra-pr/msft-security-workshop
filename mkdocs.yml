@@ -1,0 +1,143 @@
+site_name: Microsoft Security Workshop
+site_description: >-
+  A beginner-friendly, workshop-style learning series for the Microsoft
+  Security product family — Purview, Entra, Intune, Defender, Sentinel,
+  Security Copilot, and Agent 365. Every fact is grounded in Microsoft Learn.
+# Update site_url to match your GitHub Pages URL, e.g.
+# https://<your-org-or-user>.github.io/security-workshop/
+site_url: https://example.github.io/security-workshop/
+docs_dir: docs
+copyright: >-
+  Content grounded in Microsoft Learn. Microsoft, Purview, Entra, Intune,
+  Defender, Sentinel, and related names are trademarks of the Microsoft group
+  of companies. This is an independent educational workshop.
+
+theme:
+  name: material
+  language: en
+  icon:
+    logo: material/shield-lock
+    repo: fontawesome/brands/github
+  features:
+    - navigation.footer      # automatic Previous / Next paging
+    - navigation.instant     # fast client-side page loads
+    - navigation.tracking    # URL anchor tracking while scrolling
+    - navigation.sections    # top-level groups rendered as sections
+    - navigation.top         # back-to-top button
+    - toc.integrate          # table of contents in the left sidebar
+    - content.code.copy      # copy-to-clipboard on code blocks
+    - content.code.annotate  # code annotations
+    - content.tabs.link      # linked content tabs
+    - search.suggest         # search-as-you-type suggestions
+    - search.highlight       # highlight search terms on the page
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+
+extra_css:
+  - stylesheets/extra.css
+
+plugins:
+  - search
+  - glightbox:
+      touchNavigation: true
+      loop: false
+      effect: zoom
+      width: 100%
+      height: auto
+      zoomable: true
+      draggable: true
+  # Per-page "Last updated" (and creation) dates, pulled from git history.
+  # Requires the CI checkout to use fetch-depth: 0 for accurate dates.
+  - git-revision-date-localized:
+      type: date
+      enable_creation_date: true
+      fallback_to_build_date: true
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Microsoft Purview:
+      - Overview: purview/index.md
+      - Data Security:
+          - Data Security overview: purview/data-security/index.md
+          - Data Loss Prevention (DLP):
+              - "Part 1 · Overview & prerequisites": purview/data-security/dlp/index.md
+              - "Part 2 · Recommended policy setup": purview/data-security/dlp/policy-setup.md
+              - "Part 3 · Step-by-step configuration": purview/data-security/dlp/configuration.md
+              - "Part 4 · Verification": purview/data-security/dlp/verification.md
+          - Information Protection:
+              - "Part 1 · Overview & prerequisites": purview/data-security/information-protection/index.md
+              - "Part 2 · Step-by-step configuration": purview/data-security/information-protection/configuration.md
+              - "Part 3 · Verification": purview/data-security/information-protection/verification.md
+          - Insider Risk Management:
+              - "Part 1 · Overview & prerequisites": purview/data-security/insider-risk-management/index.md
+              - "Part 2 · Recommended policy setup": purview/data-security/insider-risk-management/policy-setup.md
+              - "Part 3 · Step-by-step configuration": purview/data-security/insider-risk-management/configuration.md
+              - "Part 4 · Verification": purview/data-security/insider-risk-management/verification.md
+          - Information Barriers: purview/data-security/information-barriers.md
+          - Privileged Access Management: purview/data-security/privileged-access-management.md
+          - Data Security Investigations: purview/data-security/data-security-investigations.md
+          - Data Security Posture Management (DSPM): purview/data-security/dspm.md
+      - Data Compliance:
+          - Data Compliance overview: purview/data-compliance/index.md
+          - Audit: purview/data-compliance/audit.md
+          - Communication Compliance: purview/data-compliance/communication-compliance.md
+          - Compliance Manager: purview/data-compliance/compliance-manager.md
+          - Data Lifecycle Management: purview/data-compliance/data-lifecycle-management.md
+          - eDiscovery: purview/data-compliance/ediscovery.md
+          - Records Management: purview/data-compliance/records-management.md
+      - Data Governance:
+          - Data Governance overview: purview/data-governance/index.md
+          - Data Map: purview/data-governance/data-map.md
+          - Unified Catalog: purview/data-governance/unified-catalog.md
+      - Extensibility & Integrations: purview/extensibility.md
+      - Industry Use Cases: purview/use-cases.md
+  - Microsoft Entra:
+      - Overview: entra/index.md
+      - Feature deep-dive (template): entra/feature-template.md
+  - Microsoft Intune:
+      - Overview: intune/index.md
+      - Feature deep-dive (template): intune/feature-template.md
+  - Microsoft Defender:
+      - Overview: defender/index.md
+      - Feature deep-dive (template): defender/feature-template.md
+  - Microsoft Sentinel:
+      - Overview: sentinel/index.md
+      - Feature deep-dive (template): sentinel/feature-template.md
+  - Microsoft Security Copilot:
+      - Overview: security-copilot/index.md
+      - Feature deep-dive (template): security-copilot/feature-template.md
+  - Microsoft Agent 365:
+      - Overview: agent-365/index.md
+      - Feature deep-dive (template): agent-365/feature-template.md

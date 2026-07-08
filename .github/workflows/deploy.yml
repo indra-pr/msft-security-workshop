@@ -1,0 +1,62 @@
+name: Deploy site to GitHub Pages
+
+# Builds the MkDocs Material site and publishes it to GitHub Pages.
+# The site is built with `mkdocs build --strict` so any broken link,
+# missing nav target, or invalid reference fails the build.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Least-privilege permissions required by the Pages deployment actions.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment; don't cancel an in-progress production deploy.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build (mkdocs build --strict)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # Full history is required for the git-revision-date-localized plugin
+          # to compute accurate per-page "last updated" / creation dates.
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Build site (strict)
+        run: mkdocs build --strict
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

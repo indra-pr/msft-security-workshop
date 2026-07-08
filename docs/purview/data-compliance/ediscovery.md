@@ -1,0 +1,141 @@
+---
+title: eDiscovery
+description: >-
+  Microsoft Purview eDiscovery — identify, hold, collect, review, and export
+  electronically stored information for legal and investigative matters.
+---
+
+# eDiscovery
+
+!!! info "Complexity: Medium–High · Est. time: ~45–75 min for a first case (Standard)"
+    A Standard case (search + hold + export) is approachable. **Premium** (custodians, legal-hold notifications, review sets, analytics, predictive coding) is a full EDRM workflow that takes longer to master.
+
+## 1. Description
+
+**Electronic discovery (eDiscovery)** is the process of identifying and delivering **electronically stored information (ESI)** for use as evidence in investigations and legal cases. **Microsoft Purview eDiscovery** lets you identify, hold, collect, review, and export content across Microsoft 365 services: **Exchange Online, SharePoint, OneDrive, Microsoft Teams, Microsoft 365 Groups, and Viva Engage**.
+
+| Tier | What you get |
+|---|---|
+| **Content search** | Keyword queries + conditions, export results, role-based access |
+| **eDiscovery (Standard)** | Adds **cases**, per-case eDiscovery managers, and **eDiscovery holds** |
+| **eDiscovery (Premium)** | Adds **custodian management**, **legal-hold notifications**, advanced indexing, **review sets**, filtering, tagging, **analytics**, and **predictive coding** |
+
+```mermaid
+flowchart LR
+    ID[Identify] --> H[Hold/Preserve]
+    H --> C[Collect/Search]
+    C --> RS[Review set]
+    RS --> AN[Analyze · tag · cull]
+    AN --> EX[Export]
+```
+
+!!! tip "When to use eDiscovery"
+    Use it for **litigation, regulatory requests, and internal investigations** — anywhere you must preserve and produce relevant content with defensible chain-of-custody.
+
+## 2. Prerequisites
+
+=== "Licensing"
+
+    **Content search** and **eDiscovery (Standard)** are broadly available with enterprise subscriptions. **eDiscovery (Premium)** requires **Office 365 E5 / Microsoft 365 E5** (or E5 add-ons); when Premium features analyze a custodian's data, that **custodian** must have the appropriate license. Confirm on the [service description](https://learn.microsoft.com/office365/servicedescriptions/microsoft-365-service-descriptions/microsoft-365-tenantlevel-services-licensing-guidance/microsoft-purview-service-description#microsoft-purview-ediscovery).
+
+=== "Roles"
+
+    eDiscovery uses granular RBAC roles: **Case Management**, **Compliance Search**, **Preview**, **Export**, **Review**, **Hold**, and more. Assign users to the **eDiscovery Manager** role group (managers see only their cases) or **eDiscovery Administrator** (all cases). See [Assign permissions in eDiscovery](https://learn.microsoft.com/purview/edisc-permissions).
+
+## 3. Generate sample data (searchable content)
+
+Seed mailboxes/sites with findable content, then search for it.
+
+```powershell
+# Send test emails containing a unique matter keyword you can later search for.
+Connect-MgGraph -Scopes "Mail.Send"
+$keyword = "Project-Falcon-LABMATTER"
+
+1..3 | ForEach-Object {
+  $body = @{ message = @{
+    subject = "$keyword note $_"
+    body = @{ contentType = "Text"; content = "Lab evidence item $_ referencing $keyword." }
+    toRecipients = @(@{ emailAddress = @{ address = "custodian@contoso.onmicrosoft.com" } })
+  } }
+  Send-MgUserMail -UserId "sender@contoso.onmicrosoft.com" -BodyParameter $body
+}
+Write-Host "Sent test items containing keyword '$keyword'." -ForegroundColor Green
+```
+
+Use the unique keyword (`Project-Falcon-LABMATTER`) as your search query.
+
+## 4. Recommended setup
+
+!!! tip "Create a case, hold, then search — in that order"
+    Preserve first (**hold**) so relevant data can't be lost, then **search** within the case, then **export** (Standard) or push to a **review set** (Premium).
+
+| Recommendation | Why |
+|---|---|
+| One **case** per matter | Clean scoping and access control |
+| **Hold** custodians early | Defensible preservation |
+| Narrow **search** queries | Reduce noise/volume |
+| Premium: use **review sets** | Filter, tag, and cull before export |
+
+## 5. Step-by-step configuration
+
+1. In the **[Microsoft Purview portal](https://purview.microsoft.com)** → **eDiscovery** → **Create case** (name it after the matter).
+2. (Standard/Premium) Add an **eDiscovery hold** on relevant content locations (mailboxes/sites) to preserve data.
+3. Create a **search** in the case using your **keyword query** (for example `Project-Falcon-LABMATTER`) and conditions.
+4. Review the **statistics/sample**, refine the query, then **add results to a review set** (Premium) or **export** (Standard).
+5. (Premium) In the **review set**, **filter**, **tag**, run **analytics**, and cull non-relevant items.
+6. **Export** the responsive items with metadata for production.
+
+## 6. Verification
+
+1. Run the case search for your unique keyword.
+2. Confirm the **test items** appear in the search **statistics/preview**.
+3. Confirm the **hold** is active on the custodian's locations (preserved even if a user deletes an item).
+4. **Export** (or add to a review set) and confirm the exported package contains the items + metadata.
+
+!!! success "What 'good' looks like"
+    Your seeded items are found by the case search, preserved by the hold, and exportable with metadata and a defensible audit trail.
+
+## 7. Extensibility
+
+- **Compliance boundaries** — limit which locations/cases eDiscovery managers can access (for multi-region or multi-BU separation).
+- **Graph eDiscovery APIs** — automate case, hold, search, and export operations.
+- **Premium analytics & predictive coding** — machine-learning-assisted review to prioritize relevant content.
+- **Audit integration** — export includes audit logs for chain-of-custody.
+
+### Integration requirements
+
+| Integration | Requirement |
+|---|---|
+| Compliance boundaries | Agency/attribute configuration; applicable eDiscovery licensing |
+| Graph automation | Graph permissions for eDiscovery APIs |
+| Premium review/analytics | E5 / E5 eDiscovery add-on |
+
+## 8. Industry use cases
+
+=== "Financial services"
+
+    Respond to **regulator information requests** and litigation with preserved, searchable communications.
+
+=== "Telco"
+
+    Handle **subpoenas and disputes** across email, Teams, and SharePoint at scale.
+
+=== "Public sector & SOE"
+
+    Fulfill **freedom-of-information** and legal requests with defensible collection.
+
+=== "Energy & resources"
+
+    Support **contract and environmental litigation** with custodian-based holds.
+
+=== "Manufacturing & conglomerates"
+
+    Manage **IP and supplier disputes** with compliance boundaries per business unit.
+
+## 9. Sources
+
+- [Learn about eDiscovery](https://learn.microsoft.com/purview/edisc)
+- [Get started with eDiscovery](https://learn.microsoft.com/purview/edisc-get-started)
+- [Assign permissions in eDiscovery](https://learn.microsoft.com/purview/edisc-permissions)
+- [Export search results in eDiscovery](https://learn.microsoft.com/purview/edisc-search-export)
+- [eDiscovery (legacy solutions overview)](https://learn.microsoft.com/purview/ediscovery)
