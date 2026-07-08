@@ -18,12 +18,14 @@ theme:
     logo: material/shield-lock
     repo: fontawesome/brands/github
   features:
+    # Left nav renders as a collapsible tree: parents show a chevron and are
+    # collapsed by default; clicking one expands it (like Microsoft Learn).
+    # navigation.sections is intentionally OFF (it force-expands groups) and
+    # toc.integrate is OFF (each page's TOC stays on the right, not the sidebar).
     - navigation.footer      # automatic Previous / Next paging
     - navigation.instant     # fast client-side page loads
     - navigation.tracking    # URL anchor tracking while scrolling
-    - navigation.sections    # top-level groups rendered as sections
     - navigation.top         # back-to-top button
-    - toc.integrate          # table of contents in the left sidebar
     - content.code.copy      # copy-to-clipboard on code blocks
     - content.code.annotate  # code annotations
     - content.tabs.link      # linked content tabs
