@@ -97,5 +97,29 @@ flowchart LR
 
 Security products are deep, and the hardest part for a newcomer is knowing *where to start* and *how to prove it works*. This workshop pairs every instruction with a supporting diagram or screenshot from Microsoft Learn, splits long walkthroughs into readable **Part 1 → Part N** pages, and always ends with a **verification** step so you can confirm success in your own lab.
 
-!!! note "Independent educational content"
-    This is an independent, community-style workshop that curates and links to official Microsoft Learn documentation. It is not an official Microsoft publication. Always confirm licensing and steps against the linked Microsoft Learn pages for your tenant.
+## About the author
+
+<div class="grid cards" markdown>
+
+-   :material-account-tie:{ .lg .middle } __Indra Permana Rusli__
+
+    ---
+
+    **Sr. Security Solution Engineer**
+    Microsoft ASEAN
+
+    This workshop is a personal learning project. Content is curated from, and grounded in, **[Microsoft Learn](https://learn.microsoft.com/)** — the authoritative source — with each page citing the Learn URLs it draws from.
+
+</div>
+
+!!! warning "Disclaimer — personal project"
+    - This is an **independent, personal project** created for learning. The views and content here are the **author's own** and do **not** represent Microsoft. It has **no relationship to, and does not reflect, the author's role or position at Microsoft**.
+    - This site is **not** official Microsoft documentation, guidance, endorsement, or support. It is **not** an official Microsoft publication.
+    - **Microsoft Learn is the source of truth.** Product names, features, licensing/SKUs, and steps change frequently — always **verify against the linked Microsoft Learn pages for your own tenant** before acting. Anything that couldn't be verified on Learn is flagged **⚠️ Not verified on Microsoft Learn**.
+
+!!! danger "Safety measures — read before running anything"
+    - **Lab tenants only.** Sample scripts generate **synthetic, non-real** data (fake card/ID-format values). Run them **only in an isolated, non-production test tenant** — never against production data, users, or devices.
+    - **Review before you run.** Read and understand every script, confirm the target tenant/account, and use **least-privilege** roles. Some steps (DLP blocking, retention, information barriers, privileged access) can **restrict access or delete data**.
+    - **Get authorization.** Only configure security controls you're **permitted** to change, and follow your organization's policies and all **applicable laws**.
+    - **No warranty.** Everything here is provided **"as is," without warranty of any kind**; you use it **at your own risk**, and the author accepts **no liability** for any outcome.
+    - **Trademarks** (Microsoft, Purview, Entra, Intune, Defender, Sentinel, Security Copilot, Agent 365, and related marks) belong to the **Microsoft group of companies**.
