@@ -22,12 +22,14 @@ description: >-
 
 When litigation or investigation hits, you must **preserve and produce** the right data — fast and defensibly. eDiscovery gives you a repeatable, auditable EDRM workflow instead of scrambling.
 
-## 1. Description
+## Overview video
 
 <div class="video-embed">
 <iframe src="https://www.youtube-nocookie.com/embed/-25S-Vz7u1Q" title="Microsoft Mechanics: Advanced eDiscovery" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
 <p class="video-caption"><strong>▶ Watch — Do more with Advanced eDiscovery in Microsoft 365</strong><br>Microsoft Mechanics · 7:07 — How to run eDiscovery investigations of any type (policy violations, GDPR requests): create a case, identify custodians and data sources, run searches, review and tag documents, and export the results.</p>
+
+## 1. Description
 
 **Electronic discovery (eDiscovery)** is the process of identifying and delivering **electronically stored information (ESI)** for use as evidence in investigations and legal cases. **Microsoft Purview eDiscovery** lets you identify, hold, collect, review, and export content across Microsoft 365 services: **Exchange Online, SharePoint, OneDrive, Microsoft Teams, Microsoft 365 Groups, and Viva Engage**.
 

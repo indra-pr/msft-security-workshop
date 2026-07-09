@@ -25,12 +25,14 @@ description: >-
 
 After a data incident, the hardest question is *"what sensitive data was actually involved, and who's impacted?"* DSI uses generative AI to answer that in minutes instead of days of manual review.
 
-## 1. Description
+## Overview video
 
 <div class="video-embed">
 <iframe src="https://www.youtube-nocookie.com/embed/tgnY65zHd8g" title="Microsoft Mechanics: Data Security Investigations" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
 <p class="video-caption"><strong>▶ Watch — Data Security Investigations in Microsoft Purview</strong><br>Microsoft Mechanics · 15:20 — Identify what data was actually exposed in a breach — not just where it moved, but what it contains and how sensitive it is. Search massive volumes with natural language, pinpoint the highest-risk content, and connect it to user activity.</p>
+
+## 1. Description
 
 **Microsoft Purview Data Security Investigations (DSI)** helps cybersecurity teams harness **generative AI** to **analyze and respond to** data security incidents, risky insiders, and data breaches. DSI quickly identifies risks from sensitive-data exposure, draws connections across impacted data, and helps teams collaborate to remediate — simplifying tasks that are traditionally time-consuming and complex.
 

@@ -29,12 +29,14 @@ Common challenges this lab solves:
 - "We need PCI/GDPR-style controls, but we don't want to block legitimate business."
 - "We want to start safely, without disrupting users on day one."
 
-## Introduction
+## Overview video
 
 <div class="video-embed">
 <iframe src="https://www.youtube-nocookie.com/embed/hvqq8L_0kgI" title="Microsoft Mechanics: Data Loss Prevention" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
 <p class="video-caption"><strong>▶ Watch — Data Loss Prevention across endpoints, apps &amp; services</strong><br>Microsoft Mechanics · 12:43 — See how one Microsoft Purview DLP policy protects sensitive data across endpoints, apps, and services — with restrictions that differ by location, volume, and data type, user override/justification, custom notifications, and monitoring.</p>
+
+## Introduction
 
 **Microsoft Purview Data Loss Prevention (DLP)** helps protect your organization against the unintentional or accidental sharing of sensitive information — inside and outside your organization.
 

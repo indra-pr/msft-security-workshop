@@ -22,12 +22,14 @@ description: >-
 
 Some content is a formal **record** — contracts, filings, safety documents — with legal disposal obligations. Records Management enforces that lifecycle and proves you did it, defensibly.
 
-## 1. Description
+## Overview video
 
 <div class="video-embed">
 <iframe src="https://www.youtube-nocookie.com/embed/gEBJPaS5_Q0" title="Microsoft Purview Records Management deep dive" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
 <p class="video-caption"><strong>▶ Watch — Microsoft Purview Records Management: deep dive</strong><br>Bruce Miller EDRMS · 5:58 — A records-management specialist's deep dive: which capabilities work well (and which to avoid), how to automate compliance, and how to handle limitations like case records.</p>
+
+## 1. Description
 
 **Microsoft Purview Records Management** helps you manage **high-value items** for **business, legal, or regulatory record-keeping**. You **declare items as records** (or **regulatory records**) using **retention labels**, organize them with a **file plan**, and **defensibly dispose** of them with **disposition reviews** and proof of deletion.
 

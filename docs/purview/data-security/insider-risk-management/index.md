@@ -32,12 +32,14 @@ Common challenges this lab solves:
 - "We need to investigate risky activity without exposing everyone's identity."
 - "Alerts are too noisy to act on."
 
-## Introduction
+## Overview video
 
 <div class="video-embed">
 <iframe src="https://www.youtube-nocookie.com/embed/og90Rs8tVUA" title="Microsoft Mechanics: Insider Risk Management" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
 <p class="video-caption"><strong>▶ Watch — Insider Risk Management: admin set-up tutorial</strong><br>Microsoft Mechanics · 13:44 — A step-by-step admin walkthrough: enable auditing and analytics, assign roles, tune indicators and intelligent detections across Office, devices, and cloud apps, then build policies from templates and review the matches.</p>
+
+## Introduction
 
 **Microsoft Purview Insider Risk Management (IRM)** correlates signals from **Microsoft 365 and Microsoft Graph** — plus third-party indicators — to help you **identify, triage, and act on** risky user activity.
 

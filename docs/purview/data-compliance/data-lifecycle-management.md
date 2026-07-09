@@ -22,12 +22,14 @@ description: >-
 
 Keeping everything forever is a liability; deleting too soon breaks compliance. DLM lets you set **defensible, automatic** retain-and-delete rules so data lives exactly as long as it should.
 
-## 1. Description
+## Overview video
 
 <div class="video-embed">
 <iframe src="https://www.youtube-nocookie.com/embed/Zvpkvp-gbq8" title="Data Lifecycle Management retention policies (SC-401)" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
 <p class="video-caption"><strong>▶ Watch — Data Lifecycle Management: retention policies (SC-401)</strong><br>Cloud Scholars · 11:55 — A hands-on walkthrough: build real-world retention strategies with retention policies and adaptive scopes, and apply retention across Exchange, SharePoint, and more.</p>
+
+## 1. Description
 
 **Microsoft Purview Data Lifecycle Management (DLM)** — formerly Microsoft Information Governance — helps you **keep what you need and delete what you don't**. It uses **retention policies**, **retention labels**, and **retention label policies** to enforce retain/delete settings across Microsoft 365 workloads, and includes **email archiving** capabilities.
 

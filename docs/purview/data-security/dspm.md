@@ -25,12 +25,14 @@ description: >-
 
 Sensitive data is scattered across Microsoft 365, Azure, and SaaS — and AI makes oversharing riskier. DSPM gives you **one data-centric view** of where the risk is and what to fix first, before you roll out Copilot.
 
-## 1. Description
+## Overview video
 
 <div class="video-embed">
 <iframe src="https://www.youtube-nocookie.com/embed/yxELPt-K9Fk" title="Microsoft Mechanics: Data Security Posture Management" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
 <p class="video-caption"><strong>▶ Watch — Stop oversharing: safeguard sensitive data fast with DSPM</strong><br>Microsoft Mechanics · 1:26 — Locate, assess, and prioritize high-risk data across Microsoft and non-Microsoft services with Data Security Posture Management — find sensitive files, spot emerging data risks, and focus remediation where it matters most.</p>
+
+## 1. Description
 
 **Microsoft Purview Data Security Posture Management** helps you **discover, protect, and investigate** sensitive-data risks across your **digital estate** — Microsoft 365, Azure, Fabric, and integrated third-party SaaS — for both traditional apps and **AI apps and agents**. Rather than focusing on infrastructure or endpoints, DSPM centers on the **data itself**: where it resides, who can access it, how it's used, and whether it's adequately protected. It continuously scans to identify sensitive data, assess risk, and recommend actions, **consolidating insights** from other Purview solutions (DLP, Insider Risk Management, Information Protection).
 

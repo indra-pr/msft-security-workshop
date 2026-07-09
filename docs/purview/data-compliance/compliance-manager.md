@@ -22,12 +22,14 @@ description: >-
 
 "Are we compliant?" is hard to answer across dozens of regulations. Compliance Manager turns that into a **measurable score** with concrete improvement actions you can assign and evidence.
 
-## 1. Description
+## Overview video
 
 <div class="video-embed">
 <iframe src="https://www.youtube-nocookie.com/embed/VrZbvZ3dMmg" title="Microsoft Purview Compliance Manager demo" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
 <p class="video-caption"><strong>▶ Watch — Microsoft Purview Compliance Manager: full demo</strong><br>2W Tech · 9:51 — An in-depth demo: access Compliance Manager, navigate its key features, understand your compliance score, and implement improvement actions to manage regulatory compliance across Microsoft 365 and other clouds.</p>
+
+## 1. Description
 
 **Microsoft Purview Compliance Manager** helps you **automatically assess and manage compliance** across your multicloud environment. It provides:
 
