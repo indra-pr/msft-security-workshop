@@ -7,8 +7,20 @@ description: >-
 
 # Records Management
 
+*Declare, manage, and defensibly dispose of high-value records using a file plan and retention labels — build a plan and label, all on this page.*
+
+## Lab details
+
+| Level | Audience | Estimated time | What you'll build |
+|---|---|---|---|
+| 300 · Advanced | Records / compliance manager | ~60–90 min | A file plan with a retention label and a disposition-review step |
+
 !!! info "Complexity: Medium–High · Est. time: ~60–90 min for a first file plan + label"
     Records management shares retention building blocks with DLM but adds **file plan**, **records declaration**, **event-based retention**, and **disposition review** — governance work that benefits from records-management expertise.
+
+## Why this matters
+
+Some content is a formal **record** — contracts, filings, safety documents — with legal disposal obligations. Records Management enforces that lifecycle and proves you did it, defensibly.
 
 ## 1. Description
 
@@ -126,6 +138,13 @@ Also seed some documents to label — reuse the [DLM sample script](data-lifecyc
 === "Manufacturing & conglomerates"
 
     Standardize a **corporate records schedule** across BUs with file plan descriptors.
+
+## Summary & golden rules
+
+- Build a **file plan** before creating labels at scale.
+- Use **records declaration** for content that must be immutable.
+- Enable **disposition review** so deletions are approved and logged.
+- Align retention triggers with **event-based** timing where needed.
 
 ## 9. Sources
 

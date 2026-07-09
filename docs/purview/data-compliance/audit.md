@@ -7,8 +7,20 @@ description: >-
 
 # Audit
 
+*Log and search user and admin activity across Microsoft 365 — turn on auditing, run a search, and read the results, all on this page.*
+
+## Lab details
+
+| Level | Audience | Estimated time | What you'll build |
+|---|---|---|---|
+| 100 · Foundational | Compliance / security administrator | ~20 min (Standard) | A permissioned audit search that returns real activity events |
+
 !!! info "Complexity: Low (Standard) / Medium (Premium) · Est. time: ~20 min (Standard); ~45–60 min (Premium)"
     **Audit (Standard)** is on by default — you mostly assign permissions and search. **Audit (Premium)** adds per-user Advanced Auditing, long-term retention policies, and high-value events, which takes more setup.
+
+## Why this matters
+
+When something goes wrong — a leak, a config change, a suspicious sign-in — the first question is *who did what, when?* Audit is the system of record that answers it, and it only helps if it's turned on **before** the incident.
 
 ## 1. Description
 
@@ -147,6 +159,13 @@ To generate specific activity, sign in as a test user and view/download a docume
 === "Manufacturing & conglomerates"
 
     Correlate cross-BU admin activity when investigating suspected IP access.
+
+## Summary & golden rules
+
+- Confirm **Audit (Standard)** is on and assign the **least-privilege** search roles.
+- Search by **activity, user, and date range** — not everything at once.
+- For long retention and high-value events, plan **Audit (Premium)**.
+- Treat the audit log as **evidence**: export and preserve what matters.
 
 ## 9. Sources
 

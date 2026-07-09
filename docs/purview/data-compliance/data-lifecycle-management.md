@@ -7,8 +7,20 @@ description: >-
 
 # Data Lifecycle Management
 
+*Retain what you need and delete what you don't, using retention policies and labels — create a policy and verify it, all on this page.*
+
+## Lab details
+
+| Level | Audience | Estimated time | What you'll build |
+|---|---|---|---|
+| 200 · Intermediate | Compliance / records administrator | ~45–60 min | A first retention policy (and optional label) across Microsoft 365 |
+
 !!! info "Complexity: Medium · Est. time: ~45–60 min for a first retention policy"
     A single retention policy across Microsoft 365 is quick. Complexity rises with **retention labels for exceptions**, **event-based retention**, mailbox archiving, and adaptive scopes.
+
+## Why this matters
+
+Keeping everything forever is a liability; deleting too soon breaks compliance. DLM lets you set **defensible, automatic** retain-and-delete rules so data lives exactly as long as it should.
 
 ## 1. Description
 
@@ -140,6 +152,13 @@ Write-Host "Created $((Get-ChildItem $lab).Count) files in $lab. Upload to a tes
 === "Manufacturing & conglomerates"
 
     Standardize retention across BUs while allowing **exceptions** via labels.
+
+## Summary & golden rules
+
+- Start with **one broad retention policy**; add labels for exceptions.
+- Decide **retain, delete, or retain-then-delete** per data type.
+- Test in a **small scope** before tenant-wide rollout.
+- Document the **why** (regulation/policy) behind each rule.
 
 ## 9. Sources
 

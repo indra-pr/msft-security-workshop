@@ -7,11 +7,23 @@ description: >-
 
 # Data Security Posture Management
 
+*Discover, protect, and investigate sensitive-data risks across your whole estate from one data-centric view — set it up and act on it, all on this page.*
+
+## Lab details
+
+| Level | Audience | Estimated time | What you'll build |
+|---|---|---|---|
+| 200 · Intermediate | Security / Data-security administrator | ~30–60 min (scans take time) | Enabled DSPM with insights and at least one one-click remediation policy |
+
 !!! warning "Preview & evolving"
     DSPM is generally referred to as **preview / evolving**, and there are **classic** versions (DSPM classic and DSPM for AI classic). This page covers the **current** DSPM. Verify capabilities on Microsoft Learn for your tenant.
 
 !!! info "Complexity: Medium · Est. time: ~30–60 min to first insights (analytics scans take time)"
     DSPM is largely **guided** through built-in setup tasks, and it *unifies* other Purview solutions rather than replacing them. Value depends on having foundations (SITs, labels, DLP, Insider Risk) in place first.
+
+## Why this matters
+
+Sensitive data is scattered across Microsoft 365, Azure, and SaaS — and AI makes oversharing riskier. DSPM gives you **one data-centric view** of where the risk is and what to fix first, before you roll out Copilot.
 
 ## 1. Description
 
@@ -148,6 +160,13 @@ Write-Host "Seeded $lab. Upload these to test SharePoint sites, then let DSPM sc
 === "Manufacturing & conglomerates"
 
     Prioritize protection of **designs and trade secrets** by seeing where sensitive data concentrates across BUs.
+
+## Summary & golden rules
+
+- Do the **foundations first** (SITs, labels, audit) — DSPM is only as good as them.
+- Enable **Audit + analytics** (the required setup task) before expecting insights.
+- Prioritize **oversharing** remediation before enabling Copilot.
+- Turn recommendations into **one-click** DLP/label policies; iterate **monthly**.
 
 ## 9. Sources
 

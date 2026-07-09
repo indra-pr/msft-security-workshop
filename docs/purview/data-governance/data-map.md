@@ -7,8 +7,20 @@ description: >-
 
 # Data Map
 
+*Register and scan on-premises, multicloud, and SaaS sources to build a unified map of your estate — run a first scan, all on this page.*
+
+## Lab details
+
+| Level | Audience | Estimated time | What you'll build |
+|---|---|---|---|
+| 300 · Advanced | Data / platform administrator | ~60–90 min | A Data Map account with a registered source and a completed scan |
+
 !!! info "Complexity: Medium–High · Est. time: ~60–90 min for a first scan"
     Creating the account and scanning a cloud source is approachable. Complexity rises with **on-premises sources** (self-hosted integration runtime), **credentials/networking**, and **custom scan rule sets**.
+
+## Why this matters
+
+You can't govern what you can't see. The Data Map automatically discovers and classifies data across clouds and on-prem, giving governance and security a **shared, current picture** of the estate.
 
 ## 1. Description
 
@@ -144,6 +156,13 @@ The `card` column contains a synthetic credit-card-format value so the scan's cl
 === "Manufacturing & conglomerates"
 
     Discover and classify **ERP/PLM data** across business units and clouds.
+
+## Summary & golden rules
+
+- Start with **one cloud source**; add on-prem later via the runtime.
+- Use **managed identity** where possible for scan credentials.
+- Schedule **incremental scans** instead of full rescans.
+- Let classifications flow into the **Unified Catalog** for curation.
 
 ## 9. Sources
 

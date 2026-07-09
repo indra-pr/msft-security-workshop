@@ -7,8 +7,20 @@ description: >-
 
 # Unified Catalog
 
+*Govern data with governance domains, data products, glossary terms, and data quality — publish a first domain and product, all on this page.*
+
+## Lab details
+
+| Level | Audience | Estimated time | What you'll build |
+|---|---|---|---|
+| 300 · Advanced | Data steward / governance lead | ~60–120 min | A governance domain with a published data product and glossary terms |
+
 !!! info "Complexity: Medium–High · Est. time: ~60–120 min for a first domain + data product"
     Building a governance domain and publishing a data product is guided, but real value comes from **curation, glossary, and data-quality** work with data stewards — an ongoing program.
+
+## Why this matters
+
+Discovery isn't governance. The Unified Catalog turns raw data-map output into **trusted, business-described data products** people can find, understand, and use responsibly.
 
 ## 1. Description
 
@@ -126,6 +138,13 @@ Unified Catalog builds on **Data Map assets**, so first complete a [Data Map sca
 === "Manufacturing & conglomerates"
 
     Govern **supply-chain and product** data across BUs with domain ownership and OKRs.
+
+## Summary & golden rules
+
+- Start with **one governance domain** tied to a real business area.
+- Publish a **data product** with owners and a clear description.
+- Grow the **glossary** with data stewards, not all at once.
+- Wire in **data quality** rules once products are stable.
 
 ## 9. Sources
 

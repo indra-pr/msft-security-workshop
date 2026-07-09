@@ -7,8 +7,20 @@ description: >-
 
 # Privileged Access Management
 
+*Enforce just-in-time, approval-based access to sensitive Exchange Online tasks — zero standing access — set up and verified, all on this page.*
+
+## Lab details
+
+| Level | Audience | Estimated time | What you'll build |
+|---|---|---|---|
+| 200 · Intermediate | Global / Exchange administrator | ~45–60 min | An approval policy that gates a sensitive Exchange task behind just-in-time approval |
+
 !!! info "Complexity: Medium · Est. time: ~45–60 min"
     The four-step setup (approver group → enable → policy → request/approve) is straightforward. Scoping the right tasks and approver groups, and coordinating with admins, is what takes the time.
+
+## Why this matters
+
+Standing admin access is a standing risk — a compromised admin account can quietly change mail flow or export mailboxes. PAM removes standing privilege: sensitive tasks require **explicit, time-limited, audited approval** every time.
 
 ## 1. Description
 
@@ -160,6 +172,13 @@ A good **test task** to gate is `Exchange\New-MoveRequest` (mailbox moves) — v
 === "Manufacturing & conglomerates"
 
     Centralize approval of **cross-tenant / cross-BU** Exchange admin tasks under one approver group.
+
+## Summary & golden rules
+
+- Gate **one high-value task** with **manual** approval first, then expand.
+- Use a dedicated **approver group** (not individuals).
+- Keep the default **time-limited** access window; every use is audited.
+- Exclude only true **system accounts**, and only exceptionally.
 
 ## 9. Sources
 

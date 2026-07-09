@@ -7,8 +7,20 @@ description: >-
 
 # Information Barriers
 
+*Restrict two-way communication and collaboration between groups in Teams, SharePoint, and OneDrive — build an "ethical wall" and verify it, all on this page.*
+
+## Lab details
+
+| Level | Audience | Estimated time | What you'll build |
+|---|---|---|---|
+| 300 · Advanced | Compliance administrator | ~60–90 min (+ up to 24 h to propagate) | Two directional Block policies between segments, verified in Teams |
+
 !!! info "Complexity: Medium–High · Est. time: ~60–90 min (+ up to 24 h to propagate)"
     Segmenting users and writing directional Block policies is methodical work, and changes take **up to 24 hours** to propagate. The concepts (segments, directions, modes) require care, so budget planning time.
+
+## Why this matters
+
+Some groups **must not** communicate — investment bankers and public-side research, or teams evaluating competing bids. Information Barriers enforces that **ethical wall** automatically across Teams, SharePoint, and OneDrive, so a conflict of interest can't happen by accident.
 
 ## 1. Description
 
@@ -166,6 +178,14 @@ foreach ($upn in $assignments.Keys) {
 === "Manufacturing & conglomerates"
 
     Isolate **business units** that supply competing OEMs so pricing and design data can't cross.
+
+## Summary & golden rules
+
+- Prefer **Block** policies for a predictable experience; create **two** (one per direction).
+- **Never** assign more than one policy to a segment.
+- Keep policies **inactive** until you're ready to apply them.
+- Plan your **IB mode** up front (multi-segment = Allow-only policies).
+- Allow **~24 hours** for changes to propagate before you test.
 
 ## 9. Sources
 

@@ -7,8 +7,20 @@ description: >-
 
 # eDiscovery
 
+*Identify, hold, collect, review, and export electronically stored information for legal matters — run a Standard case end to end, all on this page.*
+
+## Lab details
+
+| Level | Audience | Estimated time | What you'll build |
+|---|---|---|---|
+| 200 · Intermediate | Legal / eDiscovery administrator | ~45–75 min | A Standard case with a search, a hold, and an export |
+
 !!! info "Complexity: Medium–High · Est. time: ~45–75 min for a first case (Standard)"
     A Standard case (search + hold + export) is approachable. **Premium** (custodians, legal-hold notifications, review sets, analytics, predictive coding) is a full EDRM workflow that takes longer to master.
+
+## Why this matters
+
+When litigation or investigation hits, you must **preserve and produce** the right data — fast and defensibly. eDiscovery gives you a repeatable, auditable EDRM workflow instead of scrambling.
 
 ## 1. Description
 
@@ -131,6 +143,13 @@ Use the unique keyword (`Project-Falcon-LABMATTER`) as your search query.
 === "Manufacturing & conglomerates"
 
     Manage **IP and supplier disputes** with compliance boundaries per business unit.
+
+## Summary & golden rules
+
+- Put a **legal hold** on before you search or collect.
+- Scope searches by **custodian, keyword, and date** to control volume.
+- Keep a clean **case audit trail** for defensibility.
+- Graduate to **Premium** for custodians, review sets, and analytics.
 
 ## 9. Sources
 

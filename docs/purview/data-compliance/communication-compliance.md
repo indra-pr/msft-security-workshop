@@ -7,8 +7,20 @@ description: >-
 
 # Communication Compliance
 
+*Detect and remediate inappropriate or risky messages across Teams, Viva Engage, and Exchange — build a policy and triage an alert, all on this page.*
+
+## Lab details
+
+| Level | Audience | Estimated time | What you'll build |
+|---|---|---|---|
+| 200 · Intermediate | Compliance / HR-linked reviewer | ~45–60 min | A first policy from a template plus a triaged alert |
+
 !!! info "Complexity: Medium · Est. time: ~45–60 min for a first policy"
     Permissions and privacy settings need care (Global Admins have **no** access by default), but policy templates make the first policy quick. Investigation/remediation is an ongoing workflow.
+
+## Why this matters
+
+Harassment, threats, and regulatory leakage often show up in everyday messages. Communication Compliance surfaces the risky few from the many — with privacy safeguards and pseudonymization built in.
 
 ## 1. Description
 
@@ -139,6 +151,13 @@ For Teams/Viva Engage, post a benign test message containing your policy's keywo
 === "Manufacturing & conglomerates"
 
     Supervise cross-BU communications for **IP-sharing** and conduct issues.
+
+## Summary & golden rules
+
+- Grant access explicitly — **Global Admins have none** by default.
+- Start from a **template** and scope to a small group first.
+- Keep **pseudonymization** and privacy controls on.
+- Treat review as an **ongoing workflow**, coordinated with HR/Legal.
 
 ## 9. Sources
 

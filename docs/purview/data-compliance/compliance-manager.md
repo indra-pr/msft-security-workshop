@@ -7,8 +7,20 @@ description: >-
 
 # Compliance Manager
 
+*Assess and improve your compliance posture with prebuilt assessments and a risk-based score — create an assessment and act on it, all on this page.*
+
+## Lab details
+
+| Level | Audience | Estimated time | What you'll build |
+|---|---|---|---|
+| 100 · Foundational | Compliance / GRC administrator | ~30–45 min | A first assessment from a template with tracked improvement actions |
+
 !!! info "Complexity: Low–Medium · Est. time: ~30–45 min to first assessment"
     Creating an assessment from a template is quick. The ongoing work is completing **improvement actions** and keeping evidence current — that's a program, not a one-time task.
+
+## Why this matters
+
+"Are we compliant?" is hard to answer across dozens of regulations. Compliance Manager turns that into a **measurable score** with concrete improvement actions you can assign and evidence.
 
 ## 1. Description
 
@@ -122,6 +134,13 @@ flowchart LR
 === "Manufacturing & conglomerates"
 
     Roll up **ISO 27001** and regional privacy assessments across business units.
+
+## Summary & golden rules
+
+- Create your first assessment from a **template** that matches a real obligation.
+- Work **improvement actions** by impact; assign owners.
+- Attach **evidence** and keep it current — auditors ask for it.
+- Track the score as a **trend**, not a one-time number.
 
 ## 9. Sources
 

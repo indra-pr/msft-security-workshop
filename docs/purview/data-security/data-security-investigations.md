@@ -7,11 +7,23 @@ description: >-
 
 # Data Security Investigations
 
+*Use generative AI to analyze and respond to data-security incidents, risky insiders, and breaches — enable it and run an investigation, all on this page.*
+
+## Lab details
+
+| Level | Audience | Estimated time | What you'll build |
+|---|---|---|---|
+| 300 · Advanced | SOC / Data-security administrator | ~60–90 min (+ billing setup) | An enabled DSI instance and an AI-assisted investigation over a staged incident |
+
 !!! warning "Preview feature"
     Microsoft Purview **Data Security Investigations** is in **preview**. Capabilities and prerequisites may change before general availability. Verify details on Microsoft Learn for your tenant.
 
 !!! info "Complexity: High · Est. time: ~60–90 min setup (+ billing configuration)"
     DSI requires **two billing models** (pay-as-you-go storage + capacity/compute units) and careful permissions. The investigation experience itself is AI-assisted and fast, but initial enablement and billing take planning.
+
+## Why this matters
+
+After a data incident, the hardest question is *"what sensitive data was actually involved, and who's impacted?"* DSI uses generative AI to answer that in minutes instead of days of manual review.
 
 ## 1. Description
 
@@ -134,6 +146,13 @@ In practice, DSI investigations often start from data already identified by a **
 === "Manufacturing & conglomerates"
 
     Determine whether a compromised account touched **trade-secret designs** across business units.
+
+## Summary & golden rules
+
+- Configure **billing** (Azure subscription + compute) before your first investigation.
+- Start **reactive** — one real or simulated incident, end to end.
+- Assign **least-privilege** roles (contributor for investigators, admin for owners).
+- Launch investigations from a **Defender XDR** incident where possible.
 
 ## 9. Sources
 
