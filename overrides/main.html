@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{#
+  Custom document <title>:
+  - Home page  -> "Microsoft Security Workshop - Learning Labs"
+  - Every other page keeps Material's default ("{page title} - {site_name}").
+#}
+{% block htmltitle %}
+  {%- if page and page.is_homepage -%}
+    <title>Microsoft Security Workshop - Learning Labs</title>
+  {%- else -%}
+    {{ super() }}
+  {%- endif -%}
+{% endblock %}
