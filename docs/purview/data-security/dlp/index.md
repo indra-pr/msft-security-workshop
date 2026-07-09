@@ -335,6 +335,23 @@ To also catch sensitive files copied to **USB**, **printed**, or uploaded to **c
 
     Stop exfiltration of **CAD files, BOMs, and supplier pricing** across business units; scope rules per business unit using admin units.
 
+## Change management & rollout
+
+Never switch a new policy on for the whole tenant at once. Roll it out in controlled waves so you protect data **without surprising users or blocking legitimate work**. DLP can block sharing and email — great for protection, disruptive if mis-scoped — so always simulate first.
+
+| Phase | What you do | Who's affected | Move on when… |
+|---|---|---|---|
+| **1. Pilot** | Create the policy in **simulation mode** (optionally with policy tips), scoped to a pilot group; watch matches without enforcing. | Pilot group (10–50 users) | Simulation shows real matches with few false positives |
+| **2. Expand** | Turn on **policy tips**, then move the policy from simulation to **enforce** for the pilot; widen scope gradually. | Department(s) | Block/override rates are sensible; users understand tips |
+| **3. Tenant-wide** | Enforce across all locations (Exchange, SharePoint, OneDrive, Teams, endpoints) after comms + training. | All users | Steady state; alerts understood |
+| **4. Operate** | Review DLP alerts and reports; tune rules and exceptions; add locations/SITs over time. | Ongoing | — |
+
+!!! tip "Least-disruption levers"
+    - **Start in a safe mode:** **simulation mode** (with or without policy tips) before you enforce.
+    - **Communicate first:** explain what will be blocked or warned, and how to use the override/justification.
+    - **Keep a rollback path:** flip the policy back to **simulation** or **off**, or narrow its scope, in one click.
+    - **Log the change:** record scope, approver, and date in your change-management system (e.g., a change ticket).
+
 ## Summary & golden rules
 
 You built a DLP policy that detects credit-card data, warns/blocks external sharing, and raises alerts — and you verified it, all from this page.

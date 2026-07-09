@@ -139,6 +139,23 @@ Also seed some documents to label — reuse the [DLM sample script](data-lifecyc
 
     Standardize a **corporate records schedule** across BUs with file plan descriptors.
 
+## Change management & rollout
+
+Never switch a new policy on for the whole tenant at once. Roll it out in controlled waves so you protect data **without surprising users or blocking legitimate work**. Records declaration and disposition affect what users can edit and delete, so pilot the file plan and keep disposition review on.
+
+| Phase | What you do | Who's affected | Move on when… |
+|---|---|---|---|
+| **1. Pilot** | Pilot a small **file plan** with one or two retention labels on a single library/site; enable **disposition review** so nothing auto-deletes unreviewed. | Pilot site | Labels apply; records behave as expected; disposition review works |
+| **2. Expand** | Add file-plan entries and labels; widen to more sites/teams; involve records owners. | Department(s) | Declaration/retention validated; reviewers ready |
+| **3. Tenant-wide** | Publish the file plan/labels to the intended scope after comms + training. | All in-scope sites | Steady state; disposition understood |
+| **4. Operate** | Run disposition reviews on schedule; refine the file plan as obligations change. | Ongoing | — |
+
+!!! tip "Least-disruption levers"
+    - **Start in a safe mode:** pilot the **file plan** and keep **disposition review** on before broad rollout.
+    - **Communicate first:** tell content owners what becomes a record and how disposition works.
+    - **Keep a rollback path:** unpublish a label or narrow scope; disposition review prevents premature deletion.
+    - **Log the change:** record scope, approver, and date in your change-management system (e.g., a change ticket).
+
 ## Summary & golden rules
 
 - Build a **file plan** before creating labels at scale.

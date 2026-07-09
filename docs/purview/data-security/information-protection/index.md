@@ -275,6 +275,23 @@ To label existing content **at rest** (SharePoint/OneDrive) or **in transit** (E
 
     Label and encrypt **product designs and trade secrets**; auto-label CAD/BOM content across business units.
 
+## Change management & rollout
+
+Never switch a new policy on for the whole tenant at once. Roll it out in controlled waves so you protect data **without surprising users or blocking legitimate work**. Labels change how users classify content and how it's encrypted — the two things most likely to cause confusion or lock-outs — so pilot carefully.
+
+| Phase | What you do | Who's affected | Move on when… |
+|---|---|---|---|
+| **1. Pilot** | Publish the label policy to a **pilot group**; start with **manual labeling only** (no mandatory/auto-labeling). Run any auto-labeling policy in **simulation**. | Pilot group (10–50 users) | Pilot users can apply labels; simulation matches expected content |
+| **2. Expand** | Widen the policy team-by-team; enable **recommended/auto-labeling**, then encryption, for the pilot. | Department(s) | Few mislabels; encryption doesn't block collaboration |
+| **3. Tenant-wide** | Publish to all users and (optionally) set a default or mandatory label after comms + training. | All users | Steady state; alerts understood |
+| **4. Operate** | Review labeling analytics and auto-label simulation; refine SITs/label conditions; add labels as needs evolve. | Ongoing | — |
+
+!!! tip "Least-disruption levers"
+    - **Start in a safe mode:** manual labeling and **auto-label simulation** before you enforce or encrypt.
+    - **Communicate first:** tell users what each label means and when to use it (a one-page guide + short demo).
+    - **Keep a rollback path:** unpublish a label or narrow the policy scope; hold off on auto-encryption until confident.
+    - **Log the change:** record scope, approver, and date in your change-management system (e.g., a change ticket).
+
 ## Summary & golden rules
 
 You created a label taxonomy, added protection, published it, and verified enforcement — all from this page.

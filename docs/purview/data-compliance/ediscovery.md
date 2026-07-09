@@ -144,6 +144,23 @@ Use the unique keyword (`Project-Falcon-LABMATTER`) as your search query.
 
     Manage **IP and supplier disputes** with compliance boundaries per business unit.
 
+## Change management & rollout
+
+Roll this out by matter, not tenant-wide. eDiscovery is used by a small team per case, so “rollout” is about roles, process, and defensibility rather than broad impact.
+
+| Phase | What you do | Who's affected | Move on when… |
+|---|---|---|---|
+| **1. Pilot** | Run **one Standard case** end-to-end (hold → search → export) with least-privilege roles for a pilot legal/IT user. | Pilot case team | Case workflow works; audit trail is clean |
+| **2. Expand** | Onboard more reviewers/matters; standardize case naming, holds, and export handling. | Legal/IT reviewers | Repeatable process; roles scoped per matter |
+| **3. Tenant-wide** | Make eDiscovery the standard for legal/investigation matters; graduate to **Premium** where needed. | All matters | Steady state; process documented |
+| **4. Operate** | Review holds and cases regularly; release stale holds; keep the process documented. | Ongoing | — |
+
+!!! tip "Least-disruption levers"
+    - **Start in a safe mode:** **one Standard case** with least-privilege roles before scaling.
+    - **Communicate first:** align **Legal, HR, and IT**; agree who opens cases and handles exports.
+    - **Keep a rollback path:** release holds to restore normal retention; scope roles tightly.
+    - **Log the change:** record scope, approver, and date in your change-management system (e.g., a change ticket).
+
 ## Summary & golden rules
 
 - Put a **legal hold** on before you search or collect.

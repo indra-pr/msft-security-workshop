@@ -152,6 +152,23 @@ For Teams/Viva Engage, post a benign test message containing your policy's keywo
 
     Supervise cross-BU communications for **IP-sharing** and conduct issues.
 
+## Change management & rollout
+
+Never switch a new policy on for the whole tenant at once. Roll it out in controlled waves so you protect data **without surprising users or blocking legitimate work**. This scans employee messages, so privacy safeguards and scope are as important as the technical rollout.
+
+| Phase | What you do | Who's affected | Move on when… |
+|---|---|---|---|
+| **1. Pilot** | Create one policy from a **template** with a **small scope** and **pseudonymization on**; pilot with a couple of trained reviewers. | Pilot scope | Alerts are relevant; reviewers can triage; privacy controls verified |
+| **2. Expand** | Widen scope and add policies gradually; align reviewers and escalation with HR/Legal. | Department(s) | Triage volume manageable; workflow agreed |
+| **3. Tenant-wide** | Extend to the intended population with documented privacy controls and approvals. | Intended population | Steady state; alerts understood |
+| **4. Operate** | Tune conditions to cut noise; review reviewer access; report on outcomes. | Ongoing | — |
+
+!!! tip "Least-disruption levers"
+    - **Start in a safe mode:** **small scope + pseudonymization** before widening.
+    - **Communicate first:** coordinate with **HR, Legal, privacy, and works councils**; disclose monitoring per local law.
+    - **Keep a rollback path:** narrow scope or pause a policy; keep pseudonymization on.
+    - **Log the change:** record scope, approver, and date in your change-management system (e.g., a change ticket).
+
 ## Summary & golden rules
 
 - Grant access explicitly — **Global Admins have none** by default.

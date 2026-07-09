@@ -161,6 +161,23 @@ Write-Host "Seeded $lab. Upload these to test SharePoint sites, then let DSPM sc
 
     Prioritize protection of **designs and trade secrets** by seeing where sensitive data concentrates across BUs.
 
+## Change management & rollout
+
+Never switch new policies on for the whole tenant at once. Roll them out in controlled waves so you protect data **without surprising users or blocking legitimate work**. DSPM insights are read-only, but the policies it recommends (DLP, labels) do change behavior — so apply them one at a time.
+
+| Phase | What you do | Who's affected | Move on when… |
+|---|---|---|---|
+| **1. Pilot** | Enable **Audit + analytics** (read-only insights); review recommendations without acting. Pick **one** recommendation to trial. | Just admins | Insights populate; one recommended policy validated in simulation |
+| **2. Expand** | Apply recommended DLP/label policies **one at a time**, each piloted in simulation before enforcing. | Department(s) | Each policy behaves as expected; oversharing trend improving |
+| **3. Tenant-wide** | Roll out validated policies tenant-wide; use DSPM as the prioritization dashboard before enabling Copilot. | All users | Steady state; risk trend improving |
+| **4. Operate** | Review the risk trend monthly; act on new recommendations; keep foundations (SITs, labels) current. | Ongoing | — |
+
+!!! tip "Least-disruption levers"
+    - **Start in a safe mode:** **read-only insights** first; apply each recommendation via its own simulation.
+    - **Communicate first:** share the risk baseline with data owners; agree remediation priorities.
+    - **Keep a rollback path:** recommendations are optional — roll back the underlying DLP/label policy if needed.
+    - **Log the change:** record scope, approver, and date in your change-management system (e.g., a change ticket).
+
 ## Summary & golden rules
 
 - Do the **foundations first** (SITs, labels, audit) — DSPM is only as good as them.

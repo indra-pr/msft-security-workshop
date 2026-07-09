@@ -135,6 +135,23 @@ flowchart LR
 
     Roll up **ISO 27001** and regional privacy assessments across business units.
 
+## Change management & rollout
+
+Roll this out as a program rather than a switch. Compliance Manager doesn't touch user data or block anything — rollout is about ownership and cadence, not disruption.
+
+| Phase | What you do | Who's affected | Move on when… |
+|---|---|---|---|
+| **1. Pilot** | Create **one assessment** from a template that maps to a real obligation; assign a pilot owner to a few improvement actions. | Pilot owner | Score reflects reality; owners understand actions/evidence |
+| **2. Expand** | Add assessments for other regulations; assign action owners across teams; set an evidence cadence. | Action owners | Actions progressing; evidence being attached |
+| **3. Tenant-wide** | Operationalize as a compliance **program** with regular reviews and reporting to leadership. | Compliance program | Steady state; reporting in place |
+| **4. Operate** | Track the score trend; refresh evidence; add assessments as obligations change. | Ongoing | — |
+
+!!! tip "Least-disruption levers"
+    - **Start in a safe mode:** no user impact — treat as a **program rollout**, not a technical switch.
+    - **Communicate first:** assign action owners and set expectations for evidence and deadlines.
+    - **Keep a rollback path:** not applicable — assessments are informational; simply reprioritize as needed.
+    - **Log the change:** record scope, approver, and date in your change-management system (e.g., a change ticket).
+
 ## Summary & golden rules
 
 - Create your first assessment from a **template** that matches a real obligation.

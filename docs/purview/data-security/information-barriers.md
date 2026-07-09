@@ -179,6 +179,23 @@ foreach ($upn in $assignments.Keys) {
 
     Isolate **business units** that supply competing OEMs so pricing and design data can't cross.
 
+## Change management & rollout
+
+Never switch a new policy on for the whole tenant at once. Roll it out in controlled waves so you protect data **without surprising users or blocking legitimate work**. IB blocks communication between groups, so a mis-defined segment can cut off the wrong people — test before you apply.
+
+| Phase | What you do | Who's affected | Move on when… |
+|---|---|---|---|
+| **1. Pilot** | Define segments and policies in an **inactive/test** state; validate the intended blocks on a pilot pair of segments before activating. | Pilot segment pair | Test shows the right pairs blocked and nothing unintended |
+| **2. Expand** | Activate policies segment-pair by segment-pair; monitor Teams/SharePoint/OneDrive for accidental blocks. | Added segments | No false blocks reported; support prepared |
+| **3. Tenant-wide** | Activate all required segments after informing affected groups and support. | All in-scope groups | Steady state; alerts understood |
+| **4. Operate** | Review segment membership as people change teams; adjust policies for reorganizations. | Ongoing | — |
+
+!!! tip "Least-disruption levers"
+    - **Start in a safe mode:** define and **evaluate** segments before activating policies.
+    - **Communicate first:** tell affected groups that certain cross-group chat/sharing will be restricted (and why).
+    - **Keep a rollback path:** set a policy back to **inactive** to immediately restore communication.
+    - **Log the change:** record scope, approver, and date in your change-management system (e.g., a change ticket).
+
 ## Summary & golden rules
 
 - Prefer **Block** policies for a predictable experience; create **two** (one per direction).

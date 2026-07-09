@@ -153,6 +153,23 @@ Write-Host "Created $((Get-ChildItem $lab).Count) files in $lab. Upload to a tes
 
     Standardize retention across BUs while allowing **exceptions** via labels.
 
+## Change management & rollout
+
+Never switch a new policy on for the whole tenant at once. Roll it out in controlled waves so you protect data **without surprising users or blocking legitimate work**. Retention that **deletes** is irreversible, so pilot on a small scope and prefer retain-only before retain-then-delete.
+
+| Phase | What you do | Who's affected | Move on when… |
+|---|---|---|---|
+| **1. Pilot** | Apply a **retain-only** policy (or a retention label) to a **small/adaptive scope**; verify behavior before any deletion. | Pilot scope | Content is retained as expected; no unexpected holds |
+| **2. Expand** | Introduce **retain-then-delete** for well-understood data types; widen scope team-by-team. | Department(s) | Deletion behavior validated; stakeholders signed off |
+| **3. Tenant-wide** | Apply the retention plan tenant-wide via policies/adaptive scopes after comms. | All users | Steady state; disposition understood |
+| **4. Operate** | Review policies as regulations change; add labels for exceptions; monitor disposition. | Ongoing | — |
+
+!!! tip "Least-disruption levers"
+    - **Start in a safe mode:** **retain-only** and a **small/adaptive scope** before enabling deletion.
+    - **Communicate first:** tell record owners what's retained/deleted and when; coordinate with Legal.
+    - **Keep a rollback path:** retention changes take time to propagate — piloting avoids surprises; adjust scope to pause new deletions.
+    - **Log the change:** record scope, approver, and date in your change-management system (e.g., a change ticket).
+
 ## Summary & golden rules
 
 - Start with **one broad retention policy**; add labels for exceptions.

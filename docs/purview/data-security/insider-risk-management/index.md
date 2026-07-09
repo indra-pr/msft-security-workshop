@@ -272,6 +272,23 @@ IRM is configured primarily in the **[Microsoft Purview portal](https://purview.
 
     Identify **trade-secret and CAD exfiltration** across business units; use Adaptive Protection to tighten DLP for elevated-risk users.
 
+## Change management & rollout
+
+Never switch a new policy on for the whole tenant at once. Roll it out in controlled waves so you protect data **without surprising users or blocking legitimate work**. IRM handles sensitive people-signals, so privacy and scope discipline matter as much as the rollout mechanics.
+
+| Phase | What you do | Who's affected | Move on when… |
+|---|---|---|---|
+| **1. Pilot** | Start with **Analytics** (aggregated, de-identified) to size risk; then create one narrowly-scoped policy with **pseudonymization on**. | Pilot scope | Analytics shows meaningful signals; policy alerts are reviewable, not noisy |
+| **2. Expand** | Add policy templates and scopes gradually; involve HR/Legal reviewers; keep role-based access tight. | Department(s) | Triage workflow works; stakeholders aligned |
+| **3. Tenant-wide** | Extend policies to the intended population with agreed **privacy controls and approvals** in place. | Intended population | Steady state; alerts understood |
+| **4. Operate** | Tune thresholds; review analytics and re-baseline; audit reviewer access periodically. | Ongoing | — |
+
+!!! tip "Least-disruption levers"
+    - **Start in a safe mode:** **Analytics** and **pseudonymization** before named-user policies.
+    - **Communicate first:** coordinate with **HR, Legal, and privacy**; document the lawful basis and reviewer roles.
+    - **Keep a rollback path:** pause or delete a policy; keep scopes minimal and privacy settings on.
+    - **Log the change:** record scope, approver, and date in your change-management system (e.g., a change ticket).
+
 ## Summary & golden rules
 
 You configured permissions, connectors, analytics, and a departing-user policy — and verified end-to-end triage, all from this page.

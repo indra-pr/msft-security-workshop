@@ -173,6 +173,23 @@ A good **test task** to gate is `Exchange\New-MoveRequest` (mailbox moves) — v
 
     Centralize approval of **cross-tenant / cross-BU** Exchange admin tasks under one approver group.
 
+## Change management & rollout
+
+Never switch a new policy on for the whole tenant at once. Roll it out in controlled waves so you protect data **without surprising users or blocking legitimate work**. PAM adds an approval step to admin tasks, so start with one task and a small approver group to avoid workflow bottlenecks.
+
+| Phase | What you do | Who's affected | Move on when… |
+|---|---|---|---|
+| **1. Pilot** | Enable PAM and gate **one sensitive task** with **manual approval**; pilot with a small **approver group** and a couple of requesters. | Pilot admins | Requests route and approve cleanly; timing is acceptable |
+| **2. Expand** | Add more tasks/policies and requesters; document who approves what and the SLA. | More admins | Approvers keep up; no admin work stalls |
+| **3. Tenant-wide** | Apply policies to all in-scope admins after briefing them on the request/approve flow. | All in-scope admins | Steady state; alerts understood |
+| **4. Operate** | Review approvals and audit logs; refine scopes and approver groups; exclude only true system accounts. | Ongoing | — |
+
+!!! tip "Least-disruption levers"
+    - **Start in a safe mode:** **one task + manual approval** with a pilot approver group first.
+    - **Communicate first:** brief admins on how to request access and expected approval times.
+    - **Keep a rollback path:** disable the policy to restore prior access, or broaden auto-approval temporarily.
+    - **Log the change:** record scope, approver, and date in your change-management system (e.g., a change ticket).
+
 ## Summary & golden rules
 
 - Gate **one high-value task** with **manual** approval first, then expand.

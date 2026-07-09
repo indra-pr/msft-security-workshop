@@ -139,6 +139,23 @@ Unified Catalog builds on **Data Map assets**, so first complete a [Data Map sca
 
     Govern **supply-chain and product** data across BUs with domain ownership and OKRs.
 
+## Change management & rollout
+
+Roll this out one domain at a time. The catalog is additive (it curates, it doesn't block), so rollout is about steward adoption and data quality, not disruption.
+
+| Phase | What you do | Who's affected | Move on when… |
+|---|---|---|---|
+| **1. Pilot** | Stand up **one governance domain** for a real business area; publish a single **data product** with owners and a short glossary. | Pilot stewards | Domain/product published; stewards understand the model |
+| **2. Expand** | Add domains and data products with stewards; grow the glossary; introduce data-quality rules on stable products. | More stewards | Adoption growing; curation sustainable |
+| **3. Tenant-wide** | Onboard the priority domains across the org with a stewardship operating model. | All priority domains | Steady state; model adopted |
+| **4. Operate** | Curate continuously; track data quality and OKRs; retire stale products. | Ongoing | — |
+
+!!! tip "Least-disruption levers"
+    - **Start in a safe mode:** **one domain + one data product** before scaling curation.
+    - **Communicate first:** recruit and enable **data stewards**; set curation expectations.
+    - **Keep a rollback path:** unpublish a domain/product; catalog changes don't affect source data.
+    - **Log the change:** record scope, approver, and date in your change-management system (e.g., a change ticket).
+
 ## Summary & golden rules
 
 - Start with **one governance domain** tied to a real business area.

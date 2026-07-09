@@ -147,6 +147,23 @@ In practice, DSI investigations often start from data already identified by a **
 
     Determine whether a compromised account touched **trade-secret designs** across business units.
 
+## Change management & rollout
+
+Never switch a new capability on for the whole tenant at once. Roll it out in controlled waves so you protect data **without surprising users or blowing the budget**. DSI is preview and billed by usage, so pilot with one controlled investigation and tight access before wider use.
+
+| Phase | What you do | Who's affected | Move on when… |
+|---|---|---|---|
+| **1. Pilot** | Configure **billing** and least-privilege roles; run **one** investigation over a staged/real incident with a small investigator group. | Pilot investigators | Investigation completes; costs and access are understood |
+| **2. Expand** | Onboard more investigators and incident types; connect to Defender XDR incidents; set cost guardrails. | SOC team | Repeatable workflow; billing predictable |
+| **3. Tenant-wide** | Make DSI the standard tool for in-scope incident types with agreed roles and budget. | All in-scope incidents | Steady state; spend understood |
+| **4. Operate** | Monitor consumption; refine access; review investigation outcomes. | Ongoing | — |
+
+!!! tip "Least-disruption levers"
+    - **Start in a safe mode:** **one controlled investigation** with least-privilege roles.
+    - **Communicate first:** align **SOC, Legal, and privacy**; agree who can launch investigations and on what data.
+    - **Keep a rollback path:** restrict roles or pause new investigations; watch spend.
+    - **Log the change:** record scope, approver, and date in your change-management system (e.g., a change ticket).
+
 ## Summary & golden rules
 
 - Configure **billing** (Azure subscription + compute) before your first investigation.

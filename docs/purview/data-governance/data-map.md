@@ -157,6 +157,23 @@ The `card` column contains a synthetic credit-card-format value so the scan's cl
 
     Discover and classify **ERP/PLM data** across business units and clouds.
 
+## Change management & rollout
+
+Roll this out one source at a time rather than scanning everything at once. Scanning consumes source and network capacity, so start small and use incremental scans to avoid load.
+
+| Phase | What you do | Who's affected | Move on when… |
+|---|---|---|---|
+| **1. Pilot** | Register and scan **one cloud source** with a scoped scan rule set; prefer **managed identity** and run off-peak. | Pilot source owners | Scan completes; classifications look right; no source impact |
+| **2. Expand** | Add more sources (then on-prem via the runtime); schedule **incremental** scans; tune rule sets. | More source owners | Coverage growing; scan load acceptable |
+| **3. Tenant-wide** | Onboard the remaining estate on a schedule; standardize scan rule sets and credentials. | All sources | Steady state; cost/coverage understood |
+| **4. Operate** | Monitor scan health and cost; refresh classifications; feed the Unified Catalog. | Ongoing | — |
+
+!!! tip "Least-disruption levers"
+    - **Start in a safe mode:** **one source + incremental**, scoped scans, run off-peak.
+    - **Communicate first:** coordinate with source/data owners and networking before scanning production systems.
+    - **Keep a rollback path:** pause or unschedule scans; scanning is read-only but can be throttled.
+    - **Log the change:** record scope, approver, and date in your change-management system (e.g., a change ticket).
+
 ## Summary & golden rules
 
 - Start with **one cloud source**; add on-prem later via the runtime.

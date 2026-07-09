@@ -160,6 +160,23 @@ To generate specific activity, sign in as a test user and view/download a docume
 
     Correlate cross-BU admin activity when investigating suspected IP access.
 
+## Change management & rollout
+
+Roll this out in controlled waves rather than flipping everything on at once. Auditing is low-disruption (it logs, it doesn't block), so rollout is mostly about coverage, permissions, and retention.
+
+| Phase | What you do | Who's affected | Move on when… |
+|---|---|---|---|
+| **1. Pilot** | Confirm **Audit (Standard)** is on; assign **least-privilege** search roles to a pilot analyst; trial **Premium** on a few key users. | Pilot analysts | Searches return expected events; roles scoped correctly |
+| **2. Expand** | Enable **Advanced Auditing** for privileged/at-risk users; add retention policies for core workloads. | Key user groups | High-value events captured; retention meets needs |
+| **3. Tenant-wide** | Standardize retention and access across the tenant; wire audit into SIEM if needed. | All workloads | Steady state; coverage understood |
+| **4. Operate** | Review coverage and retention regularly; adjust as workloads and obligations change. | Ongoing | — |
+
+!!! tip "Least-disruption levers"
+    - **Start in a safe mode:** no user impact — validate **permissions and coverage** in a pilot before broad reliance.
+    - **Communicate first:** inform SecOps/compliance who can search and what's retained (privacy/works-council as required).
+    - **Keep a rollback path:** adjust roles or retention; disabling audit is rarely advisable.
+    - **Log the change:** record scope, approver, and date in your change-management system (e.g., a change ticket).
+
 ## Summary & golden rules
 
 - Confirm **Audit (Standard)** is on and assign the **least-privilege** search roles.
