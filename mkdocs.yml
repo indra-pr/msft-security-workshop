@@ -106,8 +106,8 @@ nav:
       - Overview: purview/index.md
       - Data Security:
           - Data Security overview: purview/data-security/index.md
-          - Data Loss Prevention: purview/data-security/dlp/index.md
           - Information Protection: purview/data-security/information-protection/index.md
+          - Data Loss Prevention: purview/data-security/dlp/index.md
           - Insider Risk Management: purview/data-security/insider-risk-management/index.md
           - Information Barriers: purview/data-security/information-barriers.md
           - Privileged Access Management: purview/data-security/privileged-access-management.md

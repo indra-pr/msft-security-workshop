@@ -27,14 +27,6 @@ flowchart LR
 
 <div class="grid cards" markdown>
 
--   :material-shield-alert:{ .lg .middle } __Data Loss Prevention__
-
-    ---
-
-    Detect and prevent risky or inappropriate sharing of sensitive information across Microsoft 365, endpoints, and more.
-
-    [:octicons-arrow-right-24: Open the DLP lab](dlp/index.md)
-
 -   :material-label-multiple:{ .lg .middle } __Information Protection__
 
     ---
@@ -42,6 +34,14 @@ flowchart LR
     Discover, classify, label, and protect sensitive information wherever it lives or travels.
 
     [:octicons-arrow-right-24: Open the Information Protection lab](information-protection/index.md)
+
+-   :material-shield-alert:{ .lg .middle } __Data Loss Prevention__
+
+    ---
+
+    Detect and prevent risky or inappropriate sharing of sensitive information across Microsoft 365, endpoints, and more.
+
+    [:octicons-arrow-right-24: Open the DLP lab](dlp/index.md)
 
 -   :material-account-alert:{ .lg .middle } __Insider Risk Management__
 
