@@ -24,6 +24,11 @@ Harassment, threats, and regulatory leakage often show up in everyday messages. 
 
 ## 1. Description
 
+<div class="video-embed">
+<iframe src="https://www.youtube-nocookie.com/embed/sRng0zP83BM" title="Microsoft Learn: Communication Compliance (SC-401)" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
+<p class="video-caption"><strong>▶ Watch — Communication Compliance in Microsoft Purview (SC-401)</strong><br>Microsoft Learn · 13:23 — How Communication Compliance identifies messages that may contain sensitive, inappropriate, or non-compliant content, how to review flagged items and understand why they triggered, and how to remediate.</p>
+
 **Microsoft Purview Communication Compliance** helps you **detect, capture, and remediate** inappropriate or risky messages in your organization's communications — across **Microsoft Teams, Viva Engage, and Exchange Online** (and other connected channels). It uses **policy templates**, **trainable classifiers**, and **sensitive information types**, with a flexible **investigate → remediate** workflow.
 
 ```mermaid

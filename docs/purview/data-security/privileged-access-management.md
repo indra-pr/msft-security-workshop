@@ -24,6 +24,11 @@ Standing admin access is a standing risk — a compromised admin account can qui
 
 ## 1. Description
 
+<div class="video-embed">
+<iframe src="https://www.youtube-nocookie.com/embed/Mya2vkW_IcU" title="Microsoft Mechanics: Privileged Access Management" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
+<p class="video-caption"><strong>▶ Watch — Introducing Privileged Access Management</strong><br>Microsoft Mechanics · 5:43 — Enable PAM, create an access policy, request and approve just-in-time access to high-risk tasks, and audit the activity — enforcing zero standing access to prevent rogue or unauthorized admin actions.</p>
+
 **Microsoft Purview Privileged Access Management (PAM)** limits **standing access** to sensitive tasks in **Microsoft Exchange Online**. Instead of administrators having constant (standing) privileges, PAM enforces **just-in-time (JIT)**, approval-based, time-limited access. When enabled for Exchange Online, your organization operates with **zero standing privileges**, adding a layer of defense against compromised accounts and insider threats.
 
 ```mermaid

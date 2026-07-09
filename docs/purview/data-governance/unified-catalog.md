@@ -24,6 +24,11 @@ Discovery isn't governance. The Unified Catalog turns raw data-map output into *
 
 ## 1. Description
 
+<div class="video-embed">
+<iframe src="https://www.youtube-nocookie.com/embed/qBOI0lGQ4bA" title="Microsoft Mechanics: Unified Catalog" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
+<p class="video-caption"><strong>▶ Watch — Improve governance with the Unified Catalog</strong><br>Microsoft Mechanics · 1:04 — Locate, access, and trust the data you need with Microsoft Purview's Unified Catalog — AI-powered search, automated quality checks, and streamlined approval workflows so people can use data while staying compliant.</p>
+
 **Microsoft Purview Unified Catalog** is the business layer of data governance. It lets you organize your data estate into **governance domains**, curate **data products**, connect data to **business concepts** (glossary terms, critical data elements, OKRs), and measure **data quality** — so people across the organization can **discover trusted data** and innovate responsibly.
 
 ```mermaid

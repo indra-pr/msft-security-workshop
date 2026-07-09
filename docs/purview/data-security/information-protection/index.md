@@ -31,6 +31,11 @@ Common challenges this lab solves:
 
 ## Introduction
 
+<div class="video-embed">
+<iframe src="https://www.youtube-nocookie.com/embed/Jn09iBRLxqw" title="Microsoft Mechanics: Information Protection" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
+<p class="video-caption"><strong>▶ Watch — Labeling files is worth it: speed &amp; protection benefits</strong><br>Microsoft Mechanics · 15:37 — Discover sensitive information across every file type and location with Microsoft Purview Information Protection: classify data, apply clear labels, and enforce protections that adapt to human and AI interactions without slowing down work.</p>
+
 **Microsoft Purview Information Protection** helps you **discover, classify, protect, and govern** sensitive information. Its foundational capability is the **sensitivity label**, which can apply:
 
 - **Encryption** — restrict who can open content and what they can do with it.

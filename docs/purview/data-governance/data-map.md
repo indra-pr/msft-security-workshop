@@ -24,6 +24,11 @@ You can't govern what you can't see. The Data Map automatically discovers and cl
 
 ## 1. Description
 
+<div class="video-embed">
+<iframe src="https://www.youtube-nocookie.com/embed/f8EUen2iuWs" title="Purview data mapping explained" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
+<p class="video-caption"><strong>▶ Watch — Purview data mapping explained: collections, scans &amp; labels</strong><br>Peter Rising · 15:21 — A quick but complete explainer of Microsoft Purview data mapping — collections, scans, and labels — covering the essentials of building a map of your data estate.</p>
+
 **Microsoft Purview Data Map** is the technical foundation of data governance. After you **register** a data source, you **scan** it to capture **technical metadata**, **extract schema**, and apply **classifications** — building a unified map of your data estate across **on-premises, multicloud, and SaaS** sources.
 
 ```mermaid

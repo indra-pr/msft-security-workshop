@@ -24,6 +24,11 @@ When something goes wrong — a leak, a config change, a suspicious sign-in — 
 
 ## 1. Description
 
+<div class="video-embed">
+<iframe src="https://www.youtube-nocookie.com/embed/G25gyBW6L5Q" title="Microsoft Security: Microsoft 365 Advanced Auditing" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
+<p class="video-caption"><strong>▶ Watch — Microsoft 365 Advanced Auditing for forensic &amp; compliance investigations</strong><br>Microsoft Security · 13:54 — How Advanced Auditing supports forensic and compliance investigations: high-value events, longer retention, and the audit data you need to answer who did what, where, and when.</p>
+
 **Microsoft Purview Audit** lets you **log and search** the activities that users and admins perform across Microsoft 365 services — to support **forensic, IT, compliance, and legal** investigations. It comes in two tiers:
 
 | | Audit (Standard) | Audit (Premium) |

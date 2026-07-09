@@ -24,6 +24,11 @@ Some groups **must not** communicate — investment bankers and public-side rese
 
 ## 1. Description
 
+<div class="video-embed">
+<iframe src="https://www.youtube-nocookie.com/embed/lLiwMq41uac" title="Microsoft Purview Information Barriers" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
+<p class="video-caption"><strong>▶ Watch — Learn Microsoft Purview Information Barriers in ~15 minutes</strong><br>Andy Malone MVP · 13:25 — A concise tour of Information Barriers: how this often-overlooked feature ethically segments your organization so specific groups can't communicate or collaborate — widely used in regulated environments.</p>
+
 **Microsoft Purview Information Barriers (IB)** is a compliance solution that lets you **restrict two-way communication and collaboration** between groups and users in **Microsoft Teams, SharePoint, and OneDrive**. It's often used in **highly regulated industries** to avoid conflicts of interest and safeguard internal information.
 
 ### Key concepts
