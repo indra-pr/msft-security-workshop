@@ -91,6 +91,8 @@ markdown_extensions:
           format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.tabbed:
       alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
@@ -104,11 +106,7 @@ nav:
       - Overview: purview/index.md
       - Data Security:
           - Data Security overview: purview/data-security/index.md
-          - Data Loss Prevention:
-              - "Part 1 · Overview & prerequisites": purview/data-security/dlp/index.md
-              - "Part 2 · Recommended policy setup": purview/data-security/dlp/policy-setup.md
-              - "Part 3 · Step-by-step configuration": purview/data-security/dlp/configuration.md
-              - "Part 4 · Verification": purview/data-security/dlp/verification.md
+          - Data Loss Prevention: purview/data-security/dlp/index.md
           - Information Protection:
               - "Part 1 · Overview & prerequisites": purview/data-security/information-protection/index.md
               - "Part 2 · Step-by-step configuration": purview/data-security/information-protection/configuration.md

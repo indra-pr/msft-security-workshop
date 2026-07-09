@@ -47,7 +47,7 @@ flowchart LR
 
 ## 3. Generate sample data (stage an "incident" data set)
 
-Stage a folder of mixed sensitive files that could represent an incident's impacted data. Reuse the [DLP sample-data script](dlp/index.md#3-generate-sample-data-for-your-lab), or run this to create a representative set:
+Stage a folder of mixed sensitive files that could represent an incident's impacted data. Reuse the [DLP sample-data script](dlp/index.md#generate-lab-data), or run this to create a representative set:
 
 ```powershell
 $lab = Join-Path $env:USERPROFILE 'DSI-Lab-Data'

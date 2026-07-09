@@ -92,7 +92,7 @@ Write-Host "Wrote $csv" -ForegroundColor Green
 Get-Content $csv
 ```
 
-To also generate *activity* to detect, reuse the [DLP sample-data script](../dlp/index.md#3-generate-sample-data-for-your-lab) and have a test "departing" user copy those files to a USB drive or personal cloud location on an onboarded device.
+To also generate *activity* to detect, reuse the [DLP sample-data script](../dlp/index.md#generate-lab-data) and have a test "departing" user copy those files to a USB drive or personal cloud location on an onboarded device.
 
 ## Continue
 

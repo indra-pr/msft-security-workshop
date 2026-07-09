@@ -15,7 +15,7 @@ description: >-
 ### Generate a test signal
 
 1. In your lab, mark a test user as a **leaver** by importing the [sample HR CSV](index.md#3-generate-sample-hr-data-for-your-lab) via the HR connector.
-2. On an **onboarded device**, have that user perform exfiltration-like activity with the [DLP sample files](../dlp/index.md#3-generate-sample-data-for-your-lab): copy them to a USB drive or upload to a personal cloud location.
+2. On an **onboarded device**, have that user perform exfiltration-like activity with the [DLP sample files](../dlp/index.md#generate-lab-data): copy them to a USB drive or upload to a personal cloud location.
 3. Allow time for signals to process.
 
 ### Confirm alerts and triage
