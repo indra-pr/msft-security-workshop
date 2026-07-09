@@ -14,8 +14,8 @@ description: >-
 
 | Solution | Financial services | Telecommunication | Public sector & SOE | Energy & resources | Manufacturing & conglomerates |
 |---|---|---|---|---|---|
-| **DLP** | Block PAN/PCI leaks | Protect subscriber PII & CDRs | Enforce residency/classification | Protect OT & seismic data | Protect CAD/BOM & pricing |
 | **Information Protection** | Encrypt M&A docs | Standardize label taxonomy | Map to gov classification | Encrypt reservoir/plant IP | Label & encrypt designs |
+| **DLP** | Block PAN/PCI leaks | Protect subscriber PII & CDRs | Enforce residency/classification | Protect OT & seismic data | Protect CAD/BOM & pricing |
 | **Insider Risk** | Departing-trader IP theft | Mass subscriber-data export | Citizen-data leakage | IP theft by departing engineers | Trade-secret exfiltration |
 | **Information Barriers** | Ethical wall (banking/research) | Wholesale vs. retail | Tender-evaluation separation | Trading vs. operations | Competing-OEM BU isolation |
 | **PAM** | Journaling/transport approvals | Executive mailbox moves | Zero standing access | Mail-flow change control | Cross-BU admin approvals |

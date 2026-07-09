@@ -1,7 +1,7 @@
 ---
 title: Data Security — Overview
 description: >-
-  Microsoft Purview data security solutions — DLP, Information Protection,
+  Microsoft Purview data security solutions — Information Protection, DLP,
   Insider Risk Management, Information Barriers, Privileged Access Management,
   Data Security Investigations, and DSPM. Grounded in Microsoft Learn.
 ---

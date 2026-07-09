@@ -67,7 +67,7 @@ Purview combines solutions and services into a [unified platform](https://learn.
 flowchart TB
     subgraph Portal["Microsoft Purview portal (purview.microsoft.com)"]
         direction TB
-        DS["Data Security<br/>DLP · Information Protection · Insider Risk<br/>Information Barriers · PAM · DSPM · Investigations"]
+        DS["Data Security<br/>Information Protection · DLP · Insider Risk<br/>Information Barriers · PAM · DSPM · Investigations"]
         DC["Data Compliance<br/>Audit · Communication Compliance · Compliance Manager<br/>Data Lifecycle · eDiscovery · Records Management"]
         DG["Data Governance<br/>Data Map · Unified Catalog"]
     end
@@ -102,8 +102,8 @@ Each solution below links to a deep-dive page that follows the same template: de
 
 | Solution | What it does | Deep dive |
 |---|---|---|
-| Data Loss Prevention | Detect and prevent risky or inappropriate sharing of sensitive information across services and endpoints. | [Open](data-security/dlp/index.md) |
 | Information Protection | Discover, classify, label, and protect sensitive information wherever it lives or travels. | [Open](data-security/information-protection/index.md) |
+| Data Loss Prevention | Detect and prevent risky or inappropriate sharing of sensitive information across services and endpoints. | [Open](data-security/dlp/index.md) |
 | Insider Risk Management | Identify, triage, and act on risky user activity using service and third-party signals. | [Open](data-security/insider-risk-management/index.md) |
 | Information Barriers | Restrict two-way communication and collaboration between groups in Teams, SharePoint, and OneDrive. | [Open](data-security/information-barriers.md) |
 | Privileged Access Management | Enforce just-in-time, scoped, time-limited access to sensitive Exchange configuration tasks. | [Open](data-security/privileged-access-management.md) |
@@ -141,7 +141,7 @@ Several capabilities are shared across multiple Purview solutions:
 
 === "Supported workloads"
 
-    Microsoft Purview data security and compliance solutions work primarily across the **Microsoft 365** workloads — **Exchange Online, SharePoint, OneDrive, and Microsoft Teams** — and extend to **Windows and macOS endpoints** for endpoint DLP and Information Protection. Purview also protects **generative AI experiences** (Microsoft 365 Copilot and agents), enterprise AI apps you build, and other AI apps you use.
+    Microsoft Purview data security and compliance solutions work primarily across the **Microsoft 365** workloads — **Exchange Online, SharePoint, OneDrive, and Microsoft Teams** — and extend to **Windows and macOS endpoints** for Information Protection and endpoint DLP. Purview also protects **generative AI experiences** (Microsoft 365 Copilot and agents), enterprise AI apps you build, and other AI apps you use.
 
 === "Clouds & standalone"
 
