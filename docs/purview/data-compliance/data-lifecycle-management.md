@@ -41,7 +41,7 @@ flowchart LR
 
 ## 3. Generate sample content
 
-Retention acts on real content, so seed a site/mailbox with disposable items. Reuse the [Information Protection sample script](../data-security/information-protection/index.md#3-generate-sample-content-for-your-lab), then upload the files to a test SharePoint site or OneDrive that your retention policy will cover.
+Retention acts on real content, so seed a site/mailbox with disposable items. Reuse the [Information Protection sample script](../data-security/information-protection/index.md#generate-lab-data), then upload the files to a test SharePoint site or OneDrive that your retention policy will cover.
 
 ```powershell
 $lab = Join-Path $env:USERPROFILE 'DLM-Lab-Data'

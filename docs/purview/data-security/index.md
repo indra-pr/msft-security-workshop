@@ -33,7 +33,7 @@ flowchart LR
 
     Detect and prevent risky or inappropriate sharing of sensitive information across Microsoft 365, endpoints, and more.
 
-    [:octicons-arrow-right-24: Start DLP (4 parts)](dlp/index.md)
+    [:octicons-arrow-right-24: Open the DLP lab](dlp/index.md)
 
 -   :material-label-multiple:{ .lg .middle } __Information Protection__
 
@@ -41,7 +41,7 @@ flowchart LR
 
     Discover, classify, label, and protect sensitive information wherever it lives or travels.
 
-    [:octicons-arrow-right-24: Start Information Protection (3 parts)](information-protection/index.md)
+    [:octicons-arrow-right-24: Open the Information Protection lab](information-protection/index.md)
 
 -   :material-account-alert:{ .lg .middle } __Insider Risk Management__
 
@@ -49,7 +49,7 @@ flowchart LR
 
     Identify, triage, and act on risky user activity using service and third-party signals — with privacy by design.
 
-    [:octicons-arrow-right-24: Start Insider Risk (4 parts)](insider-risk-management/index.md)
+    [:octicons-arrow-right-24: Open the Insider Risk lab](insider-risk-management/index.md)
 
 -   :material-wall:{ .lg .middle } __Information Barriers__
 

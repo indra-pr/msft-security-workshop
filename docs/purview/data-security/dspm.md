@@ -53,7 +53,7 @@ flowchart TB
 
 ## 3. Generate sample data (make the estate "interesting")
 
-DSPM scans existing content, so seed your tenant with labeled/sensitive data. Reuse the [Information Protection](information-protection/index.md#3-generate-sample-content-for-your-lab) and [DLP](dlp/index.md#generate-lab-data) sample scripts, then upload the files to a few SharePoint sites and OneDrive accounts.
+DSPM scans existing content, so seed your tenant with labeled/sensitive data. Reuse the [Information Protection](information-protection/index.md#generate-lab-data) and [DLP](dlp/index.md#generate-lab-data) sample scripts, then upload the files to a few SharePoint sites and OneDrive accounts.
 
 ```powershell
 # Quick estate seeding: create oversharable sensitive content, then upload to SharePoint/OneDrive.

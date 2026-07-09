@@ -107,15 +107,8 @@ nav:
       - Data Security:
           - Data Security overview: purview/data-security/index.md
           - Data Loss Prevention: purview/data-security/dlp/index.md
-          - Information Protection:
-              - "Part 1 · Overview & prerequisites": purview/data-security/information-protection/index.md
-              - "Part 2 · Step-by-step configuration": purview/data-security/information-protection/configuration.md
-              - "Part 3 · Verification": purview/data-security/information-protection/verification.md
-          - Insider Risk Management:
-              - "Part 1 · Overview & prerequisites": purview/data-security/insider-risk-management/index.md
-              - "Part 2 · Recommended policy setup": purview/data-security/insider-risk-management/policy-setup.md
-              - "Part 3 · Step-by-step configuration": purview/data-security/insider-risk-management/configuration.md
-              - "Part 4 · Verification": purview/data-security/insider-risk-management/verification.md
+          - Information Protection: purview/data-security/information-protection/index.md
+          - Insider Risk Management: purview/data-security/insider-risk-management/index.md
           - Information Barriers: purview/data-security/information-barriers.md
           - Privileged Access Management: purview/data-security/privileged-access-management.md
           - Data Security Investigations: purview/data-security/data-security-investigations.md
