@@ -95,22 +95,24 @@ flowchart LR
 
     To view the **DLP alert dashboard** you also need the *Manage alerts* role plus *DLP Compliance Management* (or *View-Only DLP Compliance Management*). Follow least privilege — see [Permissions in the Microsoft Purview portal](https://learn.microsoft.com/purview/purview-permissions).
 
-=== "Endpoint DLP (optional)"
+=== "Endpoint DLP (for UC-01–UC-25)"
 
-    Only needed for Use case 3. To protect **Windows devices**:
+    Required for the **Endpoint DLP & Data Trust** use cases (USB, print, clipboard, browser/cloud upload, IM, webmail, GenAI). To protect **Windows devices**:
 
-    - Windows 10 **x64** build **1809 or later** (or Windows 11).
+    - Windows 10 **x64** build **1809 or later** (or Windows 11); **macOS** (three latest major versions) is also supported.
     - Antimalware Client version **4.18.2202.x or later**.
-    - Devices **onboarded** to Purview endpoint DLP — see [onboarding tools and methods](https://learn.microsoft.com/purview/device-onboarding-overview).
+    - Devices **onboarded** to Purview endpoint DLP via **Intune / Defender for Endpoint**, script, or **GPO** — see [onboarding tools and methods](https://learn.microsoft.com/purview/device-onboarding-overview).
+    - Turn on **Advanced classification** so files are scanned **on the device** (needed for content-based rules).
+    - Install the **[Microsoft Purview extension](https://learn.microsoft.com/purview/dlp-chrome-learn-about)** for **Chrome/Firefox** (Edge for Business is built-in) to cover web egress.
 
 ## What you'll accomplish
 
 By the end of this lab you will:
 
-- [x] Generate synthetic sensitive data to test with
+- [x] Generate synthetic sensitive data to test with — including **four-tier classified** files (Public → Restricted)
 - [x] Create a DLP policy (simulation mode) that detects credit-card data and warns/blocks **external** sharing
 - [x] Trigger the policy and confirm the alert and activity
-- [x] Know how to extend it to **endpoints** and **Adaptive Protection**
+- [x] Configure **Endpoint DLP & Data Trust** to cover all **25 POC use cases** (USB, print, clipboard, browser/cloud, IM, webmail, GenAI) and extend to **Adaptive Protection**
 
 ## Use cases covered
 
@@ -118,7 +120,7 @@ By the end of this lab you will:
 |---|---|---|---|
 | 1 | **Create a DLP policy in simulation mode** | A working, non-disruptive policy | ~30 min |
 | 2 | **Verify it works** | A confirmed DLP alert + activity | ~15 min |
-| 3 | *(Optional)* **Extend to endpoints** | USB / print / upload coverage | ~30 min |
+| 3 | **Endpoint DLP & Data Trust** (UC-01–UC-25) | USB, print, clipboard, browser/cloud, IM, webmail, GenAI coverage | ~60–90 min |
 
 ---
 
@@ -164,6 +166,52 @@ Get-ChildItem $labFolder | Select-Object Name, Length
 ```
 
 You'll email `payment-memo.txt` to an external test mailbox, or upload `customer-export.csv` to a covered SharePoint site, to trigger the policy in Use case 2.
+
+### Classified test data for the Endpoint DLP use cases (UC-01–UC-25)
+
+The endpoint POC use cases (Use case 3) expect files at **four classification tiers** — **Public, Internal, Confidential, Restricted** — containing synthetic national-ID (**KTP/NIK**), subscriber, finance, and source-code samples. This script builds them into per-tier folders; then **apply the matching sensitivity label** to each file so the endpoint rules can act on the label.
+
+```powershell
+# Build classified test data (Public/Internal/Confidential/Restricted) for Endpoint DLP.
+# ALL values are synthetic — safe for a lab tenant only.
+$root = Join-Path $env:USERPROFILE 'DLP-DataTrust-Lab'
+'Public','Internal','Confidential','Restricted' | ForEach-Object {
+    New-Item -ItemType Directory -Path (Join-Path $root $_) -Force | Out-Null
+}
+
+# Synthetic Indonesian national ID (KTP/NIK = 16 digits) and subscriber MSISDN.
+function New-Nik { -join (1..16 | ForEach-Object { Get-Random -Maximum 10 }) }
+function New-Msisdn { '+62812' + (-join (1..7 | ForEach-Object { Get-Random -Maximum 10 })) }
+$testCards = @('4111 1111 1111 1111','5500 0000 0000 0004')  # test PANs, not real
+
+# Public — no sensitive data.
+'Public marketing FAQ — approved for external release. Contains no customer data.' |
+    Set-Content (Join-Path $root 'Public\press-release.txt')
+
+# Internal — business-only, low sensitivity.
+'Internal operations note: support-queue targets and on-call roster. No customer PII.' |
+    Set-Content (Join-Path $root 'Internal\ops-note.txt')
+
+# Confidential — subscriber + finance PII (synthetic).
+$rows = 1..8 | ForEach-Object {
+    'Subscriber {0},NIK {1},MSISDN {2},Card {3}' -f $_, (New-Nik), (New-Msisdn), ($testCards | Get-Random)
+}
+$rows | Set-Content (Join-Path $root 'Confidential\subscriber-billing.csv')
+
+# Restricted — source code + secrets (synthetic).
+@'
+# RESTRICTED (LAB TEST) — do not distribute
+CONNECTION_STRING = "Server=db;User=svc;Password=FAKE-Passw0rd!"
+API_KEY = "sk-lab-000000000000000000000000"
+def charge(nik, card):   # handles NIK + PAN
+    return bill(nik, card)
+'@ | Set-Content (Join-Path $root 'Restricted\billing-service.py')
+
+Write-Host "Created classified lab data under $root" -ForegroundColor Green
+Get-ChildItem $root -Recurse -File | Select-Object Directory, Name, Length
+```
+
+After generating, **apply sensitivity labels** (Public / Internal / Confidential / Restricted) to the files — manually (File Explorer → **Sensitivity**) or via an auto-labeling policy — so the endpoint rules can act on the label. Build the labels in the **[Information Protection lab](../information-protection/index.md#generate-lab-data)**.
 
 ## Recommended starter policy
 
@@ -296,14 +344,100 @@ flowchart LR
 
 ---
 
-## Use case 3 (optional) — Extend to endpoints
+## Use case 3 — Endpoint DLP & Data Trust (POC use cases UC-01–UC-25)
 
-To also catch sensitive files copied to **USB**, **printed**, or uploaded to **consumer cloud apps**:
+This section maps a real-world **Endpoint DLP & Data Trust POC** — **25 use cases** across every egress channel, tested with four classification tiers (**Public → Internal → Confidential → Restricted**). Configure the **Devices** location once, then work down the coverage table.
 
-1. **Onboard devices** to endpoint DLP — see [Get started with Endpoint DLP](https://learn.microsoft.com/purview/endpoint-dlp-getting-started) and [device onboarding](https://learn.microsoft.com/purview/device-onboarding-overview).
-2. Edit your policy and turn **on** the **Devices** location.
-3. Add egress conditions/actions (copy to USB, copy to clipboard, print, upload to unallowed cloud/domains).
-4. Keep it in **simulation** first, then enforce.
+<div class="video-embed">
+<iframe src="https://www.youtube-nocookie.com/embed/rhvlmfPsgrE" title="Microsoft Learn: Implement and manage endpoint DLP policies" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
+<p class="video-caption"><strong>▶ Watch — Implement and manage endpoint DLP policies (SC-401, ep. 6)</strong><br>Microsoft Learn · 38:43 — Onboard devices, configure endpoint settings, and enforce protections across USB, print, clipboard, and browser uploads (Edge for Business, plus the Chrome and Firefox extensions).</p>
+
+### Step 1 — Onboard devices & set global endpoint settings
+
+=== "Onboard"
+
+    1. **Purview portal → Settings → Device onboarding** → turn **Onboarding** on.
+    2. Onboard Windows/macOS devices via **Intune / Defender for Endpoint**, the local script, or **GPO**. Confirm they report in **Reports → Devices**.
+
+=== "Global endpoint settings"
+
+    Under **Data Loss Prevention → Endpoint DLP settings**, prepare the reusable building blocks the use cases rely on:
+
+    - **Advanced classification** — **on** (scan content on the device).
+    - **Unallowed apps / app groups** — add desktop **WhatsApp** and **Telegram** (UC-10/UC-11 desktop clients).
+    - **Unallowed browsers** — mark browsers without the Purview extension so web egress is controlled (UC-07/UC-08).
+    - **Sensitive service domain groups** — group **personal cloud** (`drive.google.com`, `dropbox.com`), **webmail** (`mail.google.com`, `outlook.live.com`), **IM web** (`web.whatsapp.com`, `web.telegram.org`), and **GenAI** (`chatgpt.com`, `gemini.google.com`) for UC-08/09/10/11/16/20.
+    - **Network share coverage** and **removable-storage** groups for UC-01/UC-02/UC-12.
+
+### Step 2 — Create the endpoint policy (per-classification rules)
+
+Extend your policy (or create a new one) on the **Devices** location with **one rule per sensitivity label** so enforcement escalates by classification — this is **UC-18 (classification-based proportional control)**:
+
+| Label | USB · print · network share | Clipboard → unallowed app | Web · cloud · webmail · GenAI upload |
+|---|---|---|---|
+| **Public** | Allow | Allow | Allow |
+| **Internal** | Audit | Audit | Audit |
+| **Confidential** | Block with override (justify) | Warn | Warn / block with override |
+| **Restricted** | Block | Block | Block |
+
+Keep it in **simulation** first (as in Use case 1), then enforce.
+
+### Step 3 — Work the coverage table (UC-01–UC-25)
+
+| UC | Scenario | Channel | Expected action | How it's covered |
+|----|----------|---------|-----------------|------------------|
+| **UC-01** | USB storage monitoring | Removable media | Audit | Devices rule → *Copy to a removable USB device* = **Audit** |
+| **UC-02** | USB storage blocking | Removable media | Block (Restricted) | *Copy to a removable USB device* = **Block** / block w/ override |
+| **UC-03** | Print monitoring | Print | Audit | *Print* = **Audit** |
+| **UC-04** | Print blocking | Print | Block / override | *Print* = **Block with override** |
+| **UC-05** | Clipboard monitoring | Clipboard | Audit | *Copy to clipboard* = **Audit** |
+| **UC-06** | Clipboard blocking | Clipboard | Block | *Copy to clipboard* / paste to **unallowed app** = **Block** |
+| **UC-07** | Browser upload monitoring | Web upload | Audit | *Upload to a sensitive service domain* = **Audit**; unallowed browsers |
+| **UC-08** | Browser upload blocking | Web upload | Block | Sensitive service **domain group** = **Block**; unallowed browsers |
+| **UC-09** | Personal cloud storage | Cloud egress | Block / audit | *Upload to cloud* + personal-cloud domain group = **Block** |
+| **UC-10** | WhatsApp Web | IM web | Block / monitor | `web.whatsapp.com` in domain group + desktop app in **unallowed apps** |
+| **UC-11** | Telegram Web | IM web | Enforce by policy | `web.telegram.org` in domain group + desktop app unallowed |
+| **UC-12** | Network share monitoring | Network share | Audit | *Copy to a network share* = **Audit** |
+| **UC-13** | ZIP exfiltration | Compressed archive | Detect / note limits | Inspection *inside* archives is limited — **record the limitation**; label/IRM still travels |
+| **UC-14** | File-rename evasion | Extension change | Detect | Endpoint DLP classifies by **content + label**, not extension — renaming doesn't evade |
+| **UC-15** | Offline enforcement | Offline endpoint | Cached enforcement | Endpoint DLP caches policy; enforces offline, **events sync on reconnect** |
+| **UC-16** | GenAI upload / prompt | GenAI SaaS | Block / warn / log | GenAI domain group (`chatgpt.com`…) + Purview browser extension; also **DSPM for AI** |
+| **UC-17** | Unmanaged / BYOD download | Collaboration tools | View-only or label persists | **Conditional Access app control** + labels/IRM → [Information Protection lab](../information-protection/index.md) |
+| **UC-18** | Classification-proportional control | Risk-based | Escalate by label | Per-label rules (Step 2 table): allow → audit → warn → block |
+| **UC-19** | Label & IRM persistence | After download | Encryption persists | Sensitivity label + encryption → [Information Protection lab](../information-protection/index.md#generate-lab-data) |
+| **UC-20** | Personal webmail upload | Webmail | Block / warn | Webmail domain group (`mail.google.com`…) = **Block/warn** |
+| **UC-21** | Screen capture | Screenshot | Note limits | Endpoint DLP doesn't block OS screenshots — **record limitation**; labels add **watermarks** |
+| **UC-22** | Native-app export control | App → local file | Detect after export | The **saved export** is inspected on disk; USB/print/upload rules then apply |
+| **UC-23** | SOC / SIEM telemetry | Telemetry | Alerts to SIEM | DLP alerts → **Defender XDR / Microsoft Sentinel** → [Sentinel module](../../../sentinel/index.md) |
+| **UC-24** | Offline event reconciliation | Offline sync | Events reconcile | Endpoint events **reconcile with original timestamp** after reconnect |
+| **UC-25** | Advanced detection methods | Detection | Labels · SIT · EDM · fingerprint · OCR · regex · keyword | See **Detection methods** below + [Extensibility](#extensibility) |
+
+### Detection methods to validate (UC-25 & Section 5)
+
+The POC asks you to prove detection across methods — configure and test each:
+
+| Method | Where to set it | Note |
+|---|---|---|
+| **Sensitivity labels** | Label as a rule condition | Foundational — see the [Information Protection lab](../information-protection/index.md) |
+| **Sensitive info types (SIT)** | Content contains → SIT | 300+ built-in; add custom |
+| **Exact Data Match (EDM)** | Custom SIT → EDM schema | Match against *your own* data table |
+| **Document fingerprinting** | Custom SIT → fingerprint | For standard forms/templates |
+| **OCR** | Optical character recognition setting | Detects text inside images/screenshots |
+| **Custom regex + keyword dictionaries** | Custom SIT | For national IDs (**KTP/NIK**) and account formats |
+
+### Data-trust scenarios that ride on labels & IRM (UC-17, UC-19)
+
+For **unmanaged/BYOD** access and **label/encryption persistence after a file leaves Microsoft 365**, the control is the **sensitivity label + IRM/encryption** plus **Conditional Access app control** — build and verify those in the **[Information Protection lab](../information-protection/index.md)**, then confirm an unauthorized account **cannot open** a downloaded Restricted file.
+
+### SOC / SIEM telemetry (UC-23 & Section 6)
+
+DLP alerts surface in **Purview → Alerts**, flow into **Microsoft Defender XDR**, and can be streamed to **Microsoft Sentinel** for correlation and response — see the **[Microsoft Sentinel module](../../../sentinel/index.md)**. Validate that each alert carries **user, device, trust tier, file, label/SIT, destination, action, and severity**.
+
+!!! note "Known product limitations to record in your POC"
+    - **ZIP / archive (UC-13):** on-device inspection of content *inside* archives is limited — note the behavior; the sensitivity label/encryption still travels with the file.
+    - **Renamed files (UC-14):** endpoint DLP classifies by **content and label**, so changing the extension does **not** evade detection.
+    - **Screenshots (UC-21):** endpoint DLP does not block OS-level screen capture; use **labels with visual markings/watermarks** and user education instead.
 
 ## Extensibility
 
