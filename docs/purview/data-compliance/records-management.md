@@ -29,7 +29,7 @@ Some content is a formal **record** — contracts, filings, safety documents —
 </div>
 <p class="video-caption"><strong>▶ Watch — Microsoft Purview Records Management: deep dive</strong><br>Bruce Miller EDRMS · 5:58 — A records-management specialist's deep dive: which capabilities work well (and which to avoid), how to automate compliance, and how to handle limitations like case records.</p>
 
-## 1. Description
+## Introduction
 
 **Microsoft Purview Records Management** helps you manage **high-value items** for **business, legal, or regulatory record-keeping**. You **declare items as records** (or **regulatory records**) using **retention labels**, organize them with a **file plan**, and **defensibly dispose** of them with **disposition reviews** and proof of deletion.
 
@@ -48,7 +48,17 @@ flowchart LR
 !!! tip "When to use Records Management"
     Use it when regulators or corporate policy require **immutable records**, a **retention schedule (file plan)**, and **auditable disposition**.
 
-## 2. Prerequisites
+## Core concepts
+
+| Term | What it means |
+|---|---|
+| **File plan** | The retention schedule — labels plus regulatory descriptors |
+| **Retention label** | Applies retention (and record status) to items |
+| **Records declaration** | Marking an item a record so edits/deletes are restricted |
+| **Disposition review** | A human check before an item is deleted |
+| **Regulatory record** | The strictest, immutable record tier |
+
+## Prerequisites
 
 === "Licensing"
 
@@ -58,7 +68,23 @@ flowchart LR
 
     Add records staff to the **Records Management** admin role group (grants all records features). To access **file plan**, you need **Retention Manager** or **View-only Retention Manager**. Follow least privilege.
 
-## 3. Generate sample data (a file plan to import)
+## What you'll accomplish
+
+By the end of this lab you will:
+
+- [x] Build a **file plan** with a record retention label
+- [x] **Publish** the label to a pilot library and apply it
+- [x] Confirm the item is **declared a record** (edit/delete restricted)
+- [x] Complete a **disposition review** with proof of disposition
+
+## Use cases covered
+
+| # | Use case | Outcome | Time |
+|---|---|---|---|
+| 1 | **Build a file plan and publish a label** | A record label applied to a pilot library | ~60–90 min |
+| 2 | **Verify records & disposition** | A declared record + completed disposition review | ~15 min |
+
+## Generate lab data
 
 File plan supports **bulk import** of retention labels from a spreadsheet. This script creates a starter CSV you can import (adjust columns to the current file plan import template on Learn).
 
@@ -76,9 +102,9 @@ Write-Host "Wrote starter file plan to $csv (adjust to the current import templa
 Get-Content $csv
 ```
 
-Also seed some documents to label — reuse the [DLM sample script](data-lifecycle-management.md#3-generate-sample-content).
+Also seed some documents to label — reuse the [DLM sample script](data-lifecycle-management.md#generate-lab-data).
 
-## 4. Recommended setup
+## Recommended setup
 
 !!! tip "Start with one record label, applied manually"
     Create **one** record retention label (for example *Contracts – 7 years*), **publish** it to a pilot library, apply it manually, and practice a **disposition review**. Automate later.
@@ -90,7 +116,7 @@ Also seed some documents to label — reuse the [DLM sample script](data-lifecyc
 | Enable **disposition review** | Human check before deletion |
 | Use **file plan descriptors** | Track regulatory references |
 
-## 5. Step-by-step configuration
+## Use case 1 — Build a file plan and publish a label
 
 1. In the **[Microsoft Purview portal](https://purview.microsoft.com)** → **Records Management → File plan**.
 2. **Create a label** (or **Import** your file-plan CSV): set the **retention period**, the **action** (retain / retain-then-delete), and **mark items as a record**. Add **file plan descriptors** (reference ID, category).
@@ -99,7 +125,7 @@ Also seed some documents to label — reuse the [DLM sample script](data-lifecyc
 5. In the library, **apply** the label to a test document (it's now a **record** — edits/deletes are restricted).
 6. When the retention period ends, complete the **disposition review** and record **proof of disposition**.
 
-## 6. Verification
+## Use case 2 — Verify records & disposition
 
 1. Confirm the label appears in **File plan** and is **published** to the pilot library.
 2. Apply it to a document and confirm it's **declared a record** (attempting to delete/edit is blocked or versioned per settings).
@@ -109,7 +135,7 @@ Also seed some documents to label — reuse the [DLM sample script](data-lifecyc
 !!! success "What 'good' looks like"
     A test document is declared a record, protected from improper deletion, routed to a disposition review at period end, and disposed of with an auditable record.
 
-## 7. Extensibility
+## Extensibility
 
 - **Auto-apply labels** — declare records automatically by SIT, keyword/searchable property, trainable classifier, or cloud attachment.
 - **Event-based retention** — align retention to business events (contract end, employee departure).
@@ -124,7 +150,7 @@ Also seed some documents to label — reuse the [DLM sample script](data-lifecyc
 | Regulatory records | Records Management + policy enabling regulatory records |
 | Disposition proof | Disposition review configured; appropriate roles |
 
-## 8. Industry use cases
+## Industry use cases
 
 === "Financial services"
 
@@ -170,7 +196,7 @@ Never switch a new policy on for the whole tenant at once. Roll it out in contro
 - Enable **disposition review** so deletions are approved and logged.
 - Align retention triggers with **event-based** timing where needed.
 
-## 9. Sources
+## Sources
 
 - [Learn about records management](https://learn.microsoft.com/purview/records-management)
 - [Get started with records management](https://learn.microsoft.com/purview/get-started-with-records-management)

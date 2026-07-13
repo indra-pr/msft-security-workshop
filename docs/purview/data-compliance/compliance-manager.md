@@ -29,7 +29,7 @@ description: >-
 </div>
 <p class="video-caption"><strong>▶ Watch — Microsoft Purview Compliance Manager: full demo</strong><br>2W Tech · 9:51 — An in-depth demo: access Compliance Manager, navigate its key features, understand your compliance score, and implement improvement actions to manage regulatory compliance across Microsoft 365 and other clouds.</p>
 
-## 1. Description
+## Introduction
 
 **Microsoft Purview Compliance Manager** helps you **automatically assess and manage compliance** across your multicloud environment. It provides:
 
@@ -49,7 +49,17 @@ flowchart LR
 !!! tip "When to use Compliance Manager"
     Use it to **operationalize** a regulation (ISO 27001, NIST, GDPR, local laws) — turning it into concrete, trackable actions with an auditable score.
 
-## 2. Prerequisites
+## Core concepts
+
+| Term | What it means |
+|---|---|
+| **Assessment** | A grouping of controls for a regulation you're measuring against |
+| **Regulatory template** | A prebuilt control set for a standard/law (e.g., ISO 27001, GDPR) |
+| **Improvement action** | A concrete control to implement (Microsoft- or customer-managed) |
+| **Evidence** | Proof you attach to an action (screenshot, policy, export) |
+| **Compliance score** | A risk-based measure of your progress |
+
+## Prerequisites
 
 === "Licensing"
 
@@ -66,14 +76,30 @@ flowchart LR
 
     Corresponding Entra roles include Global Reader/Security Reader (read), Compliance Administrator (edit), and Compliance Data/Security Administrator (admin). Follow least privilege.
 
-## 3. Generate sample data (an assessment to work)
+## What you'll accomplish
+
+By the end of this lab you will:
+
+- [x] Assign least-privilege **Compliance Manager** roles
+- [x] Create an **assessment** from a regulatory template
+- [x] Complete an **improvement action** and upload **evidence**
+- [x] Watch your **compliance score** move and view reports
+
+## Use cases covered
+
+| # | Use case | Outcome | Time |
+|---|---|---|---|
+| 1 | **Create an assessment and work an action** | An assessment with a completed action + evidence | ~30–45 min |
+| 2 | **Verify your compliance score** | A score that reflects the completed action | ~15 min |
+
+## Generate lab data
 
 "Sample data" here is a **starter assessment** you can improve. Use the built-in **Data Protection Baseline** template (available broadly) as your practice assessment, then complete a few improvement actions.
 
 !!! note "Mostly a portal workflow"
     Compliance Manager is primarily a portal experience; there isn't a customer-facing "generate data" script. Instead, create the Data Protection Baseline assessment (below) and upload sample evidence (for example, a screenshot or PDF of a policy) to an improvement action.
 
-## 4. Recommended setup
+## Recommended setup
 
 !!! tip "Start with the baseline, then add one regulation"
     Begin with the **Data Protection Baseline**, then add **one** regulation most relevant to you (for example ISO/IEC 27001 or a local privacy law). Assign improvement-action owners.
@@ -86,7 +112,7 @@ flowchart LR
 | Upload **evidence** as you go | Audit-ready |
 | Set **alert policies** | Catch score-affecting changes |
 
-## 5. Step-by-step configuration
+## Use case 1 — Create an assessment and work an action
 
 1. Sign in to the **[Microsoft Purview portal](https://purview.microsoft.com)** → **Compliance Manager**.
 2. Under **Settings → Compliance Manager → User access** (or **Role groups**), assign the right **Compliance Manager** roles.
@@ -95,7 +121,7 @@ flowchart LR
 5. Open the assessment and work its **improvement actions** — implement the control, set status, add notes, and **upload evidence**.
 6. Watch your **compliance score** update (report changes can take ~24 hours).
 
-## 6. Verification
+## Use case 2 — Verify your compliance score
 
 1. Confirm the new assessment appears on the **Assessments** page with a **score contribution**.
 2. Complete one **customer-managed improvement action** (mark implemented + upload evidence).
@@ -105,7 +131,7 @@ flowchart LR
 !!! success "What 'good' looks like"
     You have at least one assessment, at least one completed improvement action with evidence, and a compliance score that moves as you complete actions.
 
-## 7. Extensibility
+## Extensibility
 
 - **Connectors** — assess non-Microsoft services (for example **Salesforce**, **Zoom**) via built-in connectors.
 - **Custom assessments** — extend a regulatory template with your own controls and actions.
@@ -120,7 +146,7 @@ flowchart LR
 | Custom assessments | Compliance Manager Administration/Assessor role |
 | Premium templates | Supporting licensing / regulation licenses |
 
-## 8. Industry use cases
+## Industry use cases
 
 === "Financial services"
 
@@ -166,7 +192,7 @@ Roll this out as a program rather than a switch. Compliance Manager doesn't touc
 - Attach **evidence** and keep it current — auditors ask for it.
 - Track the score as a **trend**, not a one-time number.
 
-## 9. Sources
+## Sources
 
 - [Microsoft Purview Compliance Manager](https://learn.microsoft.com/purview/compliance-manager)
 - [Get started with Compliance Manager](https://learn.microsoft.com/purview/compliance-manager-setup)

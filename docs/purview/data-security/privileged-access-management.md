@@ -29,7 +29,7 @@ Standing admin access is a standing risk — a compromised admin account can qui
 </div>
 <p class="video-caption"><strong>▶ Watch — Introducing Privileged Access Management</strong><br>Microsoft Mechanics · 5:43 — Enable PAM, create an access policy, request and approve just-in-time access to high-risk tasks, and audit the activity — enforcing zero standing access to prevent rogue or unauthorized admin actions.</p>
 
-## 1. Description
+## Introduction
 
 **Microsoft Purview Privileged Access Management (PAM)** limits **standing access** to sensitive tasks in **Microsoft Exchange Online**. Instead of administrators having constant (standing) privileges, PAM enforces **just-in-time (JIT)**, approval-based, time-limited access. When enabled for Exchange Online, your organization operates with **zero standing privileges**, adding a layer of defense against compromised accounts and insider threats.
 
@@ -48,7 +48,17 @@ sequenceDiagram
 !!! tip "When to use PAM"
     Use PAM when highly sensitive Exchange tasks (for example mailbox moves, transport rule changes, journaling) should require **explicit, logged approval** every time — not standing admin rights.
 
-## 2. Prerequisites
+## Core concepts
+
+| Term | What it means |
+|---|---|
+| **Standing access** | Always-on admin privilege — the risk PAM removes |
+| **Just-in-time (JIT) access** | Time-limited access granted only when requested and approved |
+| **Approval policy** | Binds a sensitive task to an approver group and an approval type |
+| **Approver group** | A mail-enabled security group that approves or denies requests |
+| **Access request** | A user's time-boxed request to run a gated task (default 4 hours) |
+
+## Prerequisites
 
 === "Licensing"
 
@@ -65,7 +75,23 @@ sequenceDiagram
     - Up to **30** privileged access policies per organization.
     - Default access duration is **4 hours**; requests await approval for up to **24 hours** before expiring.
 
-## 3. Generate sample data (approver group + test task)
+## What you'll accomplish
+
+By the end of this lab you will:
+
+- [x] Create an **approver group** and enable privileged access
+- [x] Create an **approval policy** that gates a sensitive Exchange task
+- [x] Request and approve **just-in-time** access, then run the task
+- [x] Confirm the request, approval, and execution are **audited**
+
+## Use cases covered
+
+| # | Use case | Outcome | Time |
+|---|---|---|---|
+| 1 | **Set up an approval policy** | A task gated behind just-in-time approval | ~30 min |
+| 2 | **Verify request & approval** | An approved, time-boxed, audited execution | ~15 min |
+
+## Generate lab data
 
 "Sample data" for PAM is the **approver group** and a **test task** to gate. This script creates a mail-enabled security group you'll use as approvers.
 
@@ -84,7 +110,7 @@ Write-Host "Created PAM Approvers group." -ForegroundColor Green
 
 A good **test task** to gate is `Exchange\New-MoveRequest` (mailbox moves) — visible and safe to exercise in a lab.
 
-## 4. Recommended policy setup
+## Recommended policy setup
 
 !!! tip "Start with one high-value task and manual approval"
     Gate a **single sensitive task** with **Manual** approval and a small approver group, then expand.
@@ -97,7 +123,7 @@ A good **test task** to gate is `Exchange\New-MoveRequest` (mailbox moves) — v
 | Duration | Leave default (**4 hours**) |
 | System accounts | Exclude only true automation accounts, exceptionally |
 
-## 5. Step-by-step configuration
+## Use case 1 — Set up an approval policy
 
 === "Admin center"
 
@@ -134,7 +160,7 @@ A good **test task** to gate is `Exchange\New-MoveRequest` (mailbox moves) — v
     Approve-ElevatedAccessRequest -RequestId <request id> -Comment 'Approved for maintenance'
     ```
 
-## 6. Verification
+## Use case 2 — Verify request & approval
 
 1. As a requestor, submit `New-ElevatedAccessRequest` (or a portal request) for the gated task.
 2. Confirm the **approver group** receives an **email** notification.
@@ -144,7 +170,7 @@ A good **test task** to gate is `Exchange\New-MoveRequest` (mailbox moves) — v
 !!! success "What 'good' looks like"
     Without approval, the gated task is **denied**; after approval, it's allowed for the **limited duration** and then reverts; every request/approval/execution is **audited**.
 
-## 7. Extensibility
+## Extensibility
 
 - **Auto-approval policies** — for lower-risk tasks, set **ApprovalType Auto** to auto-grant while still logging.
 - **Customer Lockbox** — complements PAM (Lockbox governs *Microsoft* access; PAM governs *internal* privileged tasks).
@@ -158,7 +184,7 @@ A good **test task** to gate is `Exchange\New-MoveRequest` (mailbox moves) — v
 | PowerShell approvals | Membership in the approver group |
 | Auditing | Unified audit log enabled |
 
-## 8. Industry use cases
+## Industry use cases
 
 === "Financial services"
 
@@ -204,7 +230,7 @@ Never switch a new policy on for the whole tenant at once. Roll it out in contro
 - Keep the default **time-limited** access window; every use is audited.
 - Exclude only true **system accounts**, and only exceptionally.
 
-## 9. Sources
+## Sources
 
 - [Privileged access management (overview)](https://learn.microsoft.com/purview/privileged-access-management-solution-overview)
 - [Learn about privileged access management](https://learn.microsoft.com/purview/privileged-access-management)

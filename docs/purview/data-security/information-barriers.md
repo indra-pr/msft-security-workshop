@@ -29,16 +29,9 @@ Some groups **must not** communicate — investment bankers and public-side rese
 </div>
 <p class="video-caption"><strong>▶ Watch — Learn Microsoft Purview Information Barriers in ~15 minutes</strong><br>Andy Malone MVP · 13:25 — A concise tour of Information Barriers: how this often-overlooked feature ethically segments your organization so specific groups can't communicate or collaborate — widely used in regulated environments.</p>
 
-## 1. Description
+## Introduction
 
 **Microsoft Purview Information Barriers (IB)** is a compliance solution that lets you **restrict two-way communication and collaboration** between groups and users in **Microsoft Teams, SharePoint, and OneDrive**. It's often used in **highly regulated industries** to avoid conflicts of interest and safeguard internal information.
-
-### Key concepts
-
-- **User account attributes** — Entra ID / Exchange attributes (department, job title, location, etc.) used to assign users to segments.
-- **Segments** — sets of users defined by attributes. Non-legacy organizations support up to **5,000 segments**, with a user in up to **10 segments** (Legacy mode: 250 segments, one per user).
-- **IB policies** — **Block** policies prevent one segment from communicating with another; **Allow** policies restrict a segment to communicating only with certain segments.
-- **IB modes** — *Legacy*, *SingleSegment*, *MultiSegment*. Multi-segment requires **Allow-only** policies.
 
 ```mermaid
 flowchart LR
@@ -54,7 +47,17 @@ flowchart LR
 !!! tip "When to use IB"
     Use IB to enforce an **ethical wall** — for example, keeping investment bankers and public-side research analysts from communicating, or separating case teams that must not collaborate.
 
-## 2. Prerequisites
+## Core concepts
+
+| Term | What it means |
+|---|---|
+| **User account attributes** | Entra ID / Exchange attributes (department, job title, location) used to assign users to segments |
+| **Segment** | A set of users defined by attributes; up to **5,000 segments** (a user in up to 10) in non-legacy mode |
+| **IB policy** | **Block** stops two segments communicating; **Allow** restricts a segment to named segments |
+| **IB mode** | *Legacy*, *SingleSegment*, or *MultiSegment* (multi-segment requires Allow-only policies) |
+| **Policy application** | The tenant-wide process that activates IB policies (can take hours) |
+
+## Prerequisites
 
 === "Licensing"
 
@@ -71,7 +74,23 @@ flowchart LR
     - Decide your **IB mode**; in *Legacy* mode, remove existing Exchange **address book policies** first.
     - Optional: **Microsoft Graph PowerShell SDK** for user/group management and **Security & Compliance PowerShell** for segments/policies.
 
-## 3. Generate sample data (segment attributes)
+## What you'll accomplish
+
+By the end of this lab you will:
+
+- [x] Set directory attributes on test users to build **segments**
+- [x] Create two directional **Block** policies between segments
+- [x] Apply the policies and confirm blocked communication in Teams
+- [x] Know how to extend IB to SharePoint/OneDrive and manage modes
+
+## Use cases covered
+
+| # | Use case | Outcome | Time |
+|---|---|---|---|
+| 1 | **Define segments and create IB policies** | Two segments + two Block policies applied | ~45 min (+ apply time) |
+| 2 | **Verify the barrier** | Confirmed blocked Teams communication | ~15 min |
+
+## Generate lab data
 
 Segments are built from directory attributes, so "sample data" here means test users with a **Department** attribute you can segment on. This Microsoft Graph PowerShell script sets departments on test users.
 
@@ -90,7 +109,7 @@ foreach ($upn in $assignments.Keys) {
 }
 ```
 
-## 4. Recommended policy setup
+## Recommended policy setup
 
 !!! tip "Start with Block, one direction at a time"
     For most scenarios, Microsoft recommends **Block** policies for a consistent user experience. To block two segments from talking, create **two policies** — one for each direction. **Don't assign more than one policy to a segment.**
@@ -102,7 +121,7 @@ foreach ($upn in $assignments.Keys) {
 | Keep policies **inactive** until ready | Defining/editing doesn't affect users until applied |
 | Plan **modes** up front | Multi-segment (Allow-only) vs. single/legacy affects design |
 
-## 5. Step-by-step configuration
+## Use case 1 — Define segments and create IB policies
 
 === "Portal"
 
@@ -139,7 +158,7 @@ foreach ($upn in $assignments.Keys) {
 
     See the exact parameters in [Get started with Information Barriers](https://learn.microsoft.com/purview/information-barriers-policies).
 
-## 6. Verification
+## Use case 2 — Verify the barrier
 
 1. Wait **~24 hours** for propagation, then check **Policy application** status shows completed.
 2. As an *Advisory* user in **Teams**, try to start a chat with a *Brokerage* user — you should be **prevented**.
@@ -149,7 +168,7 @@ foreach ($upn in $assignments.Keys) {
 !!! success "What 'good' looks like"
     Blocked users can't chat, call, or add each other in Teams; SharePoint/OneDrive collaboration is restricted per policy; policy application status is **completed** with no validation errors.
 
-## 7. Extensibility
+## Extensibility
 
 - **SharePoint & OneDrive IB** — extend barriers to files and sites (enabled together in one action).
 - **Moderated meetings** — an *Allow moderation* policy lets a moderator segment host cross-segment meetings (requires E5 + **Teams Premium** for organizers).
@@ -164,7 +183,7 @@ foreach ($upn in $assignments.Keys) {
 | Moderated meetings | Microsoft 365 E5 for all users + Teams Premium for organizers |
 | Multi-segment | Non-legacy mode; Allow-only policies |
 
-## 8. Industry use cases
+## Industry use cases
 
 === "Financial services"
 
@@ -211,7 +230,7 @@ Never switch a new policy on for the whole tenant at once. Roll it out in contro
 - Plan your **IB mode** up front (multi-segment = Allow-only policies).
 - Allow **~24 hours** for changes to propagate before you test.
 
-## 9. Sources
+## Sources
 
 - [Information Barriers (overview)](https://learn.microsoft.com/purview/information-barriers)
 - [Get started with Information Barriers](https://learn.microsoft.com/purview/information-barriers-policies)

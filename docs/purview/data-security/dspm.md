@@ -32,7 +32,7 @@ Sensitive data is scattered across Microsoft 365, Azure, and SaaS — and AI mak
 </div>
 <p class="video-caption"><strong>▶ Watch — Stop oversharing: safeguard sensitive data fast with DSPM</strong><br>Microsoft Mechanics · 1:26 — Locate, assess, and prioritize high-risk data across Microsoft and non-Microsoft services with Data Security Posture Management — find sensitive files, spot emerging data risks, and focus remediation where it matters most.</p>
 
-## 1. Description
+## Introduction
 
 **Microsoft Purview Data Security Posture Management** helps you **discover, protect, and investigate** sensitive-data risks across your **digital estate** — Microsoft 365, Azure, Fabric, and integrated third-party SaaS — for both traditional apps and **AI apps and agents**. Rather than focusing on infrastructure or endpoints, DSPM centers on the **data itself**: where it resides, who can access it, how it's used, and whether it's adequately protected. It continuously scans to identify sensitive data, assess risk, and recommend actions, **consolidating insights** from other Purview solutions (Information Protection, DLP, Insider Risk Management).
 
@@ -53,7 +53,17 @@ flowchart TB
 !!! tip "When to use DSPM"
     Use DSPM to get a **single, data-centric view** of risk — especially to reduce **oversharing** before rolling out **Microsoft 365 Copilot** and agents, and to prioritize where to apply DLP/labels next.
 
-## 2. Prerequisites
+## Core concepts
+
+| Term | What it means |
+|---|---|
+| **Data security posture** | A data-centric view of where sensitive data is, who can access it, and how it's protected |
+| **Setup task** | A guided task (e.g., *Auditing and analytics*) that turns on DSPM insights |
+| **Recommendation** | A suggested action DSPM surfaces — often a one-click DLP/label policy |
+| **Oversharing** | Sensitive content accessible more broadly than it should be (key pre-Copilot risk) |
+| **DSPM for AI** | Posture management focused on Copilot, agents, and third-party AI apps |
+
+## Prerequisites
 
 === "Licensing"
 
@@ -70,7 +80,23 @@ flowchart TB
     - Optionally an **Insider Risk Management** program and **Security Copilot** for investigation.
     - For third-party AI sites: onboard devices + install the **Purview browser extension**.
 
-## 3. Generate sample data (make the estate "interesting")
+## What you'll accomplish
+
+By the end of this lab you will:
+
+- [x] Seed the estate with labeled / oversharable sensitive content
+- [x] Enable **Auditing and analytics** and let DSPM scan
+- [x] Review **insights and oversharing** findings in Reports
+- [x] Turn a **recommendation** into a one-click policy
+
+## Use cases covered
+
+| # | Use case | Outcome | Time |
+|---|---|---|---|
+| 1 | **Enable DSPM and review insights** | Populated posture insights + oversharing findings | ~30–60 min (scans take time) |
+| 2 | **Verify insights & recommendations** | Confirmed findings + an actionable recommendation | ~15 min |
+
+## Generate lab data
 
 DSPM scans existing content, so seed your tenant with labeled/sensitive data. Reuse the [Information Protection](information-protection/index.md#generate-lab-data) and [DLP](dlp/index.md#generate-lab-data) sample scripts, then upload the files to a few SharePoint sites and OneDrive accounts.
 
@@ -91,7 +117,7 @@ Write-Host "Seeded $lab. Upload these to test SharePoint sites, then let DSPM sc
 !!! note "DSPM auto-scans SharePoint"
     DSPM for AI automatically runs a **weekly data risk assessment** for the **top 100 SharePoint sites** by usage — so oversharing in your seeded sites will surface over time.
 
-## 4. Recommended setup
+## Recommended setup
 
 !!! tip "Do the foundations, then follow setup tasks"
     DSPM is only as insightful as the foundations beneath it. Configure SITs + labels + audit first, then work the built-in **setup tasks** and **one-click policies**.
@@ -103,7 +129,7 @@ Write-Host "Seeded $lab. Upload these to test SharePoint sites, then let DSPM sc
 | Prioritize **oversharing** remediation | Highest risk before Copilot rollout |
 | Iterate **monthly** | Review recommendations, update policies |
 
-## 5. Step-by-step configuration
+## Use case 1 — Enable DSPM and review insights
 
 1. In the **[Microsoft Purview portal](https://purview.microsoft.com)**, open **Data Security Posture Management**.
 2. Go to **Actions → Setup tasks** and complete the required **Auditing and analytics** task.
@@ -120,7 +146,7 @@ Write-Host "Seeded $lab. Upload these to test SharePoint sites, then let DSPM sc
 | 3. Understand data landscape & risks | Risks assessed |
 | 4. Take action & investigate with Security Copilot | Environment secured |
 
-## 6. Verification
+## Use case 2 — Verify insights & recommendations
 
 1. Confirm the **Auditing and analytics** setup task shows **complete**.
 2. After scans run, open **Reports** — you should see sensitive-data insights and **oversharing** findings for your seeded sites.
@@ -130,7 +156,7 @@ Write-Host "Seeded $lab. Upload these to test SharePoint sites, then let DSPM sc
 !!! success "What 'good' looks like"
     DSPM shows your seeded sensitive content, flags oversharing on the test sites, and offers **actionable recommendations** (for example create a DLP policy or apply a label) that you can enact in one click.
 
-## 7. Extensibility
+## Extensibility
 
 - **DSPM for AI** — dedicated posture management for Microsoft 365 Copilot, agents, and third-party AI apps.
 - **Security Copilot & the Data Security Posture agent** — AI-assisted investigation (consumes **SCUs**).
@@ -146,7 +172,7 @@ Write-Host "Seeded $lab. Upload these to test SharePoint sites, then let DSPM sc
 | Posture agent | Security Copilot **SCUs** |
 | Fabric/Copilot in Fabric | Enterprise Purview data governance + collection policy |
 
-## 8. Industry use cases
+## Industry use cases
 
 === "Financial services"
 
@@ -192,7 +218,7 @@ Never switch new policies on for the whole tenant at once. Roll them out in cont
 - Prioritize **oversharing** remediation before enabling Copilot.
 - Turn recommendations into **one-click** DLP/label policies; iterate **monthly**.
 
-## 9. Sources
+## Sources
 
 - [Learn about Data Security Posture Management](https://learn.microsoft.com/purview/data-security-posture-management-learn-about)
 - [Setup tasks for Data Security Posture Management](https://learn.microsoft.com/purview/data-security-posture-management-setup)

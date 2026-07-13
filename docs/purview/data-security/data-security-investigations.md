@@ -32,7 +32,7 @@ After a data incident, the hardest question is *"what sensitive data was actuall
 </div>
 <p class="video-caption"><strong>▶ Watch — Data Security Investigations in Microsoft Purview</strong><br>Microsoft Mechanics · 15:20 — Identify what data was actually exposed in a breach — not just where it moved, but what it contains and how sensitive it is. Search massive volumes with natural language, pinpoint the highest-risk content, and connect it to user activity.</p>
 
-## 1. Description
+## Introduction
 
 **Microsoft Purview Data Security Investigations (DSI)** helps cybersecurity teams harness **generative AI** to **analyze and respond to** data security incidents, risky insiders, and data breaches. DSI quickly identifies risks from sensitive-data exposure, draws connections across impacted data, and helps teams collaborate to remediate — simplifying tasks that are traditionally time-consuming and complex.
 
@@ -47,7 +47,17 @@ flowchart LR
 !!! tip "When to use DSI"
     Use DSI when a **data incident** (leak, breach, risky insider) requires you to understand *what sensitive data was involved* and *who/what is impacted* — faster than manual review. It integrates with **Microsoft Defender XDR** so SOC teams can launch an investigation from an incident.
 
-## 2. Prerequisites
+## Core concepts
+
+| Term | What it means |
+|---|---|
+| **Investigation** | A workspace where you analyze an incident's impacted data with AI |
+| **Impacted data set** | The files/locations pulled in for analysis (e.g., from a Defender incident) |
+| **AI analysis** | Generative-AI summarization of risks, sensitive data, and connections |
+| **Storage meter (PAYG)** | Pay-as-you-go storage billed via an Azure subscription/resource group |
+| **Capacity units** | Dedicated compute for the AI analysis |
+
+## Prerequisites
 
 === "Licensing & billing"
 
@@ -64,7 +74,23 @@ flowchart LR
     - **Data Security Management** and **Insider Risk Management** role groups get **contributor** access.
     - To configure **billing**, you need **Global Administrator** plus resource-group **Owner/Contributor**.
 
-## 3. Generate sample data (stage an "incident" data set)
+## What you'll accomplish
+
+By the end of this lab you will:
+
+- [x] Configure DSI **billing** (storage meter + capacity) and roles
+- [x] Stage an incident data set and create an **investigation**
+- [x] Run **AI analysis** to surface sensitive data and impacted entities
+- [x] Know how to launch DSI from a **Defender XDR** incident
+
+## Use cases covered
+
+| # | Use case | Outcome | Time |
+|---|---|---|---|
+| 1 | **Enable DSI and run an investigation** | An AI-analyzed investigation over staged data | ~60–90 min (+ billing) |
+| 2 | **Verify findings** | Confirmed sensitive data + impacted entities | ~15 min |
+
+## Generate lab data
 
 Stage a folder of mixed sensitive files that could represent an incident's impacted data. Reuse the [DLP sample-data script](dlp/index.md#generate-lab-data), or run this to create a representative set:
 
@@ -85,7 +111,7 @@ Write-Host "Staged $((Get-ChildItem $lab).Count) files in $lab" -ForegroundColor
 
 In practice, DSI investigations often start from data already identified by a **Defender XDR incident**, **DLP alert**, or **Insider Risk** case.
 
-## 4. Recommended setup
+## Recommended setup
 
 !!! tip "Enable billing first, then scope narrowly"
     Configure the **Azure subscription/resource group** and **compute capacity** before your first investigation. Start with a **single, well-scoped incident** to learn the AI analysis workflow.
@@ -96,7 +122,7 @@ In practice, DSI investigations often start from data already identified by a **
 | Assign least-privilege roles | Contributor for investigators, admin for owners |
 | Start reactive | Investigate one real/simulated incident end to end |
 
-## 5. Step-by-step configuration
+## Use case 1 — Enable DSI and run an investigation
 
 1. In the **[Microsoft Purview portal](https://purview.microsoft.com/dsi)**, open **Data Security Investigations**. On first access, **read and agree** to the Privacy Statement, then **Get started**.
 2. **Configure permissions** — use the setup task or the **Role groups** page to grant DSI access (Compliance Administrator / Organization Management for admins).
@@ -107,7 +133,7 @@ In practice, DSI investigations often start from data already identified by a **
 !!! note "Start from Defender XDR"
     SOC teams with **Security Administrator/Operator** can launch a DSI investigation directly from a **Microsoft Defender** incident where a data set is affected. See [Create investigations in DSI from the Defender portal](https://learn.microsoft.com/defender-xdr/create-dsi-in-defender).
 
-## 6. Verification
+## Use case 2 — Verify findings
 
 1. Confirm DSI shows **billing configured** (storage + capacity) with no setup-task warnings.
 2. Create a test investigation over your staged data and run **AI analysis**.
@@ -117,7 +143,7 @@ In practice, DSI investigations often start from data already identified by a **
 !!! success "What 'good' looks like"
     A test investigation completes AI analysis, lists the sensitive data found (for example credit-card and national-ID SITs), identifies impacted users, and lets your team collaborate on remediation.
 
-## 7. Extensibility
+## Extensibility
 
 - **Microsoft Defender XDR integration** — start investigations from SOC incidents.
 - **Data Security Posture agent (preview)** — a Security Copilot agent surfaces posture insights within DSI (requires SCUs).
@@ -132,7 +158,7 @@ In practice, DSI investigations often start from data already identified by a **
 | Posture agent | Security Copilot **SCUs** provisioned |
 | Pay-as-you-go | Azure subscription + resource group in the same tenant |
 
-## 8. Industry use cases
+## Industry use cases
 
 === "Financial services"
 
@@ -178,7 +204,7 @@ Never switch a new capability on for the whole tenant at once. Roll it out in co
 - Assign **least-privilege** roles (contributor for investigators, admin for owners).
 - Launch investigations from a **Defender XDR** incident where possible.
 
-## 9. Sources
+## Sources
 
 - [Learn about Data Security Investigations](https://learn.microsoft.com/purview/data-security-investigations)
 - [Get started with Data Security Investigations](https://learn.microsoft.com/purview/data-security-investigations-get-started)

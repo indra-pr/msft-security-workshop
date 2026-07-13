@@ -29,7 +29,7 @@ Harassment, threats, and regulatory leakage often show up in everyday messages. 
 </div>
 <p class="video-caption"><strong>▶ Watch — Communication Compliance in Microsoft Purview (SC-401)</strong><br>Microsoft Learn · 13:23 — How Communication Compliance identifies messages that may contain sensitive, inappropriate, or non-compliant content, how to review flagged items and understand why they triggered, and how to remediate.</p>
 
-## 1. Description
+## Introduction
 
 **Microsoft Purview Communication Compliance** helps you **detect, capture, and remediate** inappropriate or risky messages in your organization's communications — across **Microsoft Teams, Viva Engage, and Exchange Online** (and other connected channels). It uses **policy templates**, **trainable classifiers**, and **sensitive information types**, with a flexible **investigate → remediate** workflow.
 
@@ -51,7 +51,17 @@ flowchart LR
 - **Detect conflict of interest** (between two groups)
 - **Regulatory compliance** scenarios
 
-## 2. Prerequisites
+## Core concepts
+
+| Term | What it means |
+|---|---|
+| **Policy** | Detects risky messages using a template or custom conditions |
+| **Policy template** | Prebuilt scenario (inappropriate text, sensitive info, conflict of interest) |
+| **Reviewer** | A person who triages and remediates alerts (role-group based) |
+| **Anonymization** | Pseudonymizes user identities during review for privacy |
+| **Remediation** | Resolve, notify, or escalate a flagged message |
+
+## Prerequisites
 
 === "Licensing"
 
@@ -67,7 +77,23 @@ flowchart LR
     - Decide whether to use an **adaptive scope** (create it before the policy).
     - Optionally enable **username anonymization** for privacy.
 
-## 3. Generate sample data (test messages)
+## What you'll accomplish
+
+By the end of this lab you will:
+
+- [x] Grant reviewers access via a **role group** (Global Admins have none)
+- [x] Create a policy from a **template** with a small scope + anonymization
+- [x] Trigger and **triage** an alert
+- [x] Practice the **remediate** workflow (resolve / notify / escalate)
+
+## Use cases covered
+
+| # | Use case | Outcome | Time |
+|---|---|---|---|
+| 1 | **Create a communication compliance policy** | A first policy from a template | ~45 min |
+| 2 | **Verify alerts & triage** | A triaged, remediated alert | ~15 min |
+
+## Generate lab data
 
 "Sample data" here means test messages that trip a policy. In a lab, send benign but policy-triggering messages between test users.
 
@@ -88,7 +114,7 @@ Write-Host "Sent a lab test message." -ForegroundColor Green
 
 For Teams/Viva Engage, post a benign test message containing your policy's keyword or classifier trigger from a scoped test user.
 
-## 4. Recommended policy setup
+## Recommended policy setup
 
 !!! tip "Start from a template, small scope, anonymized"
     Begin with **Detect inappropriate text** over a **small pilot group**, with **anonymization on** and a couple of named **reviewers**.
@@ -102,7 +128,7 @@ For Teams/Viva Engage, post a benign test message containing your policy's keywo
 | OCR | On, if images are in scope |
 | Notice templates | Create one reminder template |
 
-## 5. Step-by-step configuration
+## Use case 1 — Create a communication compliance policy
 
 1. In the **[Microsoft Purview portal](https://purview.microsoft.com)** → **Settings → Role groups**, add your reviewers to a **Communication Compliance** role group.
 2. Open the **Communication Compliance** solution → **Policies → Create policy**.
@@ -112,7 +138,7 @@ For Teams/Viva Engage, post a benign test message containing your policy's keywo
 6. **Create** the policy. Matches begin generating **alerts** on the dashboard.
 7. (Optional) Create **notice templates** and enable **anonymization** under **Settings → Communication Compliance → Privacy**.
 
-## 6. Verification
+## Use case 2 — Verify alerts & triage
 
 1. Send the lab test message(s) from a scoped test user.
 2. Open **Communication Compliance → Alerts** (or **Policies → your policy → Alerts**).
@@ -122,7 +148,7 @@ For Teams/Viva Engage, post a benign test message containing your policy's keywo
 !!! success "What 'good' looks like"
     Your test message surfaces as an alert with the right policy match; reviewers can investigate (optionally anonymized) and remediate; notices send successfully.
 
-## 7. Extensibility
+## Extensibility
 
 - **Third-party / connected sources** — bring in non-Microsoft communications via [data connectors](https://learn.microsoft.com/purview/archive-third-party-data) for supervision.
 - **Custom trainable classifiers** — train classifiers on your own examples.
@@ -137,7 +163,7 @@ For Teams/Viva Engage, post a benign test message containing your policy's keywo
 | Custom classifiers | Trainable classifier training data |
 | Adaptive scopes | Scope created before the policy |
 
-## 8. Industry use cases
+## Industry use cases
 
 === "Financial services"
 
@@ -183,7 +209,7 @@ Never switch a new policy on for the whole tenant at once. Roll it out in contro
 - Keep **pseudonymization** and privacy controls on.
 - Treat review as an **ongoing workflow**, coordinated with HR/Legal.
 
-## 9. Sources
+## Sources
 
 - [Learn about Communication Compliance](https://learn.microsoft.com/purview/communication-compliance-solution-overview)
 - [Get started with Communication Compliance](https://learn.microsoft.com/purview/communication-compliance-configure)

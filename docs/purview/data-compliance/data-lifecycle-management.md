@@ -29,7 +29,7 @@ Keeping everything forever is a liability; deleting too soon breaks compliance. 
 </div>
 <p class="video-caption"><strong>▶ Watch — Data Lifecycle Management: retention policies (SC-401)</strong><br>Cloud Scholars · 11:55 — A hands-on walkthrough: build real-world retention strategies with retention policies and adaptive scopes, and apply retention across Exchange, SharePoint, and more.</p>
 
-## 1. Description
+## Introduction
 
 **Microsoft Purview Data Lifecycle Management (DLM)** — formerly Microsoft Information Governance — helps you **keep what you need and delete what you don't**. It uses **retention policies**, **retention labels**, and **retention label policies** to enforce retain/delete settings across Microsoft 365 workloads, and includes **email archiving** capabilities.
 
@@ -48,7 +48,17 @@ flowchart LR
 !!! tip "When to use DLM"
     Use DLM to meet retention/deletion obligations at scale — for example, delete Teams chats after a set period, or retain SharePoint content for a required number of years.
 
-## 2. Prerequisites
+## Core concepts
+
+| Term | What it means |
+|---|---|
+| **Retention policy** | Workload-wide retain/delete settings (no user action) |
+| **Retention label** | Item-level retention for exceptions (published or auto-applied) |
+| **Retain then delete** | Keep for a period, then delete automatically |
+| **Adaptive scope** | Dynamically targets users/sites by attribute |
+| **Event-based retention** | Starts the retention clock on an event (e.g., contract end) |
+
+## Prerequisites
 
 === "Licensing"
 
@@ -58,7 +68,23 @@ flowchart LR
 
     Add compliance staff to the **Compliance Administrator** role group, or create a role group with the **Retention Management** role (**View-Only Retention Management** for read-only). Mailbox archiving/inactive-mailbox tasks need **Exchange** permissions (for example the **Mail Recipients** role via Recipient Management / Organization Management).
 
-## 3. Generate sample content
+## What you'll accomplish
+
+By the end of this lab you will:
+
+- [x] Seed a pilot site with disposable content
+- [x] Create a **retention policy** (retain then delete) on a pilot scope
+- [x] Verify content is **retained** (deletion prevented / recoverable)
+- [x] Know how to add **labels**, **auto-apply**, and **event-based** retention
+
+## Use cases covered
+
+| # | Use case | Outcome | Time |
+|---|---|---|---|
+| 1 | **Create a retention policy** | A retain-then-delete policy on a pilot site | ~45 min |
+| 2 | **Verify retention** | Confirmed retention (and scheduled deletion) | ~15 min |
+
+## Generate lab data
 
 Retention acts on real content, so seed a site/mailbox with disposable items. Reuse the [Information Protection sample script](../data-security/information-protection/index.md#generate-lab-data), then upload the files to a test SharePoint site or OneDrive that your retention policy will cover.
 
@@ -72,7 +98,7 @@ New-Item -ItemType Directory -Path $lab -Force | Out-Null
 Write-Host "Created $((Get-ChildItem $lab).Count) files in $lab. Upload to a test site the policy will cover." -ForegroundColor Green
 ```
 
-## 4. Recommended policy setup
+## Recommended policy setup
 
 !!! tip "One broad retention policy, then labels for exceptions"
     Start with a **single retention policy** that retains (or deletes) content across your main workloads, then add **retention labels** only where specific items need different handling.
@@ -85,7 +111,7 @@ Write-Host "Created $((Get-ChildItem $lab).Count) files in $lab. Upload to a tes
 | Scope | **Static** to a pilot site first; adaptive later |
 | Labels | Add for **exceptions** only |
 
-## 5. Step-by-step configuration
+## Use case 1 — Create a retention policy
 
 === "Portal"
 
@@ -112,7 +138,7 @@ Write-Host "Created $((Get-ChildItem $lab).Count) files in $lab. Upload to a tes
         -RetentionComplianceAction Delete
     ```
 
-## 6. Verification
+## Use case 2 — Verify retention
 
 1. Confirm the policy shows **On/Success** in **Policies** (initial deployment can take time).
 2. Test retention: try to permanently delete a covered item before the period ends — it should be **preserved** (recoverable), not truly gone.
@@ -122,7 +148,7 @@ Write-Host "Created $((Get-ChildItem $lab).Count) files in $lab. Upload to a tes
 !!! success "What 'good' looks like"
     Covered content is retained for the configured period (deletion is prevented/recoverable), and content is deleted on schedule after the period — verifiable in the workload and the audit log.
 
-## 7. Extensibility
+## Extensibility
 
 - **Retention labels + auto-apply** — classify items by SIT, keyword, or trainable classifier and apply retention automatically.
 - **Event-based retention** — start the clock on an event (for example employee departure, contract end).
@@ -138,7 +164,7 @@ Write-Host "Created $((Get-ChildItem $lab).Count) files in $lab. Upload to a tes
 | PST import | Import service + Azure Storage |
 | AI/Copilot locations | Pay-as-you-go billing |
 
-## 8. Industry use cases
+## Industry use cases
 
 === "Financial services"
 
@@ -184,7 +210,7 @@ Never switch a new policy on for the whole tenant at once. Roll it out in contro
 - Test in a **small scope** before tenant-wide rollout.
 - Document the **why** (regulation/policy) behind each rule.
 
-## 9. Sources
+## Sources
 
 - [Learn about data lifecycle management](https://learn.microsoft.com/purview/data-lifecycle-management)
 - [Get started with data lifecycle management](https://learn.microsoft.com/purview/get-started-with-data-lifecycle-management)

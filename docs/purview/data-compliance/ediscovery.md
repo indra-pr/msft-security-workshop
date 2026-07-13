@@ -29,7 +29,7 @@ When litigation or investigation hits, you must **preserve and produce** the rig
 </div>
 <p class="video-caption"><strong>▶ Watch — Do more with Advanced eDiscovery in Microsoft 365</strong><br>Microsoft Mechanics · 7:07 — How to run eDiscovery investigations of any type (policy violations, GDPR requests): create a case, identify custodians and data sources, run searches, review and tag documents, and export the results.</p>
 
-## 1. Description
+## Introduction
 
 **Electronic discovery (eDiscovery)** is the process of identifying and delivering **electronically stored information (ESI)** for use as evidence in investigations and legal cases. **Microsoft Purview eDiscovery** lets you identify, hold, collect, review, and export content across Microsoft 365 services: **Exchange Online, SharePoint, OneDrive, Microsoft Teams, Microsoft 365 Groups, and Viva Engage**.
 
@@ -51,7 +51,17 @@ flowchart LR
 !!! tip "When to use eDiscovery"
     Use it for **litigation, regulatory requests, and internal investigations** — anywhere you must preserve and produce relevant content with defensible chain-of-custody.
 
-## 2. Prerequisites
+## Core concepts
+
+| Term | What it means |
+|---|---|
+| **Case** | A container that scopes a matter's holds, searches, and exports |
+| **Hold** | Preserves content so it can't be lost while a matter is active |
+| **Search** | A keyword/condition query across content locations |
+| **Review set** (Premium) | A collected set you filter, tag, and cull before export |
+| **Custodian** (Premium) | A person of interest whose data is preserved and collected |
+
+## Prerequisites
 
 === "Licensing"
 
@@ -61,7 +71,23 @@ flowchart LR
 
     eDiscovery uses granular RBAC roles: **Case Management**, **Compliance Search**, **Preview**, **Export**, **Review**, **Hold**, and more. Assign users to the **eDiscovery Manager** role group (managers see only their cases) or **eDiscovery Administrator** (all cases). See [Assign permissions in eDiscovery](https://learn.microsoft.com/purview/edisc-permissions).
 
-## 3. Generate sample data (searchable content)
+## What you'll accomplish
+
+By the end of this lab you will:
+
+- [x] Seed searchable content with a unique matter keyword
+- [x] Create a **case**, place a **hold**, and run a **search**
+- [x] **Export** the results (or push to a review set in Premium)
+- [x] Know how to scale to **custodians, review sets, and analytics**
+
+## Use cases covered
+
+| # | Use case | Outcome | Time |
+|---|---|---|---|
+| 1 | **Run a Standard eDiscovery case** | A case with a hold, search, and export | ~45–75 min |
+| 2 | **Verify the case results** | Preserved, found, and exported items | ~15 min |
+
+## Generate lab data
 
 Seed mailboxes/sites with findable content, then search for it.
 
@@ -83,7 +109,7 @@ Write-Host "Sent test items containing keyword '$keyword'." -ForegroundColor Gre
 
 Use the unique keyword (`Project-Falcon-LABMATTER`) as your search query.
 
-## 4. Recommended setup
+## Recommended setup
 
 !!! tip "Create a case, hold, then search — in that order"
     Preserve first (**hold**) so relevant data can't be lost, then **search** within the case, then **export** (Standard) or push to a **review set** (Premium).
@@ -95,7 +121,7 @@ Use the unique keyword (`Project-Falcon-LABMATTER`) as your search query.
 | Narrow **search** queries | Reduce noise/volume |
 | Premium: use **review sets** | Filter, tag, and cull before export |
 
-## 5. Step-by-step configuration
+## Use case 1 — Run a Standard eDiscovery case
 
 1. In the **[Microsoft Purview portal](https://purview.microsoft.com)** → **eDiscovery** → **Create case** (name it after the matter).
 2. (Standard/Premium) Add an **eDiscovery hold** on relevant content locations (mailboxes/sites) to preserve data.
@@ -104,7 +130,7 @@ Use the unique keyword (`Project-Falcon-LABMATTER`) as your search query.
 5. (Premium) In the **review set**, **filter**, **tag**, run **analytics**, and cull non-relevant items.
 6. **Export** the responsive items with metadata for production.
 
-## 6. Verification
+## Use case 2 — Verify the case results
 
 1. Run the case search for your unique keyword.
 2. Confirm the **test items** appear in the search **statistics/preview**.
@@ -114,7 +140,7 @@ Use the unique keyword (`Project-Falcon-LABMATTER`) as your search query.
 !!! success "What 'good' looks like"
     Your seeded items are found by the case search, preserved by the hold, and exportable with metadata and a defensible audit trail.
 
-## 7. Extensibility
+## Extensibility
 
 - **Compliance boundaries** — limit which locations/cases eDiscovery managers can access (for multi-region or multi-BU separation).
 - **Graph eDiscovery APIs** — automate case, hold, search, and export operations.
@@ -129,7 +155,7 @@ Use the unique keyword (`Project-Falcon-LABMATTER`) as your search query.
 | Graph automation | Graph permissions for eDiscovery APIs |
 | Premium review/analytics | E5 / E5 eDiscovery add-on |
 
-## 8. Industry use cases
+## Industry use cases
 
 === "Financial services"
 
@@ -175,7 +201,7 @@ Roll this out by matter, not tenant-wide. eDiscovery is used by a small team per
 - Keep a clean **case audit trail** for defensibility.
 - Graduate to **Premium** for custodians, review sets, and analytics.
 
-## 9. Sources
+## Sources
 
 - [Learn about eDiscovery](https://learn.microsoft.com/purview/edisc)
 - [Get started with eDiscovery](https://learn.microsoft.com/purview/edisc-get-started)

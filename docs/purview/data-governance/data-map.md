@@ -29,7 +29,7 @@ You can't govern what you can't see. The Data Map automatically discovers and cl
 </div>
 <p class="video-caption"><strong>▶ Watch — Purview data mapping explained: collections, scans &amp; labels</strong><br>Peter Rising · 15:21 — A quick but complete explainer of Microsoft Purview data mapping — collections, scans, and labels — covering the essentials of building a map of your data estate.</p>
 
-## 1. Description
+## Introduction
 
 **Microsoft Purview Data Map** is the technical foundation of data governance. After you **register** a data source, you **scan** it to capture **technical metadata**, **extract schema**, and apply **classifications** — building a unified map of your data estate across **on-premises, multicloud, and SaaS** sources.
 
@@ -44,15 +44,17 @@ flowchart LR
 !!! tip "When to use Data Map"
     Use Data Map to answer "**what data do we have, where, and what's in it**" across databases, storage, and SaaS — the prerequisite for cataloging and governing it.
 
-### Key concepts
+## Core concepts
 
-- **Collections / domains** — organizational containers that also govern **permissions**.
-- **Registration** — giving Purview the address of a source and mapping it to a collection/domain.
-- **Integration runtime** — the compute that connects to the source (Azure-hosted or self-hosted for on-prem).
-- **Scan rule set** — the classifications the scan checks for (system default or custom).
-- **Classifications** — labels applied to data based on detected patterns.
+| Term | What it means |
+|---|---|
+| **Collection / domain** | Organizational containers that also govern permissions |
+| **Registration** | Giving Purview a source's address and mapping it to a collection |
+| **Integration runtime** | The compute that connects to a source (Azure or self-hosted) |
+| **Scan rule set** | The classifications a scan checks for (default or custom) |
+| **Classification** | A label applied to data based on a detected pattern |
 
-## 2. Prerequisites
+## Prerequisites
 
 === "Licensing / account"
 
@@ -69,7 +71,23 @@ flowchart LR
     - Choose the right **[integration runtime](https://learn.microsoft.com/purview/data-map-integration-runtime-choose)** (Azure auto-resolve for cloud; **self-hosted** for on-premises/private networks).
     - Prepare **credentials** — the **Purview Managed Identity** is the simplest for supported Azure sources; other sources support key/secret or service principal.
 
-## 3. Generate sample data (a source to scan)
+## What you'll accomplish
+
+By the end of this lab you will:
+
+- [x] Create a sample Azure source with classifiable data
+- [x] **Register** the source and run a **scan**
+- [x] Confirm discovered **schema and classifications** in the map
+- [x] Know how to add on-prem sources, custom rule sets, and lineage
+
+## Use cases covered
+
+| # | Use case | Outcome | Time |
+|---|---|---|---|
+| 1 | **Register and scan a source** | A scanned source with schema + classifications | ~60–90 min |
+| 2 | **Verify the map & classifications** | Confirmed assets + sensitive-column classifications | ~15 min |
+
+## Generate lab data
 
 Create an Azure Blob Storage container with sample files so you have something to register and scan.
 
@@ -93,7 +111,7 @@ az storage blob upload --account-name <storageAccount> \
 
 The `card` column contains a synthetic credit-card-format value so the scan's classifiers have something to detect.
 
-## 4. Recommended setup
+## Recommended setup
 
 !!! tip "Start with one cloud source and the default rule set"
     Register **one** Azure source, scan it with the **system default scan rule set** and **Managed Identity**, then review classifications before adding more sources or custom rules.
@@ -106,7 +124,7 @@ The `card` column contains a synthetic credit-card-format value so the scan's cl
 | Scope the scan | Faster, cheaper first run |
 | Schedule **incremental** scans | Keep the map current |
 
-## 5. Step-by-step configuration
+## Use case 1 — Register and scan a source
 
 1. In the **[Microsoft Purview portal](https://purview.microsoft.com)** → **Data Map → Data sources → Register**. Choose the source type (for example **Azure Blob Storage**) and map it to a **collection/domain**.
 2. (On-prem only) Install and register a **self-hosted integration runtime**.
@@ -116,7 +134,7 @@ The `card` column contains a synthetic credit-card-format value so the scan's cl
 6. Set a **schedule** (once, or recurring incremental) and **Save and run**.
 7. When complete, browse **Data Map** to see discovered assets, schema, and classifications.
 
-## 6. Verification
+## Use case 2 — Verify the map & classifications
 
 1. Confirm the scan status is **Completed** with assets discovered.
 2. Browse the source in **Data Map** and open a scanned asset — confirm **schema** and **classifications** (for example a *Credit Card Number* classification on the `card` column).
@@ -126,7 +144,7 @@ The `card` column contains a synthetic credit-card-format value so the scan's cl
 !!! success "What 'good' looks like"
     Your source is registered, the scan completes, assets appear in the map with extracted schema, and sensitive columns carry the expected **classifications**.
 
-## 7. Extensibility
+## Extensibility
 
 - **Broad source support** — Azure, other clouds (for example Amazon Redshift/S3), databases, Fabric, and on-premises via self-hosted runtime.
 - **Custom scan rule sets & classifications** — detect data unique to your business.
@@ -142,7 +160,7 @@ The `card` column contains a synthetic credit-card-format value so the scan's cl
 | Managed Identity scanning | Purview Managed Identity granted read on the source |
 | API automation | Purview REST API permissions |
 
-## 8. Industry use cases
+## Industry use cases
 
 === "Financial services"
 
@@ -188,7 +206,7 @@ Roll this out one source at a time rather than scanning everything at once. Scan
 - Schedule **incremental scans** instead of full rescans.
 - Let classifications flow into the **Unified Catalog** for curation.
 
-## 9. Sources
+## Sources
 
 - [Microsoft Purview Data Map](https://learn.microsoft.com/purview/data-map)
 - [Scan data sources in Data Map](https://learn.microsoft.com/purview/data-map-scan-data-sources)

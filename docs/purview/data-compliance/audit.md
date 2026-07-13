@@ -29,7 +29,7 @@ When something goes wrong — a leak, a config change, a suspicious sign-in — 
 </div>
 <p class="video-caption"><strong>▶ Watch — Microsoft 365 Advanced Auditing for forensic &amp; compliance investigations</strong><br>Microsoft Security · 13:54 — How Advanced Auditing supports forensic and compliance investigations: high-value events, longer retention, and the audit data you need to answer who did what, where, and when.</p>
 
-## 1. Description
+## Introduction
 
 **Microsoft Purview Audit** lets you **log and search** the activities that users and admins perform across Microsoft 365 services — to support **forensic, IT, compliance, and legal** investigations. It comes in two tiers:
 
@@ -45,7 +45,17 @@ When something goes wrong — a leak, a config change, a suspicious sign-in — 
 !!! tip "When to use Audit"
     Use Audit to answer "**who did what, where, and when**" — investigating a suspected compromise, a data-access question, or supporting an eDiscovery/insider-risk case.
 
-## 2. Prerequisites
+## Core concepts
+
+| Term | What it means |
+|---|---|
+| **Unified audit log** | The single searchable log of user/admin activity across Microsoft 365 |
+| **Audit (Standard)** | On by default; ~180-day retention; thousands of events |
+| **Audit (Premium)** | High-value events, longer retention, custom retention policies (E5) |
+| **Record type / operation** | The activity category (e.g., `SharePointFileOperation`, `MailItemsAccessed`) |
+| **Retention policy** | A rule that keeps specific record types longer (Premium) |
+
+## Prerequisites
 
 === "Licensing"
 
@@ -64,7 +74,23 @@ When something goes wrong — a leak, a config change, a suspicious sign-in — 
     # True = audit log search is on
     ```
 
-## 3. Generate sample data (audited activity)
+## What you'll accomplish
+
+By the end of this lab you will:
+
+- [x] Confirm audit logging is **on** and assign least-privilege search roles
+- [x] Generate audited activity and **search** the unified audit log
+- [x] Verify a known action appears as an **audit record** and export it
+- [x] Know how to enable **Premium** high-value events and retention
+
+## Use cases covered
+
+| # | Use case | Outcome | Time |
+|---|---|---|---|
+| 1 | **Turn on auditing and run a search** | A permissioned search returning real events | ~20 min |
+| 2 | **Verify the audit record** | A confirmed, exportable audit record | ~10 min |
+
+## Generate lab data
 
 Create some activity to find, then search for it. Run a couple of benign audited actions (for example, view/download a file in SharePoint/OneDrive), then query the log.
 
@@ -84,7 +110,7 @@ Search-UnifiedAuditLog `
 
 To generate specific activity, sign in as a test user and view/download a document, or send an email — then re-run the search filtered by that user.
 
-## 4. Recommended setup
+## Recommended setup
 
 !!! tip "Turn on the high-value events you'll actually need"
     For most orgs, enable **Audit (Premium)** for privileged/at-risk users to capture events like `MailItemsAccessed`, and configure **retention policies** so critical workloads (Entra, Exchange, SharePoint, OneDrive) are kept for **1 year**.
@@ -96,7 +122,7 @@ To generate specific activity, sign in as a test user and view/download a docume
 | Enable **Advanced Auditing** for key users (Premium) | Captures high-value events |
 | Create a **1-year retention policy** for core workloads | Meets common investigation windows |
 
-## 5. Step-by-step configuration
+## Use case 1 — Turn on auditing and run a search
 
 === "Portal"
 
@@ -120,7 +146,7 @@ To generate specific activity, sign in as a test user and view/download a docume
         -UserIds "vip@contoso.onmicrosoft.com"
     ```
 
-## 6. Verification
+## Use case 2 — Verify the audit record
 
 1. Perform a known action (for example, download a specific test file as a test user).
 2. Search the audit log for that **user + activity + time window**.
@@ -130,7 +156,7 @@ To generate specific activity, sign in as a test user and view/download a docume
 !!! success "What 'good' looks like"
     Your known test action shows up as an audit record within the search window; exports work; and (Premium) high-value events like `MailItemsAccessed` appear for licensed users.
 
-## 7. Extensibility
+## Extensibility
 
 - **Audit Search Graph API** — programmatic access to the audit search experience via [Microsoft Graph](https://learn.microsoft.com/graph/api/resources/security-api-overview).
 - **Office 365 Management Activity API** — stream audit data to SIEM/SOAR (for example, **Microsoft Sentinel**).
@@ -145,7 +171,7 @@ To generate specific activity, sign in as a test user and view/download a docume
 | Management Activity API / Sentinel | Registered app + subscription to content types |
 | Premium events | E5 + Advanced Auditing service plan |
 
-## 8. Industry use cases
+## Industry use cases
 
 === "Financial services"
 
@@ -191,7 +217,7 @@ Roll this out in controlled waves rather than flipping everything on at once. Au
 - For long retention and high-value events, plan **Audit (Premium)**.
 - Treat the audit log as **evidence**: export and preserve what matters.
 
-## 9. Sources
+## Sources
 
 - [Learn about auditing solutions in Microsoft Purview](https://learn.microsoft.com/purview/audit-solutions-overview)
 - [Get started with auditing solutions](https://learn.microsoft.com/purview/audit-get-started)
