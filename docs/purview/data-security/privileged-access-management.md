@@ -80,16 +80,19 @@ sequenceDiagram
 By the end of this lab you will:
 
 - [x] Create an **approver group** and enable privileged access
-- [x] Create an **approval policy** that gates a sensitive Exchange task
-- [x] Request and approve **just-in-time** access, then run the task
-- [x] Confirm the request, approval, and execution are **audited**
+- [x] Gate a **task** with manual just-in-time approval
+- [x] Gate a **role / role group** with approval
+- [x] Configure an **auto-approval** policy for lower-risk tasks
 
 ## Use cases covered
 
-| # | Use case | Outcome | Time |
+Each use case is one way to implement PAM, walked through as **preconfig → configure → validate**:
+
+| # | Surface | What you configure | Time |
 |---|---|---|---|
-| 1 | **Set up an approval policy** | A task gated behind just-in-time approval | ~30 min |
-| 2 | **Verify request & approval** | An approved, time-boxed, audited execution | ~15 min |
+| 1 | **Task policy (manual approval)** | Gate one Exchange task behind approval | ~30 min |
+| 2 | **Role / role-group policy** | Gate a role or role group behind approval | ~20 min |
+| 3 | **Auto-approval policy** | Auto-grant lower-risk tasks (still logged) | ~15 min |
 
 ## Generate lab data
 
@@ -123,52 +126,94 @@ A good **test task** to gate is `Exchange\New-MoveRequest` (mailbox moves) — v
 | Duration | Leave default (**4 hours**) |
 | System accounts | Exclude only true automation accounts, exceptionally |
 
-## Use case 1 — Set up an approval policy
+## Use case 1 — Task policy (manual approval)
+
+*Gate a single sensitive Exchange task behind just-in-time, human approval — the core PAM pattern.*
+
+### Preconfig
+
+An **approver group** (from [lab data](#generate-lab-data)) and **Global Administrator** to enable PAM.
+
+### Configure
 
 === "Admin center"
 
-    1. **Create an approver's group** — Microsoft 365 admin center → **Groups** → add a **mail-enabled security group** and add approvers.
-    2. **Enable privileged access** — **Settings → Org Settings → Security & Privacy → Privileged access** → turn on **Require approvals for privileged tasks** and set the **default approvers group**.
-    3. **Create an access policy** — **Manage access policies and requests → Configure policies → Add a policy**: choose **Policy type** (Task/Role/Role Group), **scope = Exchange**, the **policy** (task), **approval type = Manual**, and the **approver group**. Select **Create**.
-    4. **Request & approve** — under **New request**, a user requests the task for a number of hours; approvers **Approve/Deny** from the same area.
+    1. **Enable privileged access** — Microsoft 365 admin center → **Settings → Org Settings → Security & Privacy → Privileged access** → turn on **Require approvals for privileged tasks** and set the **default approvers group**.
+    2. **Create an access policy** — **Manage access policies and requests → Configure policies → Add a policy**: **Policy type = Task**, **scope = Exchange**, the **task** (e.g., `New-MoveRequest`), **approval type = Manual**, and the **approver group**. **Create**.
 
 === "PowerShell"
-
-    Use **Exchange Online PowerShell**.
 
     ```powershell
     Connect-ExchangeOnline -UserPrincipalName admin@contoso.onmicrosoft.com
 
-    # 2) Enable PAM with the default approver group (exclude system accounts as needed).
+    # Enable PAM with the default approver group (exclude system accounts as needed).
     Enable-ElevatedAccessControl `
         -AdminGroup 'pamapprovers@contoso.onmicrosoft.com' `
         -SystemAccounts @('sys1@contoso.onmicrosoft.com')
 
-    # 3) Create an approval policy for a specific Exchange task.
+    # Create a manual-approval policy for a specific Exchange task.
     New-ElevatedAccessApprovalPolicy `
         -Task 'Exchange\New-MoveRequest' `
         -ApprovalType Manual `
         -ApproverGroup 'pamapprovers@contoso.onmicrosoft.com'
-
-    # 4a) A user submits a request for elevated access.
-    New-ElevatedAccessRequest `
-        -Task 'Exchange\New-MoveRequest' `
-        -Reason 'Fixing a stuck mailbox move' `
-        -DurationHours 4
-
-    # 4b) An approver approves it (by request ID from the notification email).
-    Approve-ElevatedAccessRequest -RequestId <request id> -Comment 'Approved for maintenance'
     ```
 
-## Use case 2 — Verify request & approval
+### Validate the config
 
-1. As a requestor, submit `New-ElevatedAccessRequest` (or a portal request) for the gated task.
-2. Confirm the **approver group** receives an **email** notification.
-3. Approve it, then confirm the requestor can execute the task **only** within the granted window.
-4. Check the status with `Get-ElevatedAccessRequest -Identity <id> | select RequestStatus`, and confirm actions appear in the **audit log**.
+1. As a requestor, submit a request (`New-ElevatedAccessRequest -Task 'Exchange\New-MoveRequest' -Reason '...' -DurationHours 4`, or a portal request).
+2. Confirm the **approver group** gets an **email**; approve it (`Approve-ElevatedAccessRequest -RequestId <id>`).
+3. Confirm the requestor can run the task **only** within the window; check `Get-ElevatedAccessRequest` and the **audit log**.
 
 !!! success "What 'good' looks like"
-    Without approval, the gated task is **denied**; after approval, it's allowed for the **limited duration** and then reverts; every request/approval/execution is **audited**.
+    Without approval the task is **denied**; after approval it's allowed for the **limited duration**, then reverts — every request/approval/execution is **audited**.
+
+---
+
+## Use case 2 — Role / role-group policy
+
+*Gate an administrative **role** or **role group** (not just a single task) behind approval.*
+
+### Preconfig
+
+PAM enabled (Use case 1) and the approver group.
+
+### Configure
+
+1. **Manage access policies and requests → Configure policies → Add a policy**.
+2. Set **Policy type = Role** (or **Role Group**), choose the **role/role group**, **approval type = Manual**, and the **approver group**. **Create**.
+
+### Validate the config
+
+1. A requestor requests access to the **role/role group**.
+2. After approval, confirm they hold the role **only** for the granted window, and the activity is **audited**.
+
+---
+
+## Use case 3 — Auto-approval policy
+
+*For lower-risk tasks, auto-grant access (no human step) while still logging every request — speed without standing access.*
+
+### Preconfig
+
+PAM enabled; a task/role you've assessed as lower-risk.
+
+### Configure
+
+1. Create a policy with **approval type = Auto**:
+
+    ```powershell
+    New-ElevatedAccessApprovalPolicy `
+        -Task 'Exchange\Set-Mailbox' `
+        -ApprovalType Auto `
+        -ApproverGroup 'pamapprovers@contoso.onmicrosoft.com'
+    ```
+
+2. Keep it scoped narrowly and review usage periodically.
+
+### Validate the config
+
+1. Request the auto-approved task and confirm access is **granted immediately**, time-boxed.
+2. Confirm the request and execution still appear in the **audit log**.
 
 ## Extensibility
 

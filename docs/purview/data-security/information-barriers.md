@@ -79,16 +79,19 @@ flowchart LR
 By the end of this lab you will:
 
 - [x] Set directory attributes on test users to build **segments**
-- [x] Create two directional **Block** policies between segments
-- [x] Apply the policies and confirm blocked communication in Teams
-- [x] Know how to extend IB to SharePoint/OneDrive and manage modes
+- [x] Configure **Block** mode (two-way) and confirm it in Teams
+- [x] Configure **Allow / multi-segment** mode
+- [x] Extend IB to **SharePoint/OneDrive** and manage **discoverability**
 
 ## Use cases covered
 
-| # | Use case | Outcome | Time |
+Each use case is one way to implement Information Barriers, walked through as **preconfig → configure → validate**:
+
+| # | Surface | What you configure | Time |
 |---|---|---|---|
-| 1 | **Define segments and create IB policies** | Two segments + two Block policies applied | ~45 min (+ apply time) |
-| 2 | **Verify the barrier** | Confirmed blocked Teams communication | ~15 min |
+| 1 | **Block mode** | Two segments + two-way Block policies | ~45 min (+ apply time) |
+| 2 | **Allow / multi-segment mode** | Allow policies restricting a segment to named segments | ~30 min |
+| 3 | **SharePoint/OneDrive & discoverability** | IB for files/sites + user discoverability | ~30 min |
 
 ## Generate lab data
 
@@ -121,52 +124,93 @@ foreach ($upn in $assignments.Keys) {
 | Keep policies **inactive** until ready | Defining/editing doesn't affect users until applied |
 | Plan **modes** up front | Multi-segment (Allow-only) vs. single/legacy affects design |
 
-## Use case 1 — Define segments and create IB policies
+## Use case 1 — Block mode (two segments, two-way block)
+
+*The most common IB pattern — stop two groups from communicating in Teams.*
+
+### Preconfig
+
+Two segments' worth of users with a distinguishing directory attribute (from [lab data](#generate-lab-data)); **audit** on; IB mode decided (remove Exchange address-book policies first in Legacy mode).
+
+### Configure
 
 === "Portal"
 
-    1. In the **[Microsoft Purview portal](https://purview.microsoft.com)**, open **Information Barriers → Segments → ＋ New segment**.
-    2. Name the segment, add a **user group filter** (for example *Department equals Advisory*), and **Submit**. Repeat for *Brokerage*.
-    3. Open **Information Barriers → Policies → ＋ Create policy**. Name it (for example `Block Advisory→Brokerage`).
-    4. Choose the **assigned segment** (*Advisory*) and set communication to **Blocked** with the *Brokerage* segment. Keep it **inactive** for now.
-    5. Create the **reverse** policy `Block Brokerage→Advisory`.
-    6. Open **Policy application → Apply all policies**. Application can take **several hours**.
-    7. (Optional) Configure IB for **SharePoint/OneDrive**, IB **modes**, and **user discoverability**.
+    1. **[Microsoft Purview portal](https://purview.microsoft.com)** → **Information Barriers → Segments → ＋ New segment**. Name it, add a **user group filter** (e.g., *Department equals Advisory*), **Submit**. Repeat for *Brokerage*.
+    2. **Policies → ＋ Create policy** → name it (e.g., `Block Advisory→Brokerage`), choose the **assigned segment** (*Advisory*), set communication **Blocked** with *Brokerage*. Keep **inactive**.
+    3. Create the **reverse** policy `Block Brokerage→Advisory`.
+    4. **Policy application → Apply all policies** (can take **several hours**).
 
 === "PowerShell"
 
-    Use **Security & Compliance PowerShell** (`Connect-IPPSSession`). Segments and policies are managed with the IB cmdlets, then applied:
-
     ```powershell
     Connect-IPPSSession -UserPrincipalName admin@contoso.onmicrosoft.com
-
-    # Define segments from a directory attribute.
     New-OrganizationSegment -Name "Advisory"  -UserGroupFilter "Department -eq 'Advisory'"
     New-OrganizationSegment -Name "Brokerage" -UserGroupFilter "Department -eq 'Brokerage'"
-
-    # Create two directional Block policies (kept inactive until applied).
     New-InformationBarrierPolicy -Name "Block Advisory-Brokerage" `
         -AssignedSegment "Advisory" -SegmentsBlocked "Brokerage" -State Inactive
     New-InformationBarrierPolicy -Name "Block Brokerage-Advisory" `
         -AssignedSegment "Brokerage" -SegmentsBlocked "Advisory" -State Inactive
-
-    # Activate and apply.
     Set-InformationBarrierPolicy -Identity "Block Advisory-Brokerage" -State Active
     Set-InformationBarrierPolicy -Identity "Block Brokerage-Advisory" -State Active
     Start-InformationBarrierPoliciesApplication
     ```
 
-    See the exact parameters in [Get started with Information Barriers](https://learn.microsoft.com/purview/information-barriers-policies).
+    See [Get started with Information Barriers](https://learn.microsoft.com/purview/information-barriers-policies).
 
-## Use case 2 — Verify the barrier
+### Validate the config
 
-1. Wait **~24 hours** for propagation, then check **Policy application** status shows completed.
-2. As an *Advisory* user in **Teams**, try to start a chat with a *Brokerage* user — you should be **prevented**.
-3. Confirm search/people-picker discoverability behaves as configured.
-4. Review the **audit log** for IB policy application events.
+1. Wait **~24 hours**, then confirm **Policy application** status is **completed**.
+2. As an *Advisory* user in **Teams**, try to chat with a *Brokerage* user — you should be **prevented**.
+3. Review the **audit log** for IB application events.
 
-!!! success "What 'good' looks like"
-    Blocked users can't chat, call, or add each other in Teams; SharePoint/OneDrive collaboration is restricted per policy; policy application status is **completed** with no validation errors.
+---
+
+## Use case 2 — Allow / multi-segment mode
+
+*When users belong to many segments, use **Allow** policies (a segment may communicate only with named segments) — required for multi-segment mode.*
+
+### Preconfig
+
+Non-legacy (**multi-segment**) mode; segments defined (Use case 1). Multi-segment supports up to **5,000 segments** and users in up to **10**.
+
+### Configure
+
+1. Ensure the org is in **multi-segment** mode.
+2. For each segment, create an **Allow** policy naming the segments it *can* communicate with:
+
+    ```powershell
+    New-InformationBarrierPolicy -Name "Allow Sales-with-Marketing" `
+        -AssignedSegment "Sales" -SegmentsAllowed "Sales","Marketing" -State Inactive
+    ```
+
+3. **Apply all policies** and allow propagation.
+
+### Validate the config
+
+1. Confirm a user in *Sales* can reach *Marketing* but **not** other segments.
+2. Confirm application status is **completed** with no validation errors.
+
+---
+
+## Use case 3 — Extend IB to SharePoint/OneDrive & discoverability
+
+*Barriers for files and sites, plus controlling whether blocked users can even find each other.*
+
+### Preconfig
+
+Active IB policies (Use case 1) and ~24 h propagation.
+
+### Configure
+
+1. Enable **IB for SharePoint and OneDrive** (turned on together in one action) so segment restrictions apply to sites and files.
+2. Configure **user discoverability** (whether blocked users appear in search/people pickers) under IB settings.
+3. (Optional) Add an **Allow moderation** policy for cross-segment moderated meetings (requires E5 + Teams Premium for organizers).
+
+### Validate the config
+
+1. Confirm a blocked user **can't** access a restricted SharePoint site / add the other segment to a site.
+2. Confirm search/people-picker **discoverability** behaves as configured.
 
 ## Extensibility
 

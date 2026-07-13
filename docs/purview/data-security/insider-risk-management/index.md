@@ -97,18 +97,22 @@ flowchart LR
 
 By the end of this lab you will:
 
-- [x] Import synthetic **HR leaver** data via the HR connector
-- [x] Enable **analytics** and review threshold recommendations
-- [x] Create a **Data theft by departing users** policy (pilot scope, pseudonymized)
-- [x] Trigger and **triage** an alert, and open a **case**
-- [x] Know how to pair IRM with **Adaptive Protection**
+- [x] Enable IRM: permissions, **HR connector**, analytics, indicators
+- [x] Create a **Data theft by departing users** policy and triage an alert
+- [x] Add **Data leaks** and **Security policy violations** policies
+- [x] Turn on **Adaptive Protection** to make DLP/access risk-based
 
 ## Use cases covered
 
-| # | Use case | Outcome | Time |
+Each use case is one way to implement Insider Risk Management, walked through as **preconfig → configure → validate**:
+
+| # | Surface | What you configure | Time |
 |---|---|---|---|
-| 1 | **Configure IRM and create a policy** | A live departing-users policy | ~60 min |
-| 2 | **Verify alerts & triage** | A confirmed, triaged alert / case | ~30 min |
+| 1 | **Enable IRM & foundations** | Permissions, HR connector, analytics, indicators | ~60 min |
+| 2 | **Data theft by departing users** | HR-triggered exfiltration policy | ~30 min |
+| 3 | **Data leaks** | DLP-driven sensitive-data policy | ~30 min |
+| 4 | **Security policy violations** | Defender-for-Endpoint-driven policy | ~30 min |
+| 5 | **Adaptive Protection** | Risk-based DLP & Conditional Access | ~30 min |
 
 ---
 
@@ -167,73 +171,125 @@ flowchart TB
 
 ---
 
-## Use case 1 — Configure IRM and create a policy
+## Use case 1 — Enable Insider Risk Management & foundations
 
-IRM is configured primarily in the **[Microsoft Purview portal](https://purview.microsoft.com)**. Follow these steps in order.
+*Turn IRM on, connect HR data, and let analytics recommend thresholds — the base every policy builds on.*
 
-**Step 1 — Assign permissions (required)**
+### Preconfig
 
-1. Ensure your account is a **Global Administrator / Compliance Administrator** (or **Organization Management**) so **Insider Risk Management** appears in the portal.
-2. Open **Settings → Roles & scopes → Role groups** and add people to the six IRM role groups (Admins, Analysts, Investigators, Auditors, Approvers).
-3. Allow **up to 30 minutes** for role membership to take effect.
+You need **Global/Compliance Administrator** (or Organization Management) to see IRM, plus your synthetic [HR leavers CSV](#generate-lab-data).
+
+### Configure
+
+**Assign permissions**
+
+1. **Settings → Roles & scopes → Role groups** — add people to the IRM role groups (Admins, Analysts, Investigators, Auditors, Approvers). Allow up to **30 minutes**.
 
 ![Insider Risk Management configuration steps](https://learn.microsoft.com/purview/media/ir-solution-ir-steps.png){ loading=lazy }
 
 *Image source: [Insider Risk Management solution overview](https://learn.microsoft.com/purview/insider-risk-management-solution-overview).*
 
-**Step 2 — Configure the HR connector**
+**Connect HR data**
 
-1. Open **Data connectors → Connectors** and create a **Microsoft 365 HR (Human Resources)** connector.
-2. Define the **field mapping** to match your [sample HR CSV](#generate-lab-data).
-3. Upload/import the CSV (production automates this on a schedule) per [Import data with the HR connector](https://learn.microsoft.com/purview/import-hr-data).
+2. **Data connectors → Connectors** → create a **Microsoft 365 HR** connector, define the **field mapping** to match your [sample CSV](#generate-lab-data), and import it — see [Import HR data](https://learn.microsoft.com/purview/import-hr-data).
 
-**Step 3 — Enable analytics (recommended)**
+**Enable analytics & indicators**
 
-1. Open **Insider Risk Management → Analytics** and **turn on analytics**.
-2. Wait for the scan — results can take **up to 48 hours**.
-3. Review the insights and note the **recommended indicator thresholds**.
+3. **Insider Risk Management → Analytics** → **turn on analytics** (results can take up to **48 hours**); note the **recommended thresholds**.
+4. **Settings** — keep **pseudonymization** on; under **Policy indicators**, enable **file exfiltration** indicators (download, USB, personal cloud, print); optionally define **priority content**.
 
-**Step 4 — Review settings & indicators**
+### Validate the config
 
-1. Open **Insider Risk Management → Settings** and confirm **privacy** settings (keep **pseudonymization** on).
-2. Under **Policy indicators**, enable the **file exfiltration** indicators (download, copy to USB, copy to personal cloud, print).
-3. Optionally define **priority content** (specific SharePoint sites, or *Highly Confidential*–labeled content).
-
-**Step 5 — Create the policy**
-
-1. Open **Insider Risk Management → Policies → ＋ Create policy** and choose the **Data theft by departing users** template. Select **Next**.
-2. **Name** it, choose **users/groups in scope** (start with your **pilot group**), and select **Next**.
-3. Confirm the **HR connector** dependency is satisfied (the wizard flags it if not).
-4. Select **priority content** and **indicators**, apply the **analytics-recommended thresholds**, and select **Next**.
-5. **Review** and **Submit**. The policy begins evaluating in-scope users.
-
-!!! success "Checkpoint"
-    The policy is live under **Insider Risk Management → Policies**. It now needs activity + HR signals to generate alerts — trigger test activity next and allow processing time.
+1. Confirm **Insider Risk Management** appears for role-group members.
+2. Confirm the **HR connector** shows imported records and **analytics** is running/complete.
+3. Confirm your indicators and privacy settings are saved.
 
 ---
 
-## Use case 2 — Verify alerts & triage
+## Use case 2 — Data theft by departing users (policy)
 
-### Generate a test signal
+*The highest-signal starting policy — tie exfiltration to resignation / last-working dates.*
 
-1. Mark a test user as a **leaver** by importing the [sample HR CSV](#generate-lab-data) via the HR connector.
-2. On an **onboarded device**, have that user perform exfiltration-like activity with the [DLP sample files](../dlp/index.md#generate-lab-data): copy to USB or upload to personal cloud.
-3. Allow time for signals to process.
+### Preconfig
 
-### Confirm alerts and triage
+Use case 1 complete (permissions, HR connector, analytics, indicators), and a **pilot group** of users.
 
-1. Open **Insider Risk Management → Alerts** — your test activity should appear as an **alert** with a **risk severity**.
-2. Open it to review the **pseudonymized user**, the **triggering indicators** (for example *copy to USB*), and the **activity timeline**.
-3. **Triage** the alert (Confirm / Dismiss) and, if warranted, **create a case**.
-4. Review **Analytics** and the **Users** dashboard for risk distribution.
+### Configure
 
-!!! success "What 'good' looks like"
-    - A departing-user activity produces an **alert** with the expected indicators and severity.
-    - The analyst sees a **pseudonymized** identity unless they hold the role to reveal it.
-    - You can move an alert into a **case** and act (notify, escalate, or escalate to eDiscovery).
+1. **Insider Risk Management → Policies → ＋ Create policy** → **Data theft by departing users**. **Next**.
+2. **Name** it, choose the **pilot group** in scope. **Next**.
+3. Confirm the **HR connector** dependency is satisfied.
+4. Select **priority content** and **indicators**, apply the **analytics-recommended thresholds**. **Next → Submit**.
+
+### Validate the config
+
+1. Mark a test user as a **leaver** (import the [HR CSV](#generate-lab-data)); on an **onboarded device**, have that user copy [DLP sample files](../dlp/index.md#generate-lab-data) to USB / personal cloud.
+2. **Insider Risk Management → Alerts** — confirm an **alert** with the expected indicators and severity.
+3. Open it (pseudonymized user + activity timeline), **triage** (Confirm/Dismiss), and optionally **create a case**.
 
 !!! warning "Interpret responsibly"
     IRM insights are a **starting point** for investigation, not a verdict. Conduct a full, lawful investigation and involve HR/legal before any employment action.
+
+---
+
+## Use case 3 — Data leaks (policy)
+
+*Detect risky sharing/exfiltration of sensitive content — driven by DLP and priority content.*
+
+### Preconfig
+
+Use case 1 foundations, plus **at least one DLP policy** (see the [DLP lab](../dlp/index.md)) so IRM can consume high-severity DLP signals.
+
+### Configure
+
+1. **Policies → ＋ Create policy** → **Data leaks**. **Next**.
+2. Choose whether to trigger on a **DLP policy** (high-severity alerts) or on **user activities**; select the **DLP policy** and scope the users.
+3. Set **priority content** (sites / *Highly Confidential* labels) and indicators; apply recommended thresholds. **Submit**.
+
+### Validate the config
+
+1. Have a scoped user trigger a **high-severity DLP** event on priority content.
+2. Confirm a **Data leaks** alert appears in IRM with the linked DLP activity, then triage it.
+
+---
+
+## Use case 4 — Security policy violations (policy)
+
+*Correlate endpoint security alerts with data risk using Microsoft Defender for Endpoint.*
+
+### Preconfig
+
+Use case 1 foundations, and **Microsoft Defender for Endpoint** onboarded with Defender ↔ Purview signal-sharing turned on.
+
+### Configure
+
+1. **Policies → ＋ Create policy** → the **Security policy violations** template that fits (e.g., *by departing / risky users*). **Next**.
+2. Scope users and confirm **Defender for Endpoint** indicators (malware, unwanted software, security-control tampering). **Submit**.
+
+### Validate the config
+
+1. Generate a benign **Defender for Endpoint** test detection on a scoped device.
+2. Confirm the signal surfaces as an IRM **alert** and triage it.
+
+---
+
+## Use case 5 — Adaptive Protection (risk-based DLP & access)
+
+*Let a user's calculated risk level dynamically tighten DLP and Conditional Access — strong controls only for higher-risk users.*
+
+### Preconfig
+
+Live IRM policies (Use cases 2–4) and a **DLP policy** (and/or Conditional Access) you can scope to risk levels.
+
+### Configure
+
+1. **Insider Risk Management → Adaptive Protection** → turn it on.
+2. Map **insider-risk levels** (Elevated / Moderate / Minor) to **DLP policy** actions (e.g., Elevated = block, Moderate = warn) and/or **Conditional Access** controls. See [Adaptive Protection](https://learn.microsoft.com/purview/insider-risk-management-adaptive-protection).
+
+### Validate the config
+
+1. Drive a test user to an **Elevated** risk level (repeated exfiltration signals).
+2. Confirm the mapped **DLP/CA** control tightens for that user, and relaxes as risk decreases.
 
 ## Governance guardrails
 

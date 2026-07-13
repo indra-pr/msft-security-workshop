@@ -87,16 +87,20 @@ flowchart TB
 By the end of this lab you will:
 
 - [x] Seed the estate with labeled / oversharable sensitive content
-- [x] Enable **Auditing and analytics** and let DSPM scan
-- [x] Review **insights and oversharing** findings in Reports
-- [x] Turn a **recommendation** into a one-click policy
+- [x] Enable **Auditing and analytics** and review posture insights
+- [x] Turn an oversharing **recommendation** into a one-click policy
+- [x] Assess **DSPM for AI** (Copilot/agents) and investigate with **Security Copilot**
 
 ## Use cases covered
 
-| # | Use case | Outcome | Time |
+Each use case is one way to implement DSPM, walked through as **preconfig → configure → validate**:
+
+| # | Surface | What you configure | Time |
 |---|---|---|---|
-| 1 | **Enable DSPM and review insights** | Populated posture insights + oversharing findings | ~30–60 min (scans take time) |
-| 2 | **Verify insights & recommendations** | Confirmed findings + an actionable recommendation | ~15 min |
+| 1 | **Enable DSPM & review insights** | Audit + analytics; posture insights | ~30–60 min (scans take time) |
+| 2 | **Remediate oversharing** | One-click DLP/label policy from a recommendation | ~20 min |
+| 3 | **DSPM for AI** | Copilot/agents posture + one-click AI policies | ~30–45 min |
+| 4 | **Investigate with Security Copilot** | Natural-language risk investigation (advanced) | ~15 min |
 
 ## Generate lab data
 
@@ -131,32 +135,85 @@ Write-Host "Seeded $lab. Upload these to test SharePoint sites, then let DSPM sc
 | Prioritize **oversharing** remediation | Highest risk before Copilot rollout |
 | Iterate **monthly** | Review recommendations, update policies |
 
-## Use case 1 — Enable DSPM and review insights
+## Use case 1 — Enable DSPM & review insights
 
-1. In the **[Microsoft Purview portal](https://purview.microsoft.com)**, open **Data Security Posture Management**.
-2. Go to **Actions → Setup tasks** and complete the required **Auditing and analytics** task.
-3. Optionally create **collection policies** to capture AI interactions, and activate recommended **one-click DSPM for AI** policies.
-4. Review the **Overview**, **Reports**, and **Recommendations** as data accumulates (allow **~24 hours** for policy data to appear).
-5. Act on recommendations — many generate **DLP/label policies** directly; investigate deeper with **Security Copilot**.
+*Turn DSPM on and let it surface where your sensitive-data risk is.*
 
-### The four-step deployment model
+### Preconfig
 
-| Step | Outcome |
-|---|---|
-| 1. Establish foundations (SITs, labels, IRM, Security Copilot) | Data estate understood |
-| 2. Configure access & analytics; start initial scan | DSPM starts pulling insights |
-| 3. Understand data landscape & risks | Risks assessed |
-| 4. Take action & investigate with Security Copilot | Environment secured |
+Foundations in place: **SITs**, **sensitivity labels**, and **Audit** (see the [Information Protection](information-protection/index.md) and [DLP](dlp/index.md) labs), plus seeded [lab data](#generate-lab-data).
 
-## Use case 2 — Verify insights & recommendations
+### Configure
 
-1. Confirm the **Auditing and analytics** setup task shows **complete**.
-2. After scans run, open **Reports** — you should see sensitive-data insights and **oversharing** findings for your seeded sites.
-3. Confirm at least one **recommendation** appears and can be turned into a policy.
-4. If enabled, confirm **Copilot/agent** interaction insights appear in the reports.
+1. **[Microsoft Purview portal](https://purview.microsoft.com)** → **Data Security Posture Management**.
+2. **Actions → Setup tasks** → complete the required **Auditing and analytics** task.
+3. Let scans run and review the **Overview**, **Reports**, and **Recommendations** (allow **~24 hours** for data).
 
-!!! success "What 'good' looks like"
-    DSPM shows your seeded sensitive content, flags oversharing on the test sites, and offers **actionable recommendations** (for example create a DLP policy or apply a label) that you can enact in one click.
+### Validate the config
+
+1. Confirm the **Auditing and analytics** task shows **complete**.
+2. Open **Reports** — confirm sensitive-data insights and **oversharing** findings for your seeded sites.
+3. Confirm at least one **recommendation** appears.
+
+---
+
+## Use case 2 — Remediate oversharing (one-click policy)
+
+*Turn a DSPM recommendation into a real DLP or labeling policy — the "act on it" step.*
+
+### Preconfig
+
+Use case 1 complete, with at least one **oversharing recommendation** showing in DSPM.
+
+### Configure
+
+1. Open **DSPM → Recommendations** and pick an oversharing recommendation (e.g., *restrict broadly-shared sensitive files*).
+2. Choose the **one-click** action — DSPM generates the underlying **DLP** or **sensitivity-label / auto-labeling** policy.
+3. Review the generated policy and run it in **simulation** first, then enforce.
+
+### Validate the config
+
+1. Confirm the generated **DLP/label policy** appears (in DLP or Information Protection).
+2. Confirm the oversharing finding **trends down** on re-scan.
+
+---
+
+## Use case 3 — DSPM for AI (Copilot & agents)
+
+*Assess and reduce data risk specifically for Microsoft 365 Copilot, agents, and third-party AI apps before and during rollout.*
+
+### Preconfig
+
+DSPM enabled (Use case 1). For third-party AI sites, **onboard devices** and install the **Purview browser extension**; Copilot/agent insights need users with **Microsoft 365 Copilot** licenses.
+
+### Configure
+
+1. Open **DSPM for AI** → complete its **setup tasks** (audit, one-click policies).
+2. Optionally create **collection policies** to capture AI interactions, and activate recommended **one-click DSPM for AI** policies (e.g., limit sensitive data in Copilot responses).
+
+### Validate the config
+
+1. Generate some **Copilot/agent** interactions with sensitive content.
+2. Confirm **DSPM for AI** reports show the interactions and any **oversharing / sensitive-data-in-prompt** insights.
+
+---
+
+## Use case 4 — Investigate with Security Copilot (advanced)
+
+*Use the Data Security Posture agent in Security Copilot to investigate risks in natural language.*
+
+### Preconfig
+
+**Security Copilot** provisioned with **SCUs**, and DSPM enabled.
+
+### Configure
+
+1. In DSPM, open an insight/risk and choose **Investigate with Security Copilot** (or use the **Data Security Posture agent**).
+2. Ask natural-language questions about the risk (who has access, what's exposed, what to fix).
+
+### Validate the config
+
+1. Confirm Security Copilot returns a grounded summary of the risk and recommended actions.
 
 ## What DSPM helps you assess
 
