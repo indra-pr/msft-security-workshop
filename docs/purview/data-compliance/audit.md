@@ -13,9 +13,9 @@ description: >-
 
 | Level | Audience | Estimated time | What you'll build |
 |---|---|---|---|
-| 100 · Foundational | Compliance / security administrator | ~20 min (Standard) | A permissioned audit search that returns real activity events |
+| 100 · Foundational | Compliance / security administrator | ~1.5 hrs (all 3 surfaces); ~20 min for Standard | A permissioned audit search that returns real activity events |
 
-!!! info "Complexity: Low (Standard) / Medium (Premium) · Est. time: ~20 min (Standard); ~45–60 min (Premium)"
+!!! info "Complexity: Low (Standard) / Medium (Premium) · Est. time: ~1.5 hrs total (all 3 surfaces); ~20 min for a Standard search"
     **Audit (Standard)** is on by default — you mostly assign permissions and search. **Audit (Premium)** adds per-user Advanced Auditing, long-term retention policies, and high-value events, which takes more setup.
 
 ## Why this matters
@@ -127,7 +127,7 @@ To generate specific activity, sign in as a test user and view/download a docume
 
 ## Use case 1 — Audit (Standard) search
 
-*The always-on baseline — search the unified audit log to answer "who did what, when".*
+*Investigate a suspected mailbox compromise by searching the unified audit log for who accessed, sent, or exported a user's mail — the always-on baseline for "who did what, when".*
 
 ### Preconfig
 
@@ -149,7 +149,7 @@ To generate specific activity, sign in as a test user and view/download a docume
         -RecordType SharePointFileOperation -ResultSize 50
     ```
 
-### Validate the config
+### Validate
 
 1. Perform a known action (e.g., download a test file as a test user).
 2. Search for that **user + activity + time window** and confirm the **record** appears.
@@ -159,7 +159,7 @@ To generate specific activity, sign in as a test user and view/download a docume
 
 ## Use case 2 — Audit (Premium) — advanced auditing & retention
 
-*Capture high-value events and keep logs longer for serious investigations.*
+*Turn on high-value events like **MailItemsAccessed** and keep logs for a year (or up to ten) so you can reconstruct a breach discovered months after it happened.*
 
 ### Preconfig
 
@@ -170,7 +170,7 @@ To generate specific activity, sign in as a test user and view/download a docume
 1. **Microsoft 365 admin center → Users → Active users** → open a user → **Licenses and apps** → enable **Microsoft 365 Advanced Auditing** for privileged/at-risk users.
 2. In **Purview → Audit**, create **audit log retention policies** to keep specific record types longer (up to 1 year, or 10 years with the add-on).
 
-### Validate the config
+### Validate
 
 1. As a licensed user, generate a high-value event (e.g., access a mailbox item).
 2. Search for `MailItemsAccessed` and confirm it appears.
@@ -180,7 +180,7 @@ To generate specific activity, sign in as a test user and view/download a docume
 
 ## Use case 3 — Export / SIEM streaming
 
-*Get audit data out to your SOC tooling for correlation and long-term analytics.*
+*Stream audit events into **Microsoft Sentinel** so the SOC can correlate them with other signals and hunt across long-term analytics.*
 
 ### Preconfig
 
@@ -191,7 +191,7 @@ A **registered app** with the right permissions (Graph / Office 365 Management A
 1. Choose an export path: **Audit Search Graph API**, the **Office 365 Management Activity API**, or the **Microsoft 365 connector in Sentinel**.
 2. Subscribe to the relevant **content types** and point them at your SIEM/SOAR.
 
-### Validate the config
+### Validate
 
 1. Trigger an audited action.
 2. Confirm the event arrives in your **SIEM** (e.g., a Sentinel table) with the expected fields.

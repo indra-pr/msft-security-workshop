@@ -13,9 +13,9 @@ description: >-
 
 | Level | Audience | Estimated time | What you'll build |
 |---|---|---|---|
-| 300 · Advanced | Compliance administrator | ~60–90 min (+ up to 24 h to propagate) | Two directional Block policies between segments, verified in Teams |
+| 300 · Advanced | Compliance administrator | ~1.75 hrs (all 3 surfaces) + up to 24 h to propagate | Two directional Block policies between segments, verified in Teams |
 
-!!! info "Complexity: Medium–High · Est. time: ~60–90 min (+ up to 24 h to propagate)"
+!!! info "Complexity: Medium–High · Est. time: ~1.75 hrs total (all 3 surfaces); changes take up to 24 h to propagate"
     Segmenting users and writing directional Block policies is methodical work, and changes take **up to 24 hours** to propagate. The concepts (segments, directions, modes) require care, so budget planning time.
 
 ## Why this matters
@@ -126,7 +126,7 @@ foreach ($upn in $assignments.Keys) {
 
 ## Use case 1 — Block mode (two segments, two-way block)
 
-*The most common IB pattern — stop two groups from communicating in Teams.*
+*Stop the **Investment Banking** segment and the **Public-side Research** segment from chatting, calling, or meeting in Teams — the classic ethical-wall block, enforced in both directions.*
 
 ### Preconfig
 
@@ -158,7 +158,7 @@ Two segments' worth of users with a distinguishing directory attribute (from [la
 
     See [Get started with Information Barriers](https://learn.microsoft.com/purview/information-barriers-policies).
 
-### Validate the config
+### Validate
 
 1. Wait **~24 hours**, then confirm **Policy application** status is **completed**.
 2. As an *Advisory* user in **Teams**, try to chat with a *Brokerage* user — you should be **prevented**.
@@ -168,7 +168,7 @@ Two segments' worth of users with a distinguishing directory attribute (from [la
 
 ## Use case 2 — Allow / multi-segment mode
 
-*When users belong to many segments, use **Allow** policies (a segment may communicate only with named segments) — required for multi-segment mode.*
+*Restrict the **Trading** segment so it can collaborate only with **Compliance** and **Operations** — using **Allow** policies when users belong to many segments (multi-segment mode).*
 
 ### Preconfig
 
@@ -186,7 +186,7 @@ Non-legacy (**multi-segment**) mode; segments defined (Use case 1). Multi-segmen
 
 3. **Apply all policies** and allow propagation.
 
-### Validate the config
+### Validate
 
 1. Confirm a user in *Sales* can reach *Marketing* but **not** other segments.
 2. Confirm application status is **completed** with no validation errors.
@@ -195,7 +195,7 @@ Non-legacy (**multi-segment**) mode; segments defined (Use case 1). Multi-segmen
 
 ## Use case 3 — Extend IB to SharePoint/OneDrive & discoverability
 
-*Barriers for files and sites, plus controlling whether blocked users can even find each other.*
+*Extend the wall to files — block a **Research** user from opening a **Banking** SharePoint site or OneDrive — and hide blocked users from each other in people search.*
 
 ### Preconfig
 
@@ -207,7 +207,7 @@ Active IB policies (Use case 1) and ~24 h propagation.
 2. Configure **user discoverability** (whether blocked users appear in search/people pickers) under IB settings.
 3. (Optional) Add an **Allow moderation** policy for cross-segment moderated meetings (requires E5 + Teams Premium for organizers).
 
-### Validate the config
+### Validate
 
 1. Confirm a blocked user **can't** access a restricted SharePoint site / add the other segment to a site.
 2. Confirm search/people-picker **discoverability** behaves as configured.

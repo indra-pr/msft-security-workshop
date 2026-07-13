@@ -13,9 +13,9 @@ description: >-
 
 | Level | Audience | Estimated time | What you'll build |
 |---|---|---|---|
-| 200 · Intermediate | Compliance / HR-linked reviewer | ~45–60 min | A first policy from a template plus a triaged alert |
+| 200 · Intermediate | Compliance / HR-linked reviewer | ~2.25 hrs (all 5 surfaces); ~45 min for the first policy | A first policy from a template plus a triaged alert |
 
-!!! info "Complexity: Medium · Est. time: ~45–60 min for a first policy"
+!!! info "Complexity: Medium · Est. time: ~2.25 hrs total (all 5 surfaces); ~45 min for a first policy"
     Permissions and privacy settings need care (Global Admins have **no** access by default), but policy templates make the first policy quick. Investigation/remediation is an ongoing workflow.
 
 ## Why this matters
@@ -135,7 +135,7 @@ For Teams/Viva Engage, post a benign test message containing your policy's keywo
 
 ## Use case 1 — Inappropriate text & images
 
-*Catch harassment, threats, and offensive content across Teams, Viva Engage, and Exchange.*
+*Flag a Teams message where one employee harasses or threatens another — using trainable classifiers (and OCR on images) across Teams, Viva Engage, and Exchange.*
 
 ### Preconfig
 
@@ -148,7 +148,7 @@ Add reviewers to a **Communication Compliance** role group (**Global Admins have
 3. Set the **name**, **users/groups in scope** (pilot), and **reviewers**. Create.
 4. (Optional) Add **notice templates** and confirm **anonymization** under **Settings → Communication Compliance → Privacy**.
 
-### Validate the config
+### Validate
 
 1. From a scoped test user, post a policy-triggering message.
 2. **Communication Compliance → Alerts** — confirm the **alert** with the matched classifier.
@@ -158,7 +158,7 @@ Add reviewers to a **Communication Compliance** role group (**Global Admins have
 
 ## Use case 2 — Sensitive information
 
-*Detect regulated or confidential data (SITs) shared in messages.*
+*Catch an employee pasting a customer's credit-card number or national ID into a chat, by detecting sensitive information types in messages.*
 
 ### Preconfig
 
@@ -169,7 +169,7 @@ Use case 1 foundations (role groups, privacy).
 1. **Policies → Create policy** → **Detect sensitive info** template (or Custom).
 2. Add **sensitive information types** (e.g., Credit Card Number) and/or **sensitivity labels** as conditions; scope users; assign reviewers. Create.
 
-### Validate the config
+### Validate
 
 1. Send a message containing a synthetic SIT (e.g., a test card number).
 2. Confirm an **alert** with the matched SIT and triage it.
@@ -178,7 +178,7 @@ Use case 1 foundations (role groups, privacy).
 
 ## Use case 3 — Conflict of interest
 
-*Detect communication between two groups that shouldn't be talking (e.g., deal vs. research).*
+*Surface any chat between the **deal team** and **public-side research** — groups that must not talk — to catch a conflict of interest early.*
 
 ### Preconfig
 
@@ -189,7 +189,7 @@ Two groups defined, and Use case 1 foundations.
 1. **Policies → Create policy** → **Detect conflict of interest**.
 2. Choose the **two groups**; scope and assign reviewers. Create.
 
-### Validate the config
+### Validate
 
 1. Send a message between members of the two groups.
 2. Confirm a **conflict-of-interest** alert and triage it.
@@ -198,7 +198,7 @@ Two groups defined, and Use case 1 foundations.
 
 ## Use case 4 — Regulatory compliance
 
-*Detect conduct/regulatory violations (e.g., promises, guarantees, market abuse).*
+*Flag a broker who promises "guaranteed returns" or hints at market abuse, using a regulatory-compliance template for conduct violations.*
 
 ### Preconfig
 
@@ -209,7 +209,7 @@ Use case 1 foundations.
 1. **Policies → Create policy** → a **Regulatory compliance** template (or Custom with the relevant classifiers/keywords).
 2. Scope users and assign reviewers. Create.
 
-### Validate the config
+### Validate
 
 1. Send a message that matches the regulatory condition.
 2. Confirm the **alert** and triage it.
@@ -218,7 +218,7 @@ Use case 1 foundations.
 
 ## Use case 5 — Connected / third-party sources
 
-*Supervise non-Microsoft communications (e.g., Bloomberg, WhatsApp, Zoom) by importing them.*
+*Bring **Bloomberg**, **WhatsApp**, or **Zoom** messages into scope via data connectors, so the same conduct policies supervise non-Microsoft channels too.*
 
 ### Preconfig
 
@@ -229,7 +229,7 @@ The relevant **data connector** available for your channel.
 1. **Data connectors → Connectors** — configure the connector for the third-party source ([archive third-party data](https://learn.microsoft.com/purview/archive-third-party-data)).
 2. Include the connected source in a Communication Compliance **policy** scope.
 
-### Validate the config
+### Validate
 
 1. Confirm imported messages appear and are evaluated by the policy.
 2. Confirm alerts generate for matching connected-source content.

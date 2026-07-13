@@ -13,9 +13,9 @@ description: >-
 
 | Level | Audience | Estimated time | What you'll build |
 |---|---|---|---|
-| 300 · Advanced | Records / compliance manager | ~60–90 min | A file plan with a retention label and a disposition-review step |
+| 300 · Advanced | Records / compliance manager | ~2.75 hrs (all 6 surfaces); ~45 min for the first file plan + label | A file plan with a retention label and a disposition-review step |
 
-!!! info "Complexity: Medium–High · Est. time: ~60–90 min for a first file plan + label"
+!!! info "Complexity: Medium–High · Est. time: ~2.75 hrs total (all 6 surfaces); ~45 min for a first file plan + label"
     Records management shares retention building blocks with DLM but adds **file plan**, **records declaration**, **event-based retention**, and **disposition review** — governance work that benefits from records-management expertise.
 
 ## Why this matters
@@ -124,7 +124,7 @@ Also seed some documents to label — reuse the [DLM sample script](data-lifecyc
 
 ## Use case 1 — File plan & retention label
 
-*The backbone — a retention schedule (file plan) plus a record label to apply.*
+*Build a retention schedule for **contracts** — a file plan with a 7-year record label — the backbone you'll publish and apply in every use case below.*
 
 ### Preconfig
 
@@ -136,7 +136,7 @@ Also seed some documents to label — reuse the [DLM sample script](data-lifecyc
 2. **Create a label** (or **Import** your CSV): set the **retention period** and **action**, add **file plan descriptors** (reference ID, category).
 3. **Label policies → Publish labels** to a **pilot** SharePoint library.
 
-### Validate the config
+### Validate
 
 1. Confirm the label appears in **File plan** and is **published**.
 2. Confirm a pilot user can **apply** it to a document.
@@ -145,7 +145,7 @@ Also seed some documents to label — reuse the [DLM sample script](data-lifecyc
 
 ## Use case 2 — Records declaration
 
-*Turn content into an immutable record so it can't be edited or deleted improperly.*
+*Mark a signed contract as a **record** so no one can edit or delete it before its retention period ends.*
 
 ### Preconfig
 
@@ -156,7 +156,7 @@ A published label from Use case 1.
 1. Edit the label → **mark items as a record** (or **regulatory record** for the strictest tier — see Use case 5).
 2. Publish and apply it to a test document.
 
-### Validate the config
+### Validate
 
 1. Apply the label and confirm the item is **declared a record**.
 2. Confirm attempts to **delete/edit** are blocked or versioned per settings.
@@ -165,7 +165,7 @@ A published label from Use case 1.
 
 ## Use case 3 — Event-based retention
 
-*Start the retention clock on a business event (contract end, employee departure).*
+*Start a personnel file's retention clock on the employee's **departure**, not on a fixed date — event-based retention for records.*
 
 ### Preconfig
 
@@ -177,7 +177,7 @@ An **event type** defined; a retention label.
 2. Record the **asset ID / keywords** tying items to the event; publish/auto-apply.
 3. Create the matching **event** to start the clock.
 
-### Validate the config
+### Validate
 
 1. Trigger the event and confirm labeled items begin retention from the event date.
 
@@ -185,7 +185,7 @@ An **event type** defined; a retention label.
 
 ## Use case 4 — Disposition review
 
-*Require a human to review and approve before a record is deleted.*
+*Require a records manager to review and approve each expired contract before it's deleted — with proof of disposition.*
 
 ### Preconfig
 
@@ -196,7 +196,7 @@ An **event type** defined; a retention label.
 1. On the record label, enable **disposition review** and assign **reviewers** (one or more stages).
 2. Publish and apply it.
 
-### Validate the config
+### Validate
 
 1. When the period ends, confirm the item enters a **disposition review**.
 2. Complete the review and confirm **proof of disposition** is recorded.
@@ -205,7 +205,7 @@ An **event type** defined; a retention label.
 
 ## Use case 5 — Regulatory records
 
-*The strictest tier — an immutable label that can't be removed or changed.*
+*Apply the strictest **regulatory record** label to SEC-mandated filings, so the label itself can never be removed or its retention shortened.*
 
 ### Preconfig
 
@@ -216,7 +216,7 @@ An **event type** defined; a retention label.
 1. Enable **regulatory records** for your tenant.
 2. Create a label as a **regulatory record** and publish it (note: cannot be un-declared).
 
-### Validate the config
+### Validate
 
 1. Apply the regulatory-record label to a test item.
 2. Confirm the label/record **can't be removed or changed** and content is locked.
@@ -225,7 +225,7 @@ An **event type** defined; a retention label.
 
 ## Use case 6 — Auto-apply record labels
 
-*Declare records automatically instead of relying on users.*
+*Auto-declare any document containing a contract number as a record — by SIT, keyword, or classifier — instead of relying on users to do it.*
 
 ### Preconfig
 
@@ -236,7 +236,7 @@ Higher-tier licensing; a **SIT / keyword / trainable classifier** to match on.
 1. **Auto-apply a label** policy → choose the **condition** (SIT, keyword/searchable property, trainable classifier, or cloud attachment) and the **record label**.
 2. Run in **simulation** first, then enable.
 
-### Validate the config
+### Validate
 
 1. Add content matching the condition.
 2. Confirm the **record label auto-applies** and the item is declared a record.

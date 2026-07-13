@@ -13,9 +13,9 @@ description: >-
 
 | Level | Audience | Estimated time | What you'll build |
 |---|---|---|---|
-| 200 · Intermediate | Compliance / records administrator | ~45–60 min | A first retention policy (and optional label) across Microsoft 365 |
+| 200 · Intermediate | Compliance / records administrator | ~3 hrs (all 5 surfaces); ~45 min for the first policy | A first retention policy (and optional label) across Microsoft 365 |
 
-!!! info "Complexity: Medium · Est. time: ~45–60 min for a first retention policy"
+!!! info "Complexity: Medium · Est. time: ~3 hrs total (all 5 surfaces); ~45 min for a first retention policy"
     A single retention policy across Microsoft 365 is quick. Complexity rises with **retention labels for exceptions**, **event-based retention**, mailbox archiving, and adaptive scopes.
 
 ## Why this matters
@@ -118,7 +118,7 @@ Write-Host "Created $((Get-ChildItem $lab).Count) files in $lab. Upload to a tes
 
 ## Use case 1 — Retention policy (static scope)
 
-*The broad "keep/delete" control — one policy across chosen workloads.*
+*Automatically delete Teams chats after 90 days and retain SharePoint content for 7 years — one broad retain-then-delete policy across chosen workloads.*
 
 ### Preconfig
 
@@ -142,7 +142,7 @@ Compliance / **Retention Management** roles, and a **pilot site** seeded with [d
         -Policy "Baseline retention" -RetentionDuration 1095 -RetentionComplianceAction Delete
     ```
 
-### Validate the config
+### Validate
 
 1. Confirm the policy shows **On/Success**.
 2. Try to permanently delete a covered item before the period ends — it should be **preserved** (recoverable).
@@ -152,7 +152,7 @@ Compliance / **Retention Management** roles, and a **pilot site** seeded with [d
 
 ## Use case 2 — Retention labels (item-level exceptions)
 
-*Apply different retention to specific items than the broad policy.*
+*Keep individual contracts for 10 years even though their site's default is 3 — an item-level retention label for the exceptions.*
 
 ### Preconfig
 
@@ -163,7 +163,7 @@ Use case 1 policy in place.
 1. **Data Lifecycle Management → Labels → Create a label** — set the **period** and **action** (retain / retain-then-delete / delete).
 2. **Label policies → Publish labels** to a pilot site/library (or auto-apply by SIT/keyword with higher-tier licensing).
 
-### Validate the config
+### Validate
 
 1. Apply the label to a test item.
 2. Confirm the item follows the **label's** retention (not just the policy's).
@@ -172,7 +172,7 @@ Use case 1 policy in place.
 
 ## Use case 3 — Adaptive scopes
 
-*Target policies dynamically by directory attribute instead of a static list.*
+*Automatically apply a 5-year retention policy to every mailbox in the **Legal** department, using an adaptive scope that follows the directory attribute as people join and leave.*
 
 ### Preconfig
 
@@ -183,7 +183,7 @@ The attribute values you'll scope on (e.g., Department, Country).
 1. **Data Lifecycle Management → Adaptive scopes → Create** — choose **users/sites/groups** and the **attribute query**.
 2. Create (or edit) a retention policy and choose **Adaptive** scope, selecting your scope.
 
-### Validate the config
+### Validate
 
 1. Confirm the policy targets exactly the users/sites matching the attribute.
 2. Change an attribute and confirm scope membership updates.
@@ -192,7 +192,7 @@ The attribute values you'll scope on (e.g., Department, Country).
 
 ## Use case 4 — Event-based retention
 
-*Start the retention clock on a business event (contract end, employee departure).*
+*Start a contract's 7-year retention clock only when the contract actually **ends** — event-based retention keyed to a business event rather than a fixed date.*
 
 ### Preconfig
 
@@ -204,7 +204,7 @@ Higher-tier licensing; an **event type** defined.
 2. Publish/auto-apply it, and record the **asset ID / keywords** that tie items to events.
 3. Create the matching **event** to start the clock.
 
-### Validate the config
+### Validate
 
 1. Trigger the event and confirm labeled items begin their retention from the event date.
 
@@ -212,7 +212,7 @@ Higher-tier licensing; an **event type** defined.
 
 ## Use case 5 — Mailbox archiving / PST import
 
-*Give users archive mailboxes and bring legacy PSTs under governance.*
+*Turn on auto-expanding archive mailboxes and import legacy **PST** files, bringing years of old email under retention governance.*
 
 ### Preconfig
 
@@ -223,7 +223,7 @@ Higher-tier licensing; an **event type** defined.
 1. Enable **archive mailboxes** (and **auto-expanding archiving**) for users.
 2. For legacy data, use the **Import service** (network upload or drive shipping) to bring **PSTs** into mailboxes, then apply retention.
 
-### Validate the config
+### Validate
 
 1. Confirm a user's **archive mailbox** appears and receives archived items.
 2. Confirm imported PST content lands in the mailbox and is covered by retention.

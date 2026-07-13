@@ -13,9 +13,9 @@ description: >-
 
 | Level | Audience | Estimated time | What you'll build |
 |---|---|---|---|
-| 200 · Intermediate | Legal / eDiscovery administrator | ~45–75 min | A Standard case with a search, a hold, and an export |
+| 200 · Intermediate | Legal / eDiscovery administrator | ~2–3 hrs (all 3 surfaces); ~20 min for a content search | A Standard case with a search, a hold, and an export |
 
-!!! info "Complexity: Medium–High · Est. time: ~45–75 min for a first case (Standard)"
+!!! info "Complexity: Medium–High · Est. time: ~2–3 hrs total (all 3 surfaces); ~45–75 min for a first Standard case"
     A Standard case (search + hold + export) is approachable. **Premium** (custodians, legal-hold notifications, review sets, analytics, predictive coding) is a full EDRM workflow that takes longer to master.
 
 ## Why this matters
@@ -126,7 +126,7 @@ Use the unique keyword (`Project-Falcon-LABMATTER`) as your search query.
 
 ## Use case 1 — Content search
 
-*The lightest tool — search across Microsoft 365 and export, without a formal case.*
+*Quickly find every email and file mentioning "Project Falcon" across Microsoft 365 and export the results — the lightest tool, no formal case needed.*
 
 ### Preconfig
 
@@ -138,7 +138,7 @@ Use the unique keyword (`Project-Falcon-LABMATTER`) as your search query.
 2. Add **content locations** and a **keyword query** (e.g., `Project-Falcon-LABMATTER`) + conditions.
 3. Run it, review **statistics/preview**, then **Export** results.
 
-### Validate the config
+### Validate
 
 1. Confirm your seeded items appear in the **statistics/preview**.
 2. Confirm the **export** package contains the items + metadata.
@@ -147,7 +147,7 @@ Use the unique keyword (`Project-Falcon-LABMATTER`) as your search query.
 
 ## Use case 2 — Standard case (hold → search → export)
 
-*A managed matter — preserve first, then search and produce, defensibly.*
+*Open a case for a wrongful-dismissal claim: place the employee's mailbox on hold, search it, and produce the results with a defensible chain of custody.*
 
 ### Preconfig
 
@@ -160,7 +160,7 @@ Use the unique keyword (`Project-Falcon-LABMATTER`) as your search query.
 3. Create a **search** with your keyword query + conditions.
 4. Review statistics, refine, then **Export** the responsive items with metadata.
 
-### Validate the config
+### Validate
 
 1. Confirm the **hold** is active (data preserved even if a user deletes an item).
 2. Confirm the search finds your seeded items and the **export** contains them + metadata + a defensible audit trail.
@@ -169,7 +169,7 @@ Use the unique keyword (`Project-Falcon-LABMATTER`) as your search query.
 
 ## Use case 3 — Premium (custodians, review sets, analytics)
 
-*The full EDRM workflow for complex matters.*
+*Run a complex litigation with named **custodians** and legal-hold notifications — using review sets, analytics, and predictive coding to cull millions of items before export.*
 
 ### Preconfig
 
@@ -181,7 +181,7 @@ Use the unique keyword (`Project-Falcon-LABMATTER`) as your search query.
 2. Collect data into a **review set**; **filter**, **tag**, and run **analytics / predictive coding** to cull.
 3. **Export** the reviewed, responsive set with metadata.
 
-### Validate the config
+### Validate
 
 1. Confirm custodians are on hold and their data is collected.
 2. Confirm the **review set** filters/tags work and the final export is defensible.

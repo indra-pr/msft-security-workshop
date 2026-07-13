@@ -14,9 +14,9 @@ description: >-
 
 | Level | Audience | Estimated time | What you'll build |
 |---|---|---|---|
-| 300 · Advanced | Insider Risk / Compliance administrator | ~90 min (analytics scan up to 48 h) | A *Data theft by departing users* policy, plus verified alert triage |
+| 300 · Advanced | Insider Risk / Compliance administrator | ~3 hrs (all 5 surfaces) + analytics up to 48 h | A *Data theft by departing users* policy, plus verified alert triage |
 
-!!! info "Complexity: High · Est. time: ~90 min (analytics up to 48 h)"
+!!! info "Complexity: High · Est. time: ~3 hrs total (all 5 surfaces); analytics scan up to 48 h"
     IRM touches **privacy, HR data connectors, and role separation**, and its **analytics scan can take up to 48 hours**. The steps are guided, but plan for stakeholder sign-off (HR, legal, privacy) before you enable anything.
 
 !!! warning "Privacy by design — read first"
@@ -173,7 +173,7 @@ flowchart TB
 
 ## Use case 1 — Enable Insider Risk Management & foundations
 
-*Turn IRM on, connect HR data, and let analytics recommend thresholds — the base every policy builds on.*
+*Turn IRM on, connect the HR feed of leavers, and let analytics recommend thresholds — the foundation every policy below builds on.*
 
 ### Preconfig
 
@@ -198,7 +198,7 @@ You need **Global/Compliance Administrator** (or Organization Management) to see
 3. **Insider Risk Management → Analytics** → **turn on analytics** (results can take up to **48 hours**); note the **recommended thresholds**.
 4. **Settings** — keep **pseudonymization** on; under **Policy indicators**, enable **file exfiltration** indicators (download, USB, personal cloud, print); optionally define **priority content**.
 
-### Validate the config
+### Validate
 
 1. Confirm **Insider Risk Management** appears for role-group members.
 2. Confirm the **HR connector** shows imported records and **analytics** is running/complete.
@@ -208,7 +208,7 @@ You need **Global/Compliance Administrator** (or Organization Management) to see
 
 ## Use case 2 — Data theft by departing users (policy)
 
-*The highest-signal starting policy — tie exfiltration to resignation / last-working dates.*
+*Catch a resigning engineer who, in their final two weeks, copies priority source code to USB and uploads it to personal cloud — by tying exfiltration signals to their HR resignation / last-working date.*
 
 ### Preconfig
 
@@ -221,7 +221,7 @@ Use case 1 complete (permissions, HR connector, analytics, indicators), and a **
 3. Confirm the **HR connector** dependency is satisfied.
 4. Select **priority content** and **indicators**, apply the **analytics-recommended thresholds**. **Next → Submit**.
 
-### Validate the config
+### Validate
 
 1. Mark a test user as a **leaver** (import the [HR CSV](#generate-lab-data)); on an **onboarded device**, have that user copy [DLP sample files](../dlp/index.md#generate-lab-data) to USB / personal cloud.
 2. **Insider Risk Management → Alerts** — confirm an **alert** with the expected indicators and severity.
@@ -234,7 +234,7 @@ Use case 1 complete (permissions, HR connector, analytics, indicators), and a **
 
 ## Use case 3 — Data leaks (policy)
 
-*Detect risky sharing/exfiltration of sensitive content — driven by DLP and priority content.*
+*Spot an employee repeatedly emailing and externally sharing Confidential customer files, by escalating on **DLP policy matches** against priority content.*
 
 ### Preconfig
 
@@ -246,7 +246,7 @@ Use case 1 foundations, plus **at least one DLP policy** (see the [DLP lab](../d
 2. Choose whether to trigger on a **DLP policy** (high-severity alerts) or on **user activities**; select the **DLP policy** and scope the users.
 3. Set **priority content** (sites / *Highly Confidential* labels) and indicators; apply recommended thresholds. **Submit**.
 
-### Validate the config
+### Validate
 
 1. Have a scoped user trigger a **high-severity DLP** event on priority content.
 2. Confirm a **Data leaks** alert appears in IRM with the linked DLP activity, then triage it.
@@ -255,7 +255,7 @@ Use case 1 foundations, plus **at least one DLP policy** (see the [DLP lab](../d
 
 ## Use case 4 — Security policy violations (policy)
 
-*Correlate endpoint security alerts with data risk using Microsoft Defender for Endpoint.*
+*Flag a user who disables security tools or triggers malware alerts on their device — correlating **Microsoft Defender for Endpoint** alerts with their data-risk activity.*
 
 ### Preconfig
 
@@ -266,7 +266,7 @@ Use case 1 foundations, and **Microsoft Defender for Endpoint** onboarded with D
 1. **Policies → ＋ Create policy** → the **Security policy violations** template that fits (e.g., *by departing / risky users*). **Next**.
 2. Scope users and confirm **Defender for Endpoint** indicators (malware, unwanted software, security-control tampering). **Submit**.
 
-### Validate the config
+### Validate
 
 1. Generate a benign **Defender for Endpoint** test detection on a scoped device.
 2. Confirm the signal surfaces as an IRM **alert** and triage it.
@@ -275,7 +275,7 @@ Use case 1 foundations, and **Microsoft Defender for Endpoint** onboarded with D
 
 ## Use case 5 — Adaptive Protection (risk-based DLP & access)
 
-*Let a user's calculated risk level dynamically tighten DLP and Conditional Access — strong controls only for higher-risk users.*
+*Automatically move a user who becomes **elevated risk** onto stricter DLP blocking and step-up Conditional Access — strong controls only for higher-risk users, relaxed again when their risk drops.*
 
 ### Preconfig
 
@@ -286,7 +286,7 @@ Live IRM policies (Use cases 2–4) and a **DLP policy** (and/or Conditional Acc
 1. **Insider Risk Management → Adaptive Protection** → turn it on.
 2. Map **insider-risk levels** (Elevated / Moderate / Minor) to **DLP policy** actions (e.g., Elevated = block, Moderate = warn) and/or **Conditional Access** controls. See [Adaptive Protection](https://learn.microsoft.com/purview/insider-risk-management-adaptive-protection).
 
-### Validate the config
+### Validate
 
 1. Drive a test user to an **Elevated** risk level (repeated exfiltration signals).
 2. Confirm the mapped **DLP/CA** control tightens for that user, and relaxes as risk decreases.

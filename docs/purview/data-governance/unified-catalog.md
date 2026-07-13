@@ -13,9 +13,9 @@ description: >-
 
 | Level | Audience | Estimated time | What you'll build |
 |---|---|---|---|
-| 300 · Advanced | Data steward / governance lead | ~60–120 min | A governance domain with a published data product and glossary terms |
+| 300 · Advanced | Data steward / governance lead | ~2.25 hrs (all 3 surfaces); ~60 min for the first domain + product | A governance domain with a published data product and glossary terms |
 
-!!! info "Complexity: Medium–High · Est. time: ~60–120 min for a first domain + data product"
+!!! info "Complexity: Medium–High · Est. time: ~2.25 hrs total (all 3 surfaces); ~60 min for a first domain + product"
     Building a governance domain and publishing a data product is guided, but real value comes from **curation, glossary, and data-quality** work with data stewards — an ongoing program.
 
 ## Why this matters
@@ -113,7 +113,7 @@ Unified Catalog builds on **Data Map assets**, so first complete a [Data Map sca
 
 ## Use case 1 — Governance domain & data product
 
-*Turn scanned assets into a trusted, published data product people can find.*
+*Bundle the scanned **Customer** tables into a published **data product** with an owner and usage guidance, so analysts can find and trust it.*
 
 ### Preconfig
 
@@ -125,7 +125,7 @@ Unified Catalog builds on **Data Map assets**, so first complete a [Data Map sca
 2. **Unified Catalog → Catalog management → Governance domains → New** — name it (e.g., `Customer`), assign an **owner**, and **Publish**.
 3. **Data products → New data product** — add **assets** from Data Map, a description, and **usage** guidance. **Publish**.
 
-### Validate the config
+### Validate
 
 1. Confirm the **domain** and **data product** show as **Published**.
 2. As a business user with discovery access, **search** the catalog and find the product.
@@ -134,7 +134,7 @@ Unified Catalog builds on **Data Map assets**, so first complete a [Data Map sca
 
 ## Use case 2 — Business context (glossary, CDEs, OKRs)
 
-*Give data business meaning so people understand and trust it.*
+*Attach a **glossary** definition of "Active Customer" and link an **OKR** to the data product, so business users understand what the data actually means.*
 
 ### Preconfig
 
@@ -145,7 +145,7 @@ A published data product (Use case 1).
 1. Add **glossary terms** and **critical data elements (CDEs)**; link them to the data product.
 2. Define **OKRs** and associate the relevant data products.
 
-### Validate the config
+### Validate
 
 1. Confirm glossary terms / CDEs / OKRs are **linked** to the product and visible to discovery users.
 
@@ -153,7 +153,7 @@ A published data product (Use case 1).
 
 ## Use case 3 — Data quality (profiling + rules)
 
-*Measure and publish a trust score for a data product.*
+*Profile the customer table and add **completeness** and **uniqueness** rules, publishing a data-quality score so consumers know they can rely on it.*
 
 ### Preconfig
 
@@ -164,7 +164,7 @@ Source in **delta format (ADLS Gen2 or Microsoft Fabric)** and the Purview **Man
 1. **Data quality** → connect the source and run **profiling**.
 2. Define **data quality rules** across dimensions (accuracy, completeness, conformity, consistency, timeliness, uniqueness) and run them.
 
-### Validate the config
+### Validate
 
 1. Confirm a **data-quality score** appears on the data product after rules run.
 

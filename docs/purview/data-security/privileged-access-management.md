@@ -13,9 +13,9 @@ description: >-
 
 | Level | Audience | Estimated time | What you'll build |
 |---|---|---|---|
-| 200 · Intermediate | Global / Exchange administrator | ~45–60 min | An approval policy that gates a sensitive Exchange task behind just-in-time approval |
+| 200 · Intermediate | Global / Exchange administrator | ~1 hr (all 3 surfaces) | An approval policy that gates a sensitive Exchange task behind just-in-time approval |
 
-!!! info "Complexity: Medium · Est. time: ~45–60 min"
+!!! info "Complexity: Medium · Est. time: ~1 hr total (all 3 surfaces)"
     The four-step setup (approver group → enable → policy → request/approve) is straightforward. Scoping the right tasks and approver groups, and coordinating with admins, is what takes the time.
 
 ## Why this matters
@@ -128,7 +128,7 @@ A good **test task** to gate is `Exchange\New-MoveRequest` (mailbox moves) — v
 
 ## Use case 1 — Task policy (manual approval)
 
-*Gate a single sensitive Exchange task behind just-in-time, human approval — the core PAM pattern.*
+*Require explicit, time-limited approval before any admin can run a sensitive Exchange task — such as creating a journal rule or exporting a mailbox — the core just-in-time PAM pattern.*
 
 ### Preconfig
 
@@ -158,7 +158,7 @@ An **approver group** (from [lab data](#generate-lab-data)) and **Global Adminis
         -ApproverGroup 'pamapprovers@contoso.onmicrosoft.com'
     ```
 
-### Validate the config
+### Validate
 
 1. As a requestor, submit a request (`New-ElevatedAccessRequest -Task 'Exchange\New-MoveRequest' -Reason '...' -DurationHours 4`, or a portal request).
 2. Confirm the **approver group** gets an **email**; approve it (`Approve-ElevatedAccessRequest -RequestId <id>`).
@@ -171,7 +171,7 @@ An **approver group** (from [lab data](#generate-lab-data)) and **Global Adminis
 
 ## Use case 2 — Role / role-group policy
 
-*Gate an administrative **role** or **role group** (not just a single task) behind approval.*
+*Require approval before anyone can activate the **Exchange transport rules** role — gating an entire administrative role or role group, not just one task.*
 
 ### Preconfig
 
@@ -182,7 +182,7 @@ PAM enabled (Use case 1) and the approver group.
 1. **Manage access policies and requests → Configure policies → Add a policy**.
 2. Set **Policy type = Role** (or **Role Group**), choose the **role/role group**, **approval type = Manual**, and the **approver group**. **Create**.
 
-### Validate the config
+### Validate
 
 1. A requestor requests access to the **role/role group**.
 2. After approval, confirm they hold the role **only** for the granted window, and the activity is **audited**.
@@ -191,7 +191,7 @@ PAM enabled (Use case 1) and the approver group.
 
 ## Use case 3 — Auto-approval policy
 
-*For lower-risk tasks, auto-grant access (no human step) while still logging every request — speed without standing access.*
+*Auto-grant a routine, lower-risk task the moment it's requested — no human step — while still logging every request for audit: speed without standing access.*
 
 ### Preconfig
 
@@ -210,7 +210,7 @@ PAM enabled; a task/role you've assessed as lower-risk.
 
 2. Keep it scoped narrowly and review usage periodically.
 
-### Validate the config
+### Validate
 
 1. Request the auto-approved task and confirm access is **granted immediately**, time-boxed.
 2. Confirm the request and execution still appear in the **audit log**.

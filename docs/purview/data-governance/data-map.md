@@ -13,9 +13,9 @@ description: >-
 
 | Level | Audience | Estimated time | What you'll build |
 |---|---|---|---|
-| 300 · Advanced | Data / platform administrator | ~60–90 min | A Data Map account with a registered source and a completed scan |
+| 300 · Advanced | Data / platform administrator | ~3–3.5 hrs (all 4 surfaces); ~60 min for the first cloud scan | A Data Map account with a registered source and a completed scan |
 
-!!! info "Complexity: Medium–High · Est. time: ~60–90 min for a first scan"
+!!! info "Complexity: Medium–High · Est. time: ~3–3.5 hrs total (all 4 surfaces); ~60 min for a first cloud scan"
     Creating the account and scanning a cloud source is approachable. Complexity rises with **on-premises sources** (self-hosted integration runtime), **credentials/networking**, and **custom scan rule sets**.
 
 ## Why this matters
@@ -130,7 +130,7 @@ The `card` column contains a synthetic credit-card-format value so the scan's cl
 
 ## Use case 1 — Cloud source scan
 
-*Discover and classify data in a cloud source (Azure, AWS, GCP) — the fastest way to start the map.*
+*Point Purview at an **Azure Blob Storage** account, scan it, and watch it auto-classify columns of credit-card and PII data — the fastest way to start the map.*
 
 ### Preconfig
 
@@ -142,7 +142,7 @@ A **Microsoft Purview account**, **Data Source Administrator + Data Reader** rol
 2. Select the source → **New scan**; pick a **credential** (Managed Identity), **Test connection**, **Continue**.
 3. **Scope** the scan, choose the **system default scan rule set**, set a **schedule**, and **Save and run**.
 
-### Validate the config
+### Validate
 
 1. Confirm the scan status is **Completed** with assets discovered.
 2. Open a scanned asset and confirm **schema** + **classifications** (e.g., *Credit Card Number* on the `card` column).
@@ -151,7 +151,7 @@ A **Microsoft Purview account**, **Data Source Administrator + Data Reader** rol
 
 ## Use case 2 — On-premises source (self-hosted runtime)
 
-*Extend the map to on-prem file shares, SQL, and other private-network sources.*
+*Reach a **SQL Server** or file share sitting behind the corporate firewall and scan it through a self-hosted runtime — no data leaves your network.*
 
 ### Preconfig
 
@@ -163,7 +163,7 @@ A **self-hosted integration runtime** installed on a machine with network access
 2. **Register** the on-prem source and map it to a collection.
 3. **New scan** → choose the **self-hosted runtime** and credential; scope and run.
 
-### Validate the config
+### Validate
 
 1. Confirm the scan completes via the self-hosted runtime.
 2. Confirm on-prem assets, schema, and classifications appear in the map.
@@ -172,7 +172,7 @@ A **self-hosted integration runtime** installed on a machine with network access
 
 ## Use case 3 — Custom scan rule sets & classifications
 
-*Detect data unique to your business (e.g., national IDs, account formats) that built-in classifiers miss.*
+*Teach the scanner to recognize your **customer-account number** format with a custom classification, so it's detected everywhere the built-in classifiers miss it.*
 
 ### Preconfig
 
@@ -184,7 +184,7 @@ A **self-hosted integration runtime** installed on a machine with network access
 2. **Scan rule sets** → create a **custom scan rule set** that includes your classification.
 3. Run a scan using the custom rule set.
 
-### Validate the config
+### Validate
 
 1. Confirm scanned assets carry your **custom classification** where the pattern matches.
 
@@ -192,7 +192,7 @@ A **self-hosted integration runtime** installed on a machine with network access
 
 ## Use case 4 — Scheduled / incremental scans & lineage
 
-*Keep the map current automatically and see how data moves.*
+*Schedule nightly **incremental** scans so the map stays current, and view **lineage** to trace how a report's data flowed from its original source.*
 
 ### Preconfig
 
@@ -203,7 +203,7 @@ A registered, previously-scanned source.
 1. On the source's scan, set a **recurring (incremental)** schedule.
 2. Where supported, enable **lineage** capture (e.g., via Data Factory / Fabric integration).
 
-### Validate the config
+### Validate
 
 1. Confirm a re-run **incremental** scan completes faster than the full scan.
 2. Confirm **lineage** shows how the asset is produced/consumed (where available).

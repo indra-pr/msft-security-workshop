@@ -13,9 +13,9 @@ description: >-
 
 | Level | Audience | Estimated time | What you'll build |
 |---|---|---|---|
-| 100 · Foundational | Compliance / GRC administrator | ~30–45 min | A first assessment from a template with tracked improvement actions |
+| 100 · Foundational | Compliance / GRC administrator | ~1.5–2 hrs (all 4 surfaces); ~30 min for the first assessment | A first assessment from a template with tracked improvement actions |
 
-!!! info "Complexity: Low–Medium · Est. time: ~30–45 min to first assessment"
+!!! info "Complexity: Low–Medium · Est. time: ~1.5–2 hrs total (all 4 surfaces); ~30 min to first assessment"
     Creating an assessment from a template is quick. The ongoing work is completing **improvement actions** and keeping evidence current — that's a program, not a one-time task.
 
 ## Why this matters
@@ -118,7 +118,7 @@ Each use case is one way to implement Compliance Manager, walked through as **pr
 
 ## Use case 1 — Baseline assessment
 
-*Start measuring with the broadly-available Data Protection Baseline.*
+*Get your first compliance score by creating the **Data Protection Baseline** assessment and completing one improvement action — the fastest way to start measuring.*
 
 ### Preconfig
 
@@ -130,7 +130,7 @@ Assign **Compliance Manager** roles (Reader / Contribution / Assessor / Administ
 2. Base it on **Data Protection Baseline**, choose a **group**, and designate **services**.
 3. Open the assessment and work an **improvement action** — implement the control, set status, add notes, **upload evidence**.
 
-### Validate the config
+### Validate
 
 1. Confirm the assessment appears with a **score contribution**.
 2. Complete one **customer-managed** action and confirm the **compliance score** increases (allow ~24 h); check **Reports**.
@@ -139,7 +139,7 @@ Assign **Compliance Manager** roles (Reader / Contribution / Assessor / Administ
 
 ## Use case 2 — Regulation assessment
 
-*Operationalize a specific regulation (e.g., ISO/IEC 27001, GDPR, a local privacy law).*
+*Operationalize **ISO/IEC 27001** (or GDPR, or a local privacy law) by spinning up its assessment and assigning its controls to owners.*
 
 ### Preconfig
 
@@ -150,7 +150,7 @@ Use case 1 roles; know which regulation you must meet (some templates are premiu
 1. **Assessments → Add assessment** → **Select regulation** (e.g., *ISO/IEC 27001*).
 2. Assign a **group**, designate **services**, and assign **action owners**.
 
-### Validate the config
+### Validate
 
 1. Confirm the regulation assessment appears with its controls and score.
 2. Complete an action and confirm points apply.
@@ -159,7 +159,7 @@ Use case 1 roles; know which regulation you must meet (some templates are premiu
 
 ## Use case 3 — Custom assessment
 
-*Extend a template with your own controls and actions for internal or niche requirements.*
+*Build a **custom assessment** for an internal security standard that no template covers, with your own controls and evidence.*
 
 ### Preconfig
 
@@ -170,7 +170,7 @@ Use case 1 roles; know which regulation you must meet (some templates are premiu
 1. **Assessment templates → Create/extend a template** — add your **custom controls** and **improvement actions**.
 2. Create an **assessment** from your custom template.
 
-### Validate the config
+### Validate
 
 1. Confirm the custom assessment and its controls appear.
 2. Confirm completing a custom action moves the score.
@@ -179,7 +179,7 @@ Use case 1 roles; know which regulation you must meet (some templates are premiu
 
 ## Use case 4 — Connectors (non-Microsoft services)
 
-*Bring third-party services (e.g., Salesforce, Zoom) into your compliance posture.*
+*Pull **Salesforce** or **Zoom** configuration into your compliance score via a connector, so non-Microsoft services are measured too.*
 
 ### Preconfig
 
@@ -190,7 +190,7 @@ The relevant **connector** available for your licensing.
 1. Activate the built-in **connector** for the service.
 2. Map its signals to the relevant **assessment(s)**.
 
-### Validate the config
+### Validate
 
 1. Confirm the connector is active and feeding data.
 2. Confirm the service's controls contribute to the score.

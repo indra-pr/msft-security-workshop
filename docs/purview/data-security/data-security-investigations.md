@@ -13,12 +13,12 @@ description: >-
 
 | Level | Audience | Estimated time | What you'll build |
 |---|---|---|---|
-| 300 · Advanced | SOC / Data-security administrator | ~60–90 min (+ billing setup) | An enabled DSI instance and an AI-assisted investigation over a staged incident |
+| 300 · Advanced | SOC / Data-security administrator | ~2–2.5 hrs (all 3 surfaces) + billing setup | An enabled DSI instance and an AI-assisted investigation over a staged incident |
 
 !!! warning "Preview feature"
     Microsoft Purview **Data Security Investigations** is in **preview**. Capabilities and prerequisites may change before general availability. Verify details on Microsoft Learn for your tenant.
 
-!!! info "Complexity: High · Est. time: ~60–90 min setup (+ billing configuration)"
+!!! info "Complexity: High · Est. time: ~2–2.5 hrs total (all 3 surfaces) + billing configuration"
     DSI requires **two billing models** (pay-as-you-go storage + capacity/compute units) and careful permissions. The investigation experience itself is AI-assisted and fast, but initial enablement and billing take planning.
 
 ## Why this matters
@@ -127,7 +127,7 @@ In practice, DSI investigations often start from data already identified by a **
 
 ## Use case 1 — Reactive investigation (from an incident)
 
-*Investigate a specific incident's impacted data with generative AI — the primary DSI workflow.*
+*After a mailbox breach, use generative AI to find exactly which sensitive files were exposed and who's impacted — in minutes instead of days of manual review.*
 
 ### Preconfig
 
@@ -140,7 +140,7 @@ In practice, DSI investigations often start from data already identified by a **
 3. Run **AI analysis** to summarize risks, sensitive data, and connections.
 4. Review insights, collaborate with partner teams, and drive **remediation**.
 
-### Validate the config
+### Validate
 
 1. Confirm billing shows **configured** (storage + capacity) with no setup warnings.
 2. Confirm the investigation surfaces the **sensitive information types** present and the **impacted entities**.
@@ -150,7 +150,7 @@ In practice, DSI investigations often start from data already identified by a **
 
 ## Use case 2 — Defender-XDR-initiated investigation
 
-*Let the SOC start a DSI investigation straight from a Defender incident where data is affected.*
+*Let a SOC analyst launch a DSI investigation directly from a **Microsoft Defender XDR** incident the moment sensitive data is flagged as affected.*
 
 ### Preconfig
 
@@ -161,7 +161,7 @@ DSI enabled (Use case 1). **Microsoft Defender XDR** with an incident affecting 
 1. In the **Defender portal**, open an incident where a data set is affected.
 2. Choose to **create a DSI investigation** from the incident — see [Create investigations in DSI from the Defender portal](https://learn.microsoft.com/defender-xdr/create-dsi-in-defender).
 
-### Validate the config
+### Validate
 
 1. Confirm the investigation opens in **Purview DSI** pre-populated with the incident's data.
 2. Run **AI analysis** and confirm findings, then hand off to remediation.
@@ -170,7 +170,7 @@ DSI enabled (Use case 1). **Microsoft Defender XDR** with an incident affecting 
 
 ## Use case 3 — Proactive / hygiene investigation
 
-*Don't wait for an incident — proactively analyze a data location for sensitive-data exposure.*
+*Don't wait for a breach — proactively scan an at-risk SharePoint site or mailbox for exposed sensitive data and clean it up as ongoing hygiene.*
 
 ### Preconfig
 
@@ -181,7 +181,7 @@ DSI enabled (Use case 1).
 1. **Create an investigation** scoped to a **data location** (not tied to an incident) — e.g., a SharePoint site or user data.
 2. Run **AI analysis** to find sensitive data and exposure.
 
-### Validate the config
+### Validate
 
 1. Confirm the investigation surfaces sensitive content and **oversharing / exposure** risks.
 2. Feed findings into remediation (DLP, labels, access changes).
