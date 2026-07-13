@@ -95,9 +95,9 @@ flowchart LR
 
     To view the **DLP alert dashboard** you also need the *Manage alerts* role plus *DLP Compliance Management* (or *View-Only DLP Compliance Management*). Follow least privilege — see [Permissions in the Microsoft Purview portal](https://learn.microsoft.com/purview/purview-permissions).
 
-=== "Endpoint DLP (for Use case 3)"
+=== "Endpoint DLP (for Use case 2)"
 
-    Required for **Use case 3** — extending DLP to devices (USB, print, clipboard, browser/cloud upload, IM, webmail, GenAI). To protect **Windows devices**:
+    Required for **Use case 2** — extending DLP to devices (USB, print, clipboard, browser/cloud upload, IM, webmail, GenAI). To protect **Windows devices**:
 
     - Windows 10 **x64** build **1809 or later** (or Windows 11); **macOS** (three latest major versions) is also supported.
     - Antimalware Client version **4.18.2202.x or later**.
@@ -109,18 +109,23 @@ flowchart LR
 
 By the end of this lab you will:
 
-- [x] Generate synthetic sensitive data to test with — including **four-tier classified** files (Public → Restricted)
-- [x] Create a DLP policy (simulation mode) that detects credit-card data and warns/blocks **external** sharing
-- [x] Trigger the policy and confirm the alert and activity
-- [x] Extend DLP to **endpoints** — USB, print, clipboard, browser/cloud, IM, webmail, and GenAI — and know how to reach **Adaptive Protection**
+- [x] Generate synthetic sensitive data — including **four-tier classified** files (Public → Restricted)
+- [x] Stand up a **Microsoft 365 DLP** policy (simulation) and test it
+- [x] Configure **Endpoint DLP** across USB, print, clipboard, browser/cloud, IM, webmail, and GenAI
+- [x] Extend DLP to **on-premises repositories**, **non-Microsoft cloud apps**, **Teams**, and **Microsoft 365 Copilot**
 
 ## Use cases covered
 
-| # | Use case | Outcome | Time |
+Each use case is one deployment surface, walked through as **preconfig → configure → test**:
+
+| # | Surface | What you configure | Time |
 |---|---|---|---|
-| 1 | **Create a DLP policy in simulation mode** | A working, non-disruptive policy | ~30 min |
-| 2 | **Verify it works** | A confirmed DLP alert + activity | ~15 min |
-| 3 | **Extend to endpoints** | USB, print, clipboard, browser/cloud, IM, webmail & GenAI control | ~60–90 min |
+| 1 | **Microsoft 365 DLP** (Exchange, SharePoint, OneDrive) | Block external sharing of sensitive data (simulation) | ~30–45 min |
+| 2 | **Endpoint DLP** (devices) | USB, print, clipboard, browser/cloud, IM, webmail, GenAI | ~60–90 min |
+| 3 | **On-premises repositories** (file shares, SharePoint Server) | Scanner + at-rest protective actions | ~60–90 min |
+| 4 | **Instances** (non-Microsoft cloud apps) | DLP via Defender for Cloud Apps app instances | ~45 min |
+| 5 | **Teams** (chat & channel messages) | Block sensitive messages with policy tips | ~30 min |
+| 6 | **Microsoft 365 Copilot** | Exclude labeled content from Copilot processing | ~30 min |
 
 ---
 
@@ -165,11 +170,11 @@ Write-Host "Created lab files in $labFolder" -ForegroundColor Green
 Get-ChildItem $labFolder | Select-Object Name, Length
 ```
 
-You'll email `payment-memo.txt` to an external test mailbox, or upload `customer-export.csv` to a covered SharePoint site, to trigger the policy in Use case 2.
+You'll email `payment-memo.txt` to an external test mailbox, or upload `customer-export.csv` to a covered SharePoint site, to trigger the policy in Use case 1.
 
 ### Classified test data (four sensitivity tiers)
 
-The endpoint scenarios in Use case 3 work best with files at **four classification tiers** — **Public, Internal, Confidential, Restricted** — containing synthetic national-ID (**KTP/NIK**), subscriber, finance, and source-code samples. This script builds them into per-tier folders; then **apply the matching sensitivity label** to each file so the endpoint rules can act on the label.
+The endpoint scenarios in Use case 2 work best with files at **four classification tiers** — **Public, Internal, Confidential, Restricted** — containing synthetic national-ID (**KTP/NIK**), subscriber, finance, and source-code samples. This script builds them into per-tier folders; then **apply the matching sensitivity label** to each file so the endpoint rules can act on the label.
 
 ```powershell
 # Build classified test data (Public/Internal/Confidential/Restricted) for Endpoint DLP.
@@ -242,7 +247,33 @@ flowchart LR
 
 ---
 
-## Use case 1 — Create a DLP policy (simulation mode)
+## How DLP detects sensitive data
+
+Choose whichever detection method fits the data you're protecting — combine them across any surface below:
+
+| Method | Where to set it | Good for |
+|---|---|---|
+| **Sensitivity labels** | Label as a rule condition | Foundational — see the [Information Protection lab](../information-protection/index.md) |
+| **Sensitive info types (SIT)** | Content contains → SIT | 300+ built-in; add custom |
+| **Exact Data Match (EDM)** | Custom SIT → EDM schema | Match against *your own* data table |
+| **Document fingerprinting** | Custom SIT → fingerprint | Standard forms/templates |
+| **OCR** | Optical character recognition setting | Text inside images/screenshots |
+| **Custom regex + keyword dictionaries** | Custom SIT | National IDs (e.g. **KTP/NIK**) and account formats |
+
+!!! info "Every use case below follows the same shape"
+    **Preconfig** (what to set up first) → **Configure** (create the policy) → **Test it** (prove it works). Start in **simulation mode**, then enforce.
+
+---
+
+## Use case 1 — Microsoft 365 DLP (Exchange, SharePoint, OneDrive)
+
+*The collaboration workloads where accidental oversharing is most common.*
+
+### Preconfig
+
+No device or connector setup is required. Optionally publish **sensitivity labels** first (see the [Information Protection lab](../information-protection/index.md)) if you want label-based rules — otherwise go straight to the policy.
+
+### Configure the policy
 
 **Objective:** create a policy that detects **Credit Card Number** across Microsoft 365 and **blocks external sharing with override**, running in **simulation mode** with policy tips on. Do it in the portal *or* with PowerShell.
 
@@ -253,7 +284,7 @@ flowchart LR
     3. Choose a **category** and **template** — pick **Financial → PCI Data Security Standard (PCI DSS)**, or **Custom → Custom policy**. Select **Next**.
     4. Enter a **Name** (for example, `Starter — PCI credit card`) and a description. Select **Next**.
     5. On **Assign admin units**, leave the **full directory** selected. Select **Next**.
-    6. On **locations**, turn **on**: **Exchange email**, **SharePoint sites**, **OneDrive accounts**, **Teams chat and channel messages**. Leave **Devices** off. Select **Next**.
+    6. On **locations**, turn **on**: **Exchange email**, **SharePoint sites**, **OneDrive accounts**. Leave **Devices** off (that's Use case 2). Select **Next**.
     7. On **Define policy settings → Create or customize advanced DLP rules → ＋ Create rule**:
         - **Name** the rule (for example, `Block external credit card sharing`).
         - **Conditions:** add **Content contains → Sensitive info types → Credit Card Number**; set **confidence = High**, **instance count = 1 to Any**.
@@ -276,15 +307,14 @@ flowchart LR
     # 1) Connect to Security & Compliance PowerShell (opens sign-in).
     Connect-IPPSSession -UserPrincipalName admin@contoso.onmicrosoft.com   # (1)!
 
-    # 2) Create the policy in simulation mode across Microsoft 365 locations.
+    # 2) Create the policy in simulation mode across Microsoft 365 collaboration locations.
     New-DlpCompliancePolicy `
         -Name "Starter - PCI credit card" `
         -Comment "Blocks external sharing of credit card numbers (lab)" `
         -Mode TestWithNotifications `
         -ExchangeLocation All `
         -SharePointLocation All `
-        -OneDriveLocation All `
-        -TeamsLocation All   # (2)!
+        -OneDriveLocation All   # (2)!
 
     # 3) Add a rule: block EXTERNAL sharing of high-confidence credit card data.
     New-DlpComplianceRule `
@@ -307,53 +337,38 @@ flowchart LR
 !!! success "Checkpoint"
     The policy appears under **Data Loss Prevention → Policies** with a **Simulation** status. Give it a little time to deploy across locations before testing.
 
----
+### Test it
 
-## Use case 2 — Verify it works
-
-**Objective:** trigger the policy with your lab data and confirm the signal shows up.
-
-### Trigger the policy
+Trigger the policy with your lab data and confirm the signal shows up.
 
 === "Email test"
 
     1. From a test mailbox, compose an email to an **external** address.
     2. Paste the contents of `payment-memo.txt` (a synthetic credit-card number) into the body.
-    3. With policy tips on, you should see a **policy tip** warning the message contains sensitive info. In enforce mode you'd be blocked (with override).
+    3. With policy tips on, you should see a **policy tip**. In enforce mode you'd be blocked (with override).
 
 === "SharePoint / OneDrive test"
 
     1. Upload `customer-export.csv` to a SharePoint site or OneDrive covered by the policy.
-    2. Attempt to **share** it with an external user.
-    3. A policy tip / restriction should appear for external sharing.
+    2. Attempt to **share** it with an external user — a policy tip / restriction should appear.
 
-### Confirm the match was recorded
-
-1. In the **[Microsoft Purview portal](https://purview.microsoft.com)**, open **Data Loss Prevention → Alerts**.
-2. Open the alert generated by your test — see the **matched SIT**, the **user**, the **location**, and the **action**.
-3. Open **Data Loss Prevention → Overview** and review **Risk Spotlighting** (and, after ~7 days, **DLP analytics** recommendations).
-4. Cross-check **Activity explorer** — filter for **DLPRuleMatch** events.
+Then confirm the match: in **Data Loss Prevention → Alerts** open the alert (see the **matched SIT**, **user**, **location**, **action**), and cross-check **Activity explorer** for **DLPRuleMatch** events.
 
 !!! success "What 'good' looks like"
-    - Your test action appears as a **DLP alert** with the correct SIT (Credit Card Number) and severity.
-    - In **simulation mode** you see matches **without** users being blocked.
-    - The alert shows the **rule**, **action**, and (if overridden) the **justification**.
-
-!!! note "Timing"
-    Policies take time to fully deploy; DLP **analytics** recommendations appear ~**seven days** after you enable analytics. Give simulation a few days of real activity before you tune and enforce.
+    Your test action appears as a **DLP alert** with the correct SIT (Credit Card Number) and severity; in **simulation mode** you see matches **without** users being blocked.
 
 ---
 
-## Use case 3 — Extend to endpoints (USB, print, clipboard, cloud & GenAI)
+## Use case 2 — Endpoint DLP (devices)
 
-Endpoint DLP extends the same policy to what people do **on their devices** — the everyday ways data leaves an endpoint. Configure the **Devices** location once, then control each channel by sensitivity.
+*Control the everyday ways data leaves a managed device — USB, print, clipboard, network share, browser, cloud, IM, webmail, GenAI.*
 
 <div class="video-embed">
 <iframe src="https://www.youtube-nocookie.com/embed/rhvlmfPsgrE" title="Microsoft Learn: Implement and manage endpoint DLP policies" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
 <p class="video-caption"><strong>▶ Watch — Implement and manage endpoint DLP policies (SC-401, ep. 6)</strong><br>Microsoft Learn · 38:43 — Onboard devices, configure endpoint settings, and enforce protections across USB, print, clipboard, and browser uploads (Edge for Business, plus the Chrome and Firefox extensions).</p>
 
-### Step 1 — Onboard devices & set global endpoint settings
+### Preconfig — onboard devices & set global endpoint settings
 
 === "Onboard"
 
@@ -370,9 +385,9 @@ Endpoint DLP extends the same policy to what people do **on their devices** — 
     - **Sensitive service domain groups** — group **personal cloud** (`drive.google.com`, `dropbox.com`), **webmail** (`mail.google.com`, `outlook.live.com`), **IM web** (`web.whatsapp.com`, `web.telegram.org`), and **GenAI** (`chatgpt.com`, `gemini.google.com`).
     - **Network share coverage** and **removable-storage** groups.
 
-### Step 2 — Enforce proportionally by sensitivity
+### Configure — enforce proportionally by sensitivity
 
-On the **Devices** location, add **one rule per sensitivity label** so enforcement escalates with classification — allow the low tiers, block the high ones:
+On the **Devices** location, add **one rule per sensitivity label** so enforcement escalates with classification:
 
 | Label | USB · print · network share | Clipboard → unallowed app | Web · cloud · webmail · GenAI upload |
 |---|---|---|---|
@@ -381,11 +396,7 @@ On the **Devices** location, add **one rule per sensitivity label** so enforceme
 | **Confidential** | Block with override (justify) | Warn | Warn / block with override |
 | **Restricted** | Block | Block | Block |
 
-Keep it in **simulation** first (as in Use case 1), then enforce.
-
-### Common endpoint egress channels
-
-These are the everyday exfiltration paths customers most often ask to control — each is an **activity** you set to *audit*, *warn/override*, or *block* on the Devices rule:
+Each channel is an **activity** you set to *audit*, *warn/override*, or *block*:
 
 | Channel | Typical scenario | Endpoint DLP activity to set |
 |---|---|---|
@@ -397,35 +408,135 @@ These are the everyday exfiltration paths customers most often ask to control �
 | **Personal cloud** | Sync to Google Drive, Dropbox, personal OneDrive | Personal-cloud **domain group** |
 | **Webmail** | Attach to Gmail / personal Outlook | Webmail **domain group** |
 | **Instant messaging** | Send via WhatsApp / Telegram (web or desktop) | IM **domain group** + desktop apps in **unallowed apps** |
-| **GenAI** | Paste or upload into ChatGPT / Gemini | GenAI **domain group** + Purview browser extension (also **DSPM for AI**) |
+| **GenAI** | Paste or upload into ChatGPT / Gemini | GenAI **domain group** + Purview browser extension |
+
+Keep it in **simulation** first, then enforce.
+
+### Test it
+
+1. On an onboarded device, sign in as a test user and try a **Restricted**-labeled file: copy it to a **USB** drive (or print it, or upload it to a personal-cloud domain).
+2. Confirm the **policy tip** / block appears per your rule.
+3. In **Data Loss Prevention → Activity explorer**, filter for the device and confirm the **endpoint event** (device, file, label/SIT, action).
 
 !!! tip "Detection follows the file"
     Endpoint DLP classifies by **content and sensitivity label**, not by file name — so **renaming** a file or changing its extension doesn't evade a rule, and enforcement keeps working **offline** (events sync when the device reconnects).
 
-### How DLP detects sensitive data
-
-Choose whichever detection method fits the data you're protecting — combine them as needed:
-
-| Method | Where to set it | Good for |
-|---|---|---|
-| **Sensitivity labels** | Label as a rule condition | Foundational — see the [Information Protection lab](../information-protection/index.md) |
-| **Sensitive info types (SIT)** | Content contains → SIT | 300+ built-in; add custom |
-| **Exact Data Match (EDM)** | Custom SIT → EDM schema | Match against *your own* data table |
-| **Document fingerprinting** | Custom SIT → fingerprint | Standard forms/templates |
-| **OCR** | Optical character recognition setting | Text inside images/screenshots |
-| **Custom regex + keyword dictionaries** | Custom SIT | National IDs (e.g. **KTP/NIK**) and account formats |
-
-### Keep protection when the file leaves the device
-
-For **unmanaged/BYOD** access and **label/encryption persistence after a file leaves Microsoft 365**, the control is the **sensitivity label + encryption (IRM)** plus **Conditional Access app control** — build and verify those in the **[Information Protection lab](../information-protection/index.md)**, then confirm an unauthorized account **cannot open** a downloaded Restricted file.
-
-### Get the alerts to your SOC
-
-DLP alerts surface in **Purview → Alerts**, flow into **Microsoft Defender XDR**, and can be streamed to **Microsoft Sentinel** for correlation and response — see the **[Microsoft Sentinel module](../../../sentinel/index.md)**. Each alert carries the **user, device, file, label/SIT, destination, action, and severity**.
-
 !!! note "Good to know — endpoint limits"
     - **Archives (ZIP):** on-device inspection of content *inside* an archive is limited; the sensitivity label/encryption still travels with the file.
     - **Screenshots:** endpoint DLP does not block OS-level screen capture — use **labels with visual markings/watermarks** and user education instead.
+
+---
+
+## Use case 3 — On-premises repositories DLP (file shares & SharePoint Server)
+
+*Enforce protective actions on data **at rest** in on-premises file shares and SharePoint Server document libraries.*
+
+### Preconfig — deploy the Information Protection scanner
+
+On-premises DLP relies on the **Microsoft Purview Information Protection scanner**:
+
+1. Ensure at least **one sensitivity label and one label policy are published** (required even if your rules use only SITs).
+2. Install the **Information Protection client** and **configure/install the scanner** (see [Deploy the scanner](https://learn.microsoft.com/purview/deploy-scanner)).
+3. Create a **content scan job**, specify the **repositories** (file shares / SharePoint Server), and **enable DLP rules** in the job (set **Enforce = Off** to start).
+4. Assign the job to the scanner **cluster**, add repositories, and run the scan (**schedule**, **Scan now**, or `Start-Scan`).
+
+### Configure — an on-premises DLP policy
+
+1. **Purview portal → Data Loss Prevention → Policies → ＋ Create policy** (start in **simulation mode**).
+2. Turn on the **On-premises repositories** location (scope to specific repositories, or **All**).
+3. Add a rule — detect by **SIT**, **sensitivity label**, **file extension**, or **custom document property**.
+4. Choose an **action**:
+
+| Action | Effect |
+|---|---|
+| **Block everyone** | Removes all NTFS/SharePoint permissions except owner, last modifier, admin, and the scanner |
+| **Block network / unauthorized users** | Removes *Everyone*, *Authenticated Users*, *Domain Users* from the ACL |
+| **Set permissions (inherit parent)** | Forces the file to inherit its parent folder's permissions |
+| **Remove file** | Replaces the file with a `.txt` stub and moves the original to a **quarantine** folder |
+
+### Test it
+
+1. Place a synthetic sensitive file (e.g., `payment-memo.txt`) in a scanned repository.
+2. Run the scan, then confirm the file appears in **Activity explorer** with the match.
+3. Move the rule from simulation to **enforce**, rescan, and confirm the chosen **action** (permissions changed, or file quarantined with a stub).
+
+---
+
+## Use case 4 — Instances DLP (non-Microsoft cloud apps)
+
+*Protect sensitive files **at rest** in connected third-party SaaS apps (for example Box, Dropbox, Google Drive) via **Microsoft Defender for Cloud Apps**.*
+
+### Preconfig — connect the app in Defender for Cloud Apps
+
+1. In **[Microsoft Defender for Cloud Apps](https://learn.microsoft.com/defender-cloud-apps/what-is-defender-for-cloud-apps)**, connect the app with an **app connector** (this creates the app **instance**) and enable **file monitoring**.
+2. Confirm the instance appears and files are being indexed.
+
+### Configure — an Instances DLP policy
+
+1. **Purview portal → Data Loss Prevention → Policies → ＋ Create policy → Custom**.
+2. Turn on the **Instances** location and select the **cloud app instance** to include.
+3. Add a rule with a **Content contains → SIT / sensitivity label** condition.
+4. Set an action such as **Restrict access or remove** the file in the connected app. See [Use DLP policies for non-Microsoft cloud apps](https://learn.microsoft.com/purview/dlp-use-policies-non-microsoft-cloud-apps).
+
+### Test it
+
+1. Upload a synthetic sensitive file to the connected app instance.
+2. Confirm the DLP policy matches, the **action** applies (access restricted / file removed), and the event shows in **Activity explorer**.
+
+---
+
+## Use case 5 — Teams DLP (chat & channel messages)
+
+*Stop sensitive information from being shared in **Microsoft Teams** chats and channels.*
+
+### Preconfig
+
+Confirm your users are licensed for **Teams DLP** (E5 / Purview suite or equivalent) and decide which **users, groups, or teams** are in scope.
+
+### Configure — a Teams DLP policy
+
+1. **Purview portal → Data Loss Prevention → Policies → ＋ Create policy** (Custom or a template).
+2. Turn on the **Teams chat and channel messages** location; scope to your pilot users/teams.
+3. Add a rule: **Content contains → SIT** (e.g., Credit Card Number) or **sensitivity label**.
+4. Actions: **Block the message** for external/everyone as appropriate, with a **policy tip** and **user override** where allowed. Run in **simulation** first.
+
+### Test it
+
+1. From a scoped test user, post a message containing a synthetic SIT (e.g., a test card number) in a chat/channel.
+2. Confirm the **policy tip** appears (and the message is blocked in enforce mode).
+3. Confirm the match in **Alerts** / **Activity explorer**.
+
+---
+
+## Use case 6 — Microsoft 365 Copilot DLP (protect what Copilot can process)
+
+*Exclude labeled content from being **processed or summarized** by Microsoft 365 Copilot — a key control before a Copilot rollout.*
+
+### Preconfig
+
+Publish the **sensitivity labels** you want to gate on (for example *Highly Confidential*, *Personal*) — see the [Information Protection lab](../information-protection/index.md).
+
+### Configure — a Copilot DLP policy
+
+1. **Purview portal → Data Loss Prevention → Policies → ＋ Create policy → Custom → Custom policy** (the Copilot location is Custom-only).
+2. On **Locations**, turn on **Microsoft 365 Copilot and Copilot Chat**.
+3. Add a rule with **Content contains → Sensitivity labels** and choose the label(s) to exclude.
+4. Set the action **Prevent Copilot from processing content**. (You can also use a **Sensitive info types** condition to block **prompt processing** or **web-search grounding**.)
+5. Turn the policy on.
+
+### Test it
+
+1. Apply a gated label (e.g., *Highly Confidential*) to a test file the user can access.
+2. In **Microsoft 365 Copilot / Copilot Chat**, ask it to summarize that file.
+3. Confirm the file's **content is excluded** from the response summary (it may still appear as a **citation**), proving the label-based exclusion works.
+
+---
+
+## Across all surfaces
+
+- **Detection** — the same [detection methods](#how-dlp-detects-sensitive-data) (labels, SITs, EDM, fingerprinting, OCR, regex, keyword dictionaries) work on every location above.
+- **Keep protection when data leaves** — pair DLP with **sensitivity labels + encryption (IRM)** so protection travels with the file; build these in the **[Information Protection lab](../information-protection/index.md)**.
+- **Get alerts to your SOC** — DLP alerts flow into **Microsoft Defender XDR** and can stream to **Microsoft Sentinel** — see the **[Sentinel module](../../../sentinel/index.md)**.
 
 ## Extensibility
 
