@@ -90,18 +90,23 @@ flowchart LR
 By the end of this lab you will:
 
 - [x] Generate sample content at different sensitivity levels
-- [x] Create a small **label taxonomy** (Public → Highly Confidential) with protection
-- [x] **Publish** the labels to a pilot group
-- [x] **Verify** labels appear in Office apps and that encryption is enforced
-- [x] Know how to turn on **auto-labeling** at scale
+- [x] Create and **publish** a small label taxonomy (manual labeling)
+- [x] Add **encryption & rights (IRM)** to a label and prove it's enforced
+- [x] Turn on **auto-labeling** (service-side and in Office apps)
+- [x] Know how to label **on-premises** files and apply **Double Key Encryption**
 
 ## Use cases covered
 
-| # | Use case | Outcome | Time |
+Each use case is one way to implement Information Protection, walked through as **preconfig → configure → validate**:
+
+| # | Surface | What you configure | Time |
 |---|---|---|---|
-| 1 | **Create and publish sensitivity labels** | A published label taxonomy | ~40 min |
-| 2 | **Verify labeling & protection** | Confirmed labels + enforced encryption | ~20 min |
-| 3 | *(Optional)* **Auto-label at scale** | Content labeled without user action | ~30 min |
+| 1 | **Manual labels** | Create & publish a label taxonomy | ~30 min |
+| 2 | **Encryption & rights (IRM)** | Add encryption + permissions + markings to a label | ~30 min |
+| 3 | **Auto-labeling (service-side)** | Auto-label at rest/in transit (SharePoint, OneDrive, Exchange) | ~30 min |
+| 4 | **Client/Office labeling** | Recommend or auto-apply labels in Office apps | ~30 min |
+| 5 | **On-premises labeling** | Label file shares / SharePoint Server via the scanner | ~60–90 min |
+| 6 | **Double Key Encryption** | Hold a second key yourself (advanced) | ~60 min |
 
 ---
 
@@ -152,32 +157,22 @@ If you don't already have a taxonomy, start with clear, business-friendly names 
 
 ---
 
-## Use case 1 — Create and publish sensitivity labels
+## Use case 1 — Create & publish sensitivity labels (manual labeling)
 
-**Objective:** create a *Confidential* label with protection and publish it to a pilot group.
+*The foundation — give users labels they can apply by hand in their apps.*
+
+### Preconfig
+
+Decide a small [taxonomy](#recommended-label-taxonomy) (3–5 labels) and a **pilot group** to publish to. No other setup is required.
+
+### Configure
 
 === "Portal"
 
-    **Step 1 — Create the labels**
-
-    1. Sign in to the **[Microsoft Purview portal](https://purview.microsoft.com)** → **Information Protection → Sensitivity labels**.
-    2. Select **＋ Create a label**. Enter a **Name**, **Display name**, and a helpful **tooltip** (for example, *"Business data that shouldn't be shared externally"*). Select **Next**.
-    3. On **Scope**, choose **Items** (files, emails, meetings), **Groups & sites**, and/or **Schematized data assets**. Select **Next**.
-
-    **Step 2 — Define what the label does (protection)**
-
-    4. For **Items**, choose protection settings:
-        - **Encryption** — *Configure* → assign permissions (for example, *Confidential* → your org can Co-Author; *Highly Confidential* → a named group has Viewer only).
-        - **Content marking** — add a header/footer/watermark such as *"Confidential"*.
-        - **Auto-labeling** (optional) — detect a SIT (for example **Credit Card Number**) and apply/recommend this label.
-    5. Finish the wizard and **Save**. Repeat for each label in your taxonomy.
-
-    **Step 3 — Publish a label policy**
-
-    6. Go to **Sensitivity labels → Label policies → ＋ Publish label**.
-    7. **Choose the labels**, then select the **users and groups** (start with a pilot group).
-    8. Configure **policy settings** — for example a **default label**, and whether users must **justify** lowering a label.
-    9. **Name** the policy, review, and **Submit**. Allow time for it to reach users' apps.
+    1. **[Microsoft Purview portal](https://purview.microsoft.com)** → **Information Protection → Sensitivity labels → ＋ Create a label**.
+    2. Enter a **Name**, **Display name**, and a helpful **tooltip**. Select **Next**.
+    3. On **Scope**, choose **Items** (files, emails, meetings) — leave protection off for now (that's Use case 2). Finish and **Save**. Repeat for each label.
+    4. Go to **Label policies → ＋ Publish label**, choose the labels, select your **pilot group**, set policy settings (optional **default label**, justify-on-downgrade), name it, and **Submit**.
 
     ![Sensitivity label flow: admins create and publish labels, users apply them, apps enforce protection](https://learn.microsoft.com/purview/media/sensitivity-label-flow.png){ loading=lazy }
 
@@ -186,65 +181,128 @@ If you don't already have a taxonomy, start with clear, business-friendly names 
 === "PowerShell"
 
     ```powershell
-    # Connect to Security & Compliance PowerShell.
     Connect-IPPSSession -UserPrincipalName admin@contoso.onmicrosoft.com
-
-    # Review any existing labels.
-    Get-Label | Format-List DisplayName, Name, Guid, ContentType
-
-    # Create a "Confidential" label for files and emails.
-    New-Label `
-        -DisplayName "Confidential" `
-        -Name "Confidential" `
-        -Tooltip "Business data that shouldn't be shared externally." `
-        -ContentType "File, Email"
-
-    # Publish the label to users via a label policy.
-    New-LabelPolicy `
-        -Name "Pilot label policy" `
-        -Labels "Confidential" `
-        -ExchangeLocation "All"
+    New-Label -DisplayName "Confidential" -Name "Confidential" `
+        -Tooltip "Business data that shouldn't be shared externally." -ContentType "File, Email"
+    New-LabelPolicy -Name "Pilot label policy" -Labels "Confidential" -ExchangeLocation "All"
     ```
 
-    !!! note "Encryption & advanced settings"
-        Encryption and content-marking are configured with extra parameters on `Set-Label` (for example `-EncryptionEnabled`, `-EncryptionRightsDefinitions`, `-ApplyContentMarkingFooterEnabled`). See the [Set-Label reference](https://learn.microsoft.com/powershell/module/exchangepowershell/set-label), or configure them in the portal.
+### Validate the config
 
-!!! success "Checkpoint"
-    Your labels exist under **Sensitivity labels**, and a **label policy** is published to your pilot group. Give it time to propagate to apps.
-
----
-
-## Use case 2 — Verify labeling & protection
-
-### Confirm labels reach users
-
-1. Sign in to **Word/Excel/PowerPoint** or **Outlook** (web or desktop) as a **pilot user**.
-2. Look for the **Sensitivity** button on the ribbon (or the label bar) — your published labels (for example *Confidential*) should appear.
-3. Apply **Confidential** to `confidential-contract.txt`. Confirm any configured **header/footer/watermark** appears.
-
-### Confirm protection is enforced
-
-1. As a user **outside** the permitted group, try to open the encrypted document — you should be **denied** or limited to the assigned rights (for example, view-only).
-2. If you set a default or mandatory label, confirm new documents get labeled and that **lowering** a label prompts for **justification** (if required).
-
-!!! success "What 'good' looks like"
-    - Pilot users **see** and can apply the labels in their apps.
-    - Encrypted items **enforce** permissions for unauthorized users.
-    - **Activity explorer** shows *Label applied* / *Label changed* events.
-
-!!! warning "Give it time & test broadly"
-    Policies take time to propagate, and apps enforce labels slightly differently. Test on the platforms your users actually use (Windows, macOS, web, mobile).
+1. Sign in to **Word/Outlook** (web or desktop) as a pilot user; the **Sensitivity** button should show your labels.
+2. Apply **Confidential** to `confidential-contract.txt`.
+3. Confirm **Activity explorer** shows a *Label applied* event.
 
 ---
 
-## Use case 3 (optional) — Auto-label at scale
+## Use case 2 — Label encryption & rights (IRM)
 
-To label existing content **at rest** (SharePoint/OneDrive) or **in transit** (Exchange) without user action:
+*Make a label actually protect content — encryption, permissions, and visual markings that travel with the file.*
 
-1. Open **Information Protection → Auto-labeling → ＋ Create auto-labeling policy**.
-2. Choose the **SIT(s)** to detect (for example **Credit Card Number**) and the **label** to apply.
-3. Start it in **simulation** to preview matches (the credit-card SIT in `confidential-contract.txt` should match).
-4. Review results, then **turn it on**. See [Apply a sensitivity label automatically](https://learn.microsoft.com/purview/apply-sensitivity-label-automatically).
+### Preconfig
+
+A label from Use case 1 (for example **Confidential**). Decide who should get which rights (e.g., your org = Co-Author; a named group = Viewer).
+
+### Configure
+
+1. **Sensitivity labels** → open your label → **Edit** → **Protection settings**.
+2. Turn on **Encryption** → **Configure** → **Assign permissions**: add users/groups and pick a permission level (Co-Author, Reviewer, Viewer, or custom).
+3. (Optional) Turn on **Content marking** — header/footer/watermark such as *"Confidential"*.
+4. **Save**. In PowerShell, the equivalents are `Set-Label -EncryptionEnabled $true -EncryptionRightsDefinitions ... -ApplyContentMarkingFooterEnabled $true` ([reference](https://learn.microsoft.com/powershell/module/exchangepowershell/set-label)).
+
+### Validate the config
+
+1. Apply the encrypting label to a document; confirm any header/footer/watermark appears.
+2. As a user **outside** the permitted group, open it — you should be **denied** or limited to the assigned rights (e.g., view-only), even if the file was forwarded or copied.
+
+!!! warning "Pilot encryption carefully"
+    Encryption can block legitimate collaboration if scoped too tightly. Test on the platforms users actually use (Windows, macOS, web, mobile) before widening.
+
+---
+
+## Use case 3 — Auto-labeling at rest & in transit (service-side)
+
+*Label existing and flowing content without user action across SharePoint, OneDrive, and Exchange.*
+
+### Preconfig
+
+Labels published (Use cases 1–2) and the **SIT(s)** you'll detect (for example **Credit Card Number**).
+
+### Configure
+
+1. **Information Protection → Auto-labeling → ＋ Create auto-labeling policy**.
+2. Pick the **locations** (SharePoint, OneDrive, Exchange), the **SIT(s)** to detect, and the **label** to apply.
+3. Start it in **simulation** to preview matches, review, then **turn it on**. See [Apply a sensitivity label automatically](https://learn.microsoft.com/purview/apply-sensitivity-label-automatically).
+
+### Validate the config
+
+1. Ensure `confidential-contract.txt` (with its synthetic card number) is in a covered SharePoint/OneDrive site.
+2. Run the policy in **simulation** and confirm the file is matched.
+3. Turn it on and confirm the label is applied at rest.
+
+---
+
+## Use case 4 — Client-side auto & recommended labeling (Office apps)
+
+*Guide users as they work — Office apps recommend or automatically apply a label when they detect sensitive content.*
+
+### Preconfig
+
+A label policy published to the users, and the label you'll add an auto-condition to.
+
+### Configure
+
+1. **Sensitivity labels** → open your label → **Auto-labeling for files and emails** → add a **SIT** condition.
+2. Choose **Recommend** (prompts the user with a tooltip) or **Automatically** apply the label.
+3. In the **label policy** settings, optionally set a **default label** and **downgrade justification**. Publish/refresh.
+
+### Validate the config
+
+1. In **Word**, paste a synthetic credit-card number into a document.
+2. Confirm Office **recommends** (or auto-applies) the label with a tooltip.
+3. Confirm the applied label in the app and in **Activity explorer**.
+
+---
+
+## Use case 5 — On-premises labeling (Information Protection scanner)
+
+*Discover and label sensitive files at rest in on-premises file shares and SharePoint Server.*
+
+### Preconfig
+
+Deploy the **Microsoft Purview Information Protection client + scanner** (see [Deploy the scanner](https://learn.microsoft.com/purview/deploy-scanner)); at least one label + policy published.
+
+### Configure
+
+1. Create a **content scan job** and add your **repositories** (file shares / SharePoint Server).
+2. Set the job to **apply a label automatically** based on conditions (SITs); run in **discover-only** first, then **enforce**.
+3. Assign the job to the scanner **cluster** and run it (**schedule**, **Scan now**, or `Start-Scan`).
+
+### Validate the config
+
+1. Place a sensitive file in a scanned share and run the scan.
+2. In **discover-only**, confirm the scanner reports what *would* be labeled; switch to **enforce** and confirm the label is applied.
+3. Review results in the scanner reports and **Activity explorer**.
+
+---
+
+## Use case 6 — Double Key Encryption (advanced)
+
+*For the most sensitive data, hold a **second key** yourself so not even Microsoft can decrypt the content.*
+
+### Preconfig
+
+Stand up the **Double Key Encryption service** (you host and control the second key) and make its endpoint reachable — see [Double Key Encryption](https://learn.microsoft.com/purview/double-key-encryption).
+
+### Configure
+
+1. Create (or edit) a label → **Encryption** → **Use Double Key Encryption** and enter your **DKE endpoint URL**.
+2. Publish the label to the intended (small) group.
+
+### Validate the config
+
+1. Apply the DKE label to a document.
+2. Confirm authorized users can open it (the client calls your key service) and that content can't be decrypted without your key.
 
 ## Extensibility
 

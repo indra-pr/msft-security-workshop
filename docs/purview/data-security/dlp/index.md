@@ -110,13 +110,13 @@ flowchart LR
 By the end of this lab you will:
 
 - [x] Generate synthetic sensitive data — including **four-tier classified** files (Public → Restricted)
-- [x] Stand up a **Microsoft 365 DLP** policy (simulation) and test it
+- [x] Stand up a **Microsoft 365 DLP** policy (simulation) and validate it
 - [x] Configure **Endpoint DLP** across USB, print, clipboard, browser/cloud, IM, webmail, and GenAI
 - [x] Extend DLP to **on-premises repositories**, **non-Microsoft cloud apps**, **Teams**, and **Microsoft 365 Copilot**
 
 ## Use cases covered
 
-Each use case is one deployment surface, walked through as **preconfig → configure → test**:
+Each use case is one deployment surface, walked through as **preconfig → configure → validate**:
 
 | # | Surface | What you configure | Time |
 |---|---|---|---|
@@ -261,7 +261,7 @@ Choose whichever detection method fits the data you're protecting — combine th
 | **Custom regex + keyword dictionaries** | Custom SIT | National IDs (e.g. **KTP/NIK**) and account formats |
 
 !!! info "Every use case below follows the same shape"
-    **Preconfig** (what to set up first) → **Configure** (create the policy) → **Test it** (prove it works). Start in **simulation mode**, then enforce.
+    **Preconfig** (what to set up first) → **Configure** (create the policy) → **Validate the config** (prove it works). Start in **simulation mode**, then enforce.
 
 ---
 
@@ -337,7 +337,7 @@ No device or connector setup is required. Optionally publish **sensitivity label
 !!! success "Checkpoint"
     The policy appears under **Data Loss Prevention → Policies** with a **Simulation** status. Give it a little time to deploy across locations before testing.
 
-### Test it
+### Validate the config
 
 Trigger the policy with your lab data and confirm the signal shows up.
 
@@ -412,7 +412,7 @@ Each channel is an **activity** you set to *audit*, *warn/override*, or *block*:
 
 Keep it in **simulation** first, then enforce.
 
-### Test it
+### Validate the config
 
 1. On an onboarded device, sign in as a test user and try a **Restricted**-labeled file: copy it to a **USB** drive (or print it, or upload it to a personal-cloud domain).
 2. Confirm the **policy tip** / block appears per your rule.
@@ -454,7 +454,7 @@ On-premises DLP relies on the **Microsoft Purview Information Protection scanner
 | **Set permissions (inherit parent)** | Forces the file to inherit its parent folder's permissions |
 | **Remove file** | Replaces the file with a `.txt` stub and moves the original to a **quarantine** folder |
 
-### Test it
+### Validate the config
 
 1. Place a synthetic sensitive file (e.g., `payment-memo.txt`) in a scanned repository.
 2. Run the scan, then confirm the file appears in **Activity explorer** with the match.
@@ -478,7 +478,7 @@ On-premises DLP relies on the **Microsoft Purview Information Protection scanner
 3. Add a rule with a **Content contains → SIT / sensitivity label** condition.
 4. Set an action such as **Restrict access or remove** the file in the connected app. See [Use DLP policies for non-Microsoft cloud apps](https://learn.microsoft.com/purview/dlp-use-policies-non-microsoft-cloud-apps).
 
-### Test it
+### Validate the config
 
 1. Upload a synthetic sensitive file to the connected app instance.
 2. Confirm the DLP policy matches, the **action** applies (access restricted / file removed), and the event shows in **Activity explorer**.
@@ -500,7 +500,7 @@ Confirm your users are licensed for **Teams DLP** (E5 / Purview suite or equival
 3. Add a rule: **Content contains → SIT** (e.g., Credit Card Number) or **sensitivity label**.
 4. Actions: **Block the message** for external/everyone as appropriate, with a **policy tip** and **user override** where allowed. Run in **simulation** first.
 
-### Test it
+### Validate the config
 
 1. From a scoped test user, post a message containing a synthetic SIT (e.g., a test card number) in a chat/channel.
 2. Confirm the **policy tip** appears (and the message is blocked in enforce mode).
@@ -524,7 +524,7 @@ Publish the **sensitivity labels** you want to gate on (for example *Highly Conf
 4. Set the action **Prevent Copilot from processing content**. (You can also use a **Sensitive info types** condition to block **prompt processing** or **web-search grounding**.)
 5. Turn the policy on.
 
-### Test it
+### Validate the config
 
 1. Apply a gated label (e.g., *Highly Confidential*) to a test file the user can access.
 2. In **Microsoft 365 Copilot / Copilot Chat**, ask it to summarize that file.
