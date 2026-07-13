@@ -72,17 +72,22 @@ flowchart LR
 
 By the end of this lab you will:
 
-- [x] Seed a pilot site with disposable content
 - [x] Create a **retention policy** (retain then delete) on a pilot scope
-- [x] Verify content is **retained** (deletion prevented / recoverable)
-- [x] Know how to add **labels**, **auto-apply**, and **event-based** retention
+- [x] Publish **retention labels** for item-level exceptions
+- [x] Target policies with **adaptive scopes**
+- [x] Configure **event-based** retention and **mailbox archiving**
 
 ## Use cases covered
 
-| # | Use case | Outcome | Time |
+Each use case is one way to implement Data Lifecycle Management, walked through as **preconfig → configure → validate**:
+
+| # | Surface | What you configure | Time |
 |---|---|---|---|
-| 1 | **Create a retention policy** | A retain-then-delete policy on a pilot site | ~45 min |
-| 2 | **Verify retention** | Confirmed retention (and scheduled deletion) | ~15 min |
+| 1 | **Retention policy (static)** | A retain-then-delete policy on a pilot site | ~45 min |
+| 2 | **Retention labels** | Item-level retention for exceptions | ~30 min |
+| 3 | **Adaptive scopes** | Attribute-based dynamic targeting | ~30 min |
+| 4 | **Event-based retention** | Start the clock on an event | ~30 min |
+| 5 | **Mailbox archiving / PST** | Archive mailboxes + PST import | ~45 min |
 
 ## Generate lab data
 
@@ -111,42 +116,117 @@ Write-Host "Created $((Get-ChildItem $lab).Count) files in $lab. Upload to a tes
 | Scope | **Static** to a pilot site first; adaptive later |
 | Labels | Add for **exceptions** only |
 
-## Use case 1 — Create a retention policy
+## Use case 1 — Retention policy (static scope)
+
+*The broad "keep/delete" control — one policy across chosen workloads.*
+
+### Preconfig
+
+Compliance / **Retention Management** roles, and a **pilot site** seeded with [disposable content](#generate-lab-data).
+
+### Configure
 
 === "Portal"
 
-    1. In the **[Microsoft Purview portal](https://purview.microsoft.com)** → **Data Lifecycle Management → Policies → Retention policies → New retention policy**.
-    2. Name it (for example `Baseline retention`).
-    3. Choose **locations** (SharePoint sites, OneDrive accounts; add Exchange/Teams if needed) — scope to a **pilot site** to start.
-    4. Set retention: **Retain items for** *N* years, then **delete** (or retain only / delete only).
-    5. **Review** and **Submit**. Allow time for the policy to take effect.
-    6. (Optional) Create **retention labels** for item-level exceptions and **publish** them.
+    1. **[Microsoft Purview portal](https://purview.microsoft.com)** → **Data Lifecycle Management → Policies → Retention policies → New retention policy**. Name it (e.g., `Baseline retention`).
+    2. Choose **locations** (SharePoint/OneDrive; add Exchange/Teams as needed) — scope to a **pilot site**.
+    3. Set retention: **Retain items for** *N* years, then **delete** (or retain only / delete only). **Submit**.
 
 === "PowerShell"
 
     ```powershell
     Connect-IPPSSession -UserPrincipalName admin@contoso.onmicrosoft.com
-
-    # Create a retention policy scoped to a pilot SharePoint site.
     New-RetentionCompliancePolicy -Name "Baseline retention" `
         -SharePointLocation "https://contoso.sharepoint.com/sites/pilot"
-
-    # Add a rule: retain for 3 years then delete.
     New-RetentionComplianceRule -Name "Retain 3y then delete" `
-        -Policy "Baseline retention" `
-        -RetentionDuration 1095 `
-        -RetentionComplianceAction Delete
+        -Policy "Baseline retention" -RetentionDuration 1095 -RetentionComplianceAction Delete
     ```
 
-## Use case 2 — Verify retention
+### Validate the config
 
-1. Confirm the policy shows **On/Success** in **Policies** (initial deployment can take time).
-2. Test retention: try to permanently delete a covered item before the period ends — it should be **preserved** (recoverable), not truly gone.
-3. For **delete** actions, confirm items past the retention period are removed on schedule.
-4. Check the **audit log** for retention-related events.
+1. Confirm the policy shows **On/Success**.
+2. Try to permanently delete a covered item before the period ends — it should be **preserved** (recoverable).
+3. Confirm items past the period are deleted on schedule; check the **audit log**.
 
-!!! success "What 'good' looks like"
-    Covered content is retained for the configured period (deletion is prevented/recoverable), and content is deleted on schedule after the period — verifiable in the workload and the audit log.
+---
+
+## Use case 2 — Retention labels (item-level exceptions)
+
+*Apply different retention to specific items than the broad policy.*
+
+### Preconfig
+
+Use case 1 policy in place.
+
+### Configure
+
+1. **Data Lifecycle Management → Labels → Create a label** — set the **period** and **action** (retain / retain-then-delete / delete).
+2. **Label policies → Publish labels** to a pilot site/library (or auto-apply by SIT/keyword with higher-tier licensing).
+
+### Validate the config
+
+1. Apply the label to a test item.
+2. Confirm the item follows the **label's** retention (not just the policy's).
+
+---
+
+## Use case 3 — Adaptive scopes
+
+*Target policies dynamically by directory attribute instead of a static list.*
+
+### Preconfig
+
+The attribute values you'll scope on (e.g., Department, Country).
+
+### Configure
+
+1. **Data Lifecycle Management → Adaptive scopes → Create** — choose **users/sites/groups** and the **attribute query**.
+2. Create (or edit) a retention policy and choose **Adaptive** scope, selecting your scope.
+
+### Validate the config
+
+1. Confirm the policy targets exactly the users/sites matching the attribute.
+2. Change an attribute and confirm scope membership updates.
+
+---
+
+## Use case 4 — Event-based retention
+
+*Start the retention clock on a business event (contract end, employee departure).*
+
+### Preconfig
+
+Higher-tier licensing; an **event type** defined.
+
+### Configure
+
+1. Create a **retention label** with **retention period based on an event** and pick the **event type**.
+2. Publish/auto-apply it, and record the **asset ID / keywords** that tie items to events.
+3. Create the matching **event** to start the clock.
+
+### Validate the config
+
+1. Trigger the event and confirm labeled items begin their retention from the event date.
+
+---
+
+## Use case 5 — Mailbox archiving / PST import
+
+*Give users archive mailboxes and bring legacy PSTs under governance.*
+
+### Preconfig
+
+**Exchange** permissions (Mail Recipients / Organization Management); for PST, the **Import service** + Azure Storage.
+
+### Configure
+
+1. Enable **archive mailboxes** (and **auto-expanding archiving**) for users.
+2. For legacy data, use the **Import service** (network upload or drive shipping) to bring **PSTs** into mailboxes, then apply retention.
+
+### Validate the config
+
+1. Confirm a user's **archive mailbox** appears and receives archived items.
+2. Confirm imported PST content lands in the mailbox and is covered by retention.
 
 ## Extensibility
 

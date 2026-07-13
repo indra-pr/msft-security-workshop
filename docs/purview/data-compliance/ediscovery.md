@@ -75,17 +75,20 @@ flowchart LR
 
 By the end of this lab you will:
 
-- [x] Seed searchable content with a unique matter keyword
-- [x] Create a **case**, place a **hold**, and run a **search**
-- [x] **Export** the results (or push to a review set in Premium)
-- [x] Know how to scale to **custodians, review sets, and analytics**
+- [x] Run a **Content search** with a keyword query
+- [x] Run a **Standard case**: hold → search → export
+- [x] Scale to **Premium**: custodians, review sets, analytics
+- [x] Preserve a defensible **audit trail** throughout
 
 ## Use cases covered
 
-| # | Use case | Outcome | Time |
+Each use case is one way to implement eDiscovery, walked through as **preconfig → configure → validate**:
+
+| # | Surface | What you configure | Time |
 |---|---|---|---|
-| 1 | **Run a Standard eDiscovery case** | A case with a hold, search, and export | ~45–75 min |
-| 2 | **Verify the case results** | Preserved, found, and exported items | ~15 min |
+| 1 | **Content search** | A keyword search + export | ~20 min |
+| 2 | **Standard case** | Case + hold + search + export | ~45–75 min |
+| 3 | **Premium (eDiscovery)** | Custodians, review sets, analytics | ~60–90 min |
 
 ## Generate lab data
 
@@ -121,24 +124,67 @@ Use the unique keyword (`Project-Falcon-LABMATTER`) as your search query.
 | Narrow **search** queries | Reduce noise/volume |
 | Premium: use **review sets** | Filter, tag, and cull before export |
 
-## Use case 1 — Run a Standard eDiscovery case
+## Use case 1 — Content search
 
-1. In the **[Microsoft Purview portal](https://purview.microsoft.com)** → **eDiscovery** → **Create case** (name it after the matter).
-2. (Standard/Premium) Add an **eDiscovery hold** on relevant content locations (mailboxes/sites) to preserve data.
-3. Create a **search** in the case using your **keyword query** (for example `Project-Falcon-LABMATTER`) and conditions.
-4. Review the **statistics/sample**, refine the query, then **add results to a review set** (Premium) or **export** (Standard).
-5. (Premium) In the **review set**, **filter**, **tag**, run **analytics**, and cull non-relevant items.
-6. **Export** the responsive items with metadata for production.
+*The lightest tool — search across Microsoft 365 and export, without a formal case.*
 
-## Use case 2 — Verify the case results
+### Preconfig
 
-1. Run the case search for your unique keyword.
-2. Confirm the **test items** appear in the search **statistics/preview**.
-3. Confirm the **hold** is active on the custodian's locations (preserved even if a user deletes an item).
-4. **Export** (or add to a review set) and confirm the exported package contains the items + metadata.
+**Compliance Search** (and **Export**) roles; seeded [content with a unique keyword](#generate-lab-data).
 
-!!! success "What 'good' looks like"
-    Your seeded items are found by the case search, preserved by the hold, and exportable with metadata and a defensible audit trail.
+### Configure
+
+1. **[Microsoft Purview portal](https://purview.microsoft.com)** → **eDiscovery → Content search → New search**.
+2. Add **content locations** and a **keyword query** (e.g., `Project-Falcon-LABMATTER`) + conditions.
+3. Run it, review **statistics/preview**, then **Export** results.
+
+### Validate the config
+
+1. Confirm your seeded items appear in the **statistics/preview**.
+2. Confirm the **export** package contains the items + metadata.
+
+---
+
+## Use case 2 — Standard case (hold → search → export)
+
+*A managed matter — preserve first, then search and produce, defensibly.*
+
+### Preconfig
+
+**eDiscovery Manager** role; a matter and custodians in mind.
+
+### Configure
+
+1. **eDiscovery → Create case** (name it after the matter).
+2. Add an **eDiscovery hold** on relevant mailboxes/sites to **preserve** data.
+3. Create a **search** with your keyword query + conditions.
+4. Review statistics, refine, then **Export** the responsive items with metadata.
+
+### Validate the config
+
+1. Confirm the **hold** is active (data preserved even if a user deletes an item).
+2. Confirm the search finds your seeded items and the **export** contains them + metadata + a defensible audit trail.
+
+---
+
+## Use case 3 — Premium (custodians, review sets, analytics)
+
+*The full EDRM workflow for complex matters.*
+
+### Preconfig
+
+**E5 / eDiscovery (Premium)** licensing; custodians' data appropriately licensed.
+
+### Configure
+
+1. In a case, add **custodians** and issue **legal-hold notifications**.
+2. Collect data into a **review set**; **filter**, **tag**, and run **analytics / predictive coding** to cull.
+3. **Export** the reviewed, responsive set with metadata.
+
+### Validate the config
+
+1. Confirm custodians are on hold and their data is collected.
+2. Confirm the **review set** filters/tags work and the final export is defensible.
 
 ## Extensibility
 

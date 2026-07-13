@@ -72,17 +72,23 @@ flowchart LR
 
 By the end of this lab you will:
 
-- [x] Build a **file plan** with a record retention label
-- [x] **Publish** the label to a pilot library and apply it
-- [x] Confirm the item is **declared a record** (edit/delete restricted)
-- [x] Complete a **disposition review** with proof of disposition
+- [x] Build a **file plan** and publish a record retention label
+- [x] **Declare records** and confirm edit/delete restrictions
+- [x] Configure **event-based** retention and **disposition review**
+- [x] Use **regulatory records** and **auto-apply** labels
 
 ## Use cases covered
 
-| # | Use case | Outcome | Time |
+Each use case is one way to implement Records Management, walked through as **preconfig → configure → validate**:
+
+| # | Surface | What you configure | Time |
 |---|---|---|---|
-| 1 | **Build a file plan and publish a label** | A record label applied to a pilot library | ~60–90 min |
-| 2 | **Verify records & disposition** | A declared record + completed disposition review | ~15 min |
+| 1 | **File plan + label** | A record retention label from a file plan | ~45 min |
+| 2 | **Records declaration** | Mark items as records (edit/delete restricted) | ~20 min |
+| 3 | **Event-based retention** | Start retention on an event | ~30 min |
+| 4 | **Disposition review** | Human review before deletion | ~20 min |
+| 5 | **Regulatory records** | The strictest, immutable tier | ~20 min |
+| 6 | **Auto-apply** | Auto-declare by SIT/keyword/classifier | ~30 min |
 
 ## Generate lab data
 
@@ -116,24 +122,124 @@ Also seed some documents to label — reuse the [DLM sample script](data-lifecyc
 | Enable **disposition review** | Human check before deletion |
 | Use **file plan descriptors** | Track regulatory references |
 
-## Use case 1 — Build a file plan and publish a label
+## Use case 1 — File plan & retention label
 
-1. In the **[Microsoft Purview portal](https://purview.microsoft.com)** → **Records Management → File plan**.
-2. **Create a label** (or **Import** your file-plan CSV): set the **retention period**, the **action** (retain / retain-then-delete), and **mark items as a record**. Add **file plan descriptors** (reference ID, category).
-3. Optionally configure **event-based retention** (start the clock on an event).
-4. Go to **Label policies → Publish labels** and publish to a **pilot** SharePoint library.
-5. In the library, **apply** the label to a test document (it's now a **record** — edits/deletes are restricted).
-6. When the retention period ends, complete the **disposition review** and record **proof of disposition**.
+*The backbone — a retention schedule (file plan) plus a record label to apply.*
 
-## Use case 2 — Verify records & disposition
+### Preconfig
 
-1. Confirm the label appears in **File plan** and is **published** to the pilot library.
-2. Apply it to a document and confirm it's **declared a record** (attempting to delete/edit is blocked or versioned per settings).
-3. For a short test retention period, confirm the item enters a **disposition review** at the end.
-4. Complete the review and confirm **proof of disposition** is recorded.
+**Records Management** / **Retention Manager** roles; a starter [file plan CSV](#generate-lab-data) and content to label.
 
-!!! success "What 'good' looks like"
-    A test document is declared a record, protected from improper deletion, routed to a disposition review at period end, and disposed of with an auditable record.
+### Configure
+
+1. **[Microsoft Purview portal](https://purview.microsoft.com)** → **Records Management → File plan**.
+2. **Create a label** (or **Import** your CSV): set the **retention period** and **action**, add **file plan descriptors** (reference ID, category).
+3. **Label policies → Publish labels** to a **pilot** SharePoint library.
+
+### Validate the config
+
+1. Confirm the label appears in **File plan** and is **published**.
+2. Confirm a pilot user can **apply** it to a document.
+
+---
+
+## Use case 2 — Records declaration
+
+*Turn content into an immutable record so it can't be edited or deleted improperly.*
+
+### Preconfig
+
+A published label from Use case 1.
+
+### Configure
+
+1. Edit the label → **mark items as a record** (or **regulatory record** for the strictest tier — see Use case 5).
+2. Publish and apply it to a test document.
+
+### Validate the config
+
+1. Apply the label and confirm the item is **declared a record**.
+2. Confirm attempts to **delete/edit** are blocked or versioned per settings.
+
+---
+
+## Use case 3 — Event-based retention
+
+*Start the retention clock on a business event (contract end, employee departure).*
+
+### Preconfig
+
+An **event type** defined; a retention label.
+
+### Configure
+
+1. Create/edit a record label with **retention period based on an event**; pick the **event type**.
+2. Record the **asset ID / keywords** tying items to the event; publish/auto-apply.
+3. Create the matching **event** to start the clock.
+
+### Validate the config
+
+1. Trigger the event and confirm labeled items begin retention from the event date.
+
+---
+
+## Use case 4 — Disposition review
+
+*Require a human to review and approve before a record is deleted.*
+
+### Preconfig
+
+**Disposition** roles; a label with a (short, for testing) retention period.
+
+### Configure
+
+1. On the record label, enable **disposition review** and assign **reviewers** (one or more stages).
+2. Publish and apply it.
+
+### Validate the config
+
+1. When the period ends, confirm the item enters a **disposition review**.
+2. Complete the review and confirm **proof of disposition** is recorded.
+
+---
+
+## Use case 5 — Regulatory records
+
+*The strictest tier — an immutable label that can't be removed or changed.*
+
+### Preconfig
+
+**Regulatory records** enabled in Records Management settings (a policy switch), plus roles.
+
+### Configure
+
+1. Enable **regulatory records** for your tenant.
+2. Create a label as a **regulatory record** and publish it (note: cannot be un-declared).
+
+### Validate the config
+
+1. Apply the regulatory-record label to a test item.
+2. Confirm the label/record **can't be removed or changed** and content is locked.
+
+---
+
+## Use case 6 — Auto-apply record labels
+
+*Declare records automatically instead of relying on users.*
+
+### Preconfig
+
+Higher-tier licensing; a **SIT / keyword / trainable classifier** to match on.
+
+### Configure
+
+1. **Auto-apply a label** policy → choose the **condition** (SIT, keyword/searchable property, trainable classifier, or cloud attachment) and the **record label**.
+2. Run in **simulation** first, then enable.
+
+### Validate the config
+
+1. Add content matching the condition.
+2. Confirm the **record label auto-applies** and the item is declared a record.
 
 ## Extensibility
 

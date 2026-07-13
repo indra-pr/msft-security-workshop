@@ -78,17 +78,20 @@ When something goes wrong — a leak, a config change, a suspicious sign-in — 
 
 By the end of this lab you will:
 
-- [x] Confirm audit logging is **on** and assign least-privilege search roles
-- [x] Generate audited activity and **search** the unified audit log
-- [x] Verify a known action appears as an **audit record** and export it
-- [x] Know how to enable **Premium** high-value events and retention
+- [x] Confirm audit logging is **on** and run a **Standard** search
+- [x] Verify a known action appears as a record and export it
+- [x] Enable **Premium** advanced auditing + a retention policy
+- [x] Stream audit data to a **SIEM** (Sentinel)
 
 ## Use cases covered
 
-| # | Use case | Outcome | Time |
+Each use case is one way to implement Audit, walked through as **preconfig → configure → validate**:
+
+| # | Surface | What you configure | Time |
 |---|---|---|---|
-| 1 | **Turn on auditing and run a search** | A permissioned search returning real events | ~20 min |
-| 2 | **Verify the audit record** | A confirmed, exportable audit record | ~10 min |
+| 1 | **Audit (Standard) search** | Permissioned search of the unified audit log | ~20 min |
+| 2 | **Audit (Premium)** | Advanced auditing + retention policies | ~45 min |
+| 3 | **Export / SIEM streaming** | Management Activity API / Graph → Sentinel | ~30 min |
 
 ## Generate lab data
 
@@ -122,39 +125,76 @@ To generate specific activity, sign in as a test user and view/download a docume
 | Enable **Advanced Auditing** for key users (Premium) | Captures high-value events |
 | Create a **1-year retention policy** for core workloads | Meets common investigation windows |
 
-## Use case 1 — Turn on auditing and run a search
+## Use case 1 — Audit (Standard) search
+
+*The always-on baseline — search the unified audit log to answer "who did what, when".*
+
+### Preconfig
+
+**Audit (Standard)** is on by default; assign least-privilege **Audit Logs** / **View-Only Audit Logs** roles. Generate some [audited activity](#generate-lab-data).
+
+### Configure
 
 === "Portal"
 
-    1. In the **[Microsoft Purview portal](https://purview.microsoft.com)**, open **Audit**. If prompted, **turn on** auditing.
-    2. Use the **Audit** search form: set a **date range**, **activities**, **users**, and **workloads**, then **Search**.
-    3. (Premium) In the **Microsoft 365 admin center → Users → Active users**, open a user → **Licenses and apps** → enable **Microsoft 365 Advanced Auditing**.
-    4. (Premium) Create **audit log retention policies** to keep specific record types longer (up to 1 year, or 10 years with the add-on).
+    1. **[Microsoft Purview portal](https://purview.microsoft.com)** → **Audit**. If prompted, **turn on** auditing.
+    2. Set a **date range**, **activities**, **users**, and **workloads**, then **Search**.
 
 === "PowerShell"
 
     ```powershell
     Connect-ExchangeOnline -UserPrincipalName admin@contoso.onmicrosoft.com
-
-    # Turn on audit log ingestion if needed.
     Set-AdminAuditLogConfig -UnifiedAuditLogIngestionEnabled $true
-
-    # Search for a specific user's mailbox access (a high-value Premium event).
-    Search-UnifiedAuditLog `
-        -StartDate (Get-Date).AddDays(-7) -EndDate (Get-Date) `
-        -Operations MailItemsAccessed `
-        -UserIds "vip@contoso.onmicrosoft.com"
+    Search-UnifiedAuditLog -StartDate (Get-Date).AddDays(-1) -EndDate (Get-Date) `
+        -RecordType SharePointFileOperation -ResultSize 50
     ```
 
-## Use case 2 — Verify the audit record
+### Validate the config
 
-1. Perform a known action (for example, download a specific test file as a test user).
-2. Search the audit log for that **user + activity + time window**.
-3. Confirm the matching **audit record** appears with the correct user, operation, and timestamp.
-4. **Export to CSV** and confirm the export contains the record.
+1. Perform a known action (e.g., download a test file as a test user).
+2. Search for that **user + activity + time window** and confirm the **record** appears.
+3. **Export to CSV** and confirm it contains the record.
 
-!!! success "What 'good' looks like"
-    Your known test action shows up as an audit record within the search window; exports work; and (Premium) high-value events like `MailItemsAccessed` appear for licensed users.
+---
+
+## Use case 2 — Audit (Premium) — advanced auditing & retention
+
+*Capture high-value events and keep logs longer for serious investigations.*
+
+### Preconfig
+
+**E5** (or an Audit add-on) and the **Advanced Auditing** service plan.
+
+### Configure
+
+1. **Microsoft 365 admin center → Users → Active users** → open a user → **Licenses and apps** → enable **Microsoft 365 Advanced Auditing** for privileged/at-risk users.
+2. In **Purview → Audit**, create **audit log retention policies** to keep specific record types longer (up to 1 year, or 10 years with the add-on).
+
+### Validate the config
+
+1. As a licensed user, generate a high-value event (e.g., access a mailbox item).
+2. Search for `MailItemsAccessed` and confirm it appears.
+3. Confirm your **retention policy** is listed and applied to the core workloads.
+
+---
+
+## Use case 3 — Export / SIEM streaming
+
+*Get audit data out to your SOC tooling for correlation and long-term analytics.*
+
+### Preconfig
+
+A **registered app** with the right permissions (Graph / Office 365 Management Activity API), or the **Microsoft Sentinel** connector.
+
+### Configure
+
+1. Choose an export path: **Audit Search Graph API**, the **Office 365 Management Activity API**, or the **Microsoft 365 connector in Sentinel**.
+2. Subscribe to the relevant **content types** and point them at your SIEM/SOAR.
+
+### Validate the config
+
+1. Trigger an audited action.
+2. Confirm the event arrives in your **SIEM** (e.g., a Sentinel table) with the expected fields.
 
 ## Extensibility
 

@@ -81,16 +81,20 @@ flowchart LR
 By the end of this lab you will:
 
 - [x] Assign least-privilege **Compliance Manager** roles
-- [x] Create an **assessment** from a regulatory template
-- [x] Complete an **improvement action** and upload **evidence**
-- [x] Watch your **compliance score** move and view reports
+- [x] Create the **Data Protection Baseline** assessment and work an action
+- [x] Add a **regulation** and a **custom** assessment
+- [x] Assess **non-Microsoft** services via a connector
 
 ## Use cases covered
 
-| # | Use case | Outcome | Time |
+Each use case is one way to implement Compliance Manager, walked through as **preconfig → configure → validate**:
+
+| # | Surface | What you configure | Time |
 |---|---|---|---|
-| 1 | **Create an assessment and work an action** | An assessment with a completed action + evidence | ~30–45 min |
-| 2 | **Verify your compliance score** | A score that reflects the completed action | ~15 min |
+| 1 | **Baseline assessment** | Data Protection Baseline + an improvement action | ~30–45 min |
+| 2 | **Regulation assessment** | An assessment from a regulation template | ~20 min |
+| 3 | **Custom assessment** | Your own controls and actions | ~30 min |
+| 4 | **Connectors** | Assess non-Microsoft services | ~20 min |
 
 ## Generate lab data
 
@@ -112,24 +116,84 @@ By the end of this lab you will:
 | Upload **evidence** as you go | Audit-ready |
 | Set **alert policies** | Catch score-affecting changes |
 
-## Use case 1 — Create an assessment and work an action
+## Use case 1 — Baseline assessment
 
-1. Sign in to the **[Microsoft Purview portal](https://purview.microsoft.com)** → **Compliance Manager**.
-2. Under **Settings → Compliance Manager → User access** (or **Role groups**), assign the right **Compliance Manager** roles.
-3. Open the **Assessments** tab → **Add assessment**.
-4. On **Base your assessment on a regulation**, **Select regulation** (for example *Data Protection Baseline*), choose a **group**, and designate **services**.
-5. Open the assessment and work its **improvement actions** — implement the control, set status, add notes, and **upload evidence**.
-6. Watch your **compliance score** update (report changes can take ~24 hours).
+*Start measuring with the broadly-available Data Protection Baseline.*
 
-## Use case 2 — Verify your compliance score
+### Preconfig
 
-1. Confirm the new assessment appears on the **Assessments** page with a **score contribution**.
-2. Complete one **customer-managed improvement action** (mark implemented + upload evidence).
-3. Confirm the action's **points** are reflected and your **compliance score** increases (allow ~24 h).
-4. Open **Reports** to see the score history.
+Assign **Compliance Manager** roles (Reader / Contribution / Assessor / Administration) under **Settings → Compliance Manager → Role groups**.
 
-!!! success "What 'good' looks like"
-    You have at least one assessment, at least one completed improvement action with evidence, and a compliance score that moves as you complete actions.
+### Configure
+
+1. **[Microsoft Purview portal](https://purview.microsoft.com)** → **Compliance Manager → Assessments → Add assessment**.
+2. Base it on **Data Protection Baseline**, choose a **group**, and designate **services**.
+3. Open the assessment and work an **improvement action** — implement the control, set status, add notes, **upload evidence**.
+
+### Validate the config
+
+1. Confirm the assessment appears with a **score contribution**.
+2. Complete one **customer-managed** action and confirm the **compliance score** increases (allow ~24 h); check **Reports**.
+
+---
+
+## Use case 2 — Regulation assessment
+
+*Operationalize a specific regulation (e.g., ISO/IEC 27001, GDPR, a local privacy law).*
+
+### Preconfig
+
+Use case 1 roles; know which regulation you must meet (some templates are premium).
+
+### Configure
+
+1. **Assessments → Add assessment** → **Select regulation** (e.g., *ISO/IEC 27001*).
+2. Assign a **group**, designate **services**, and assign **action owners**.
+
+### Validate the config
+
+1. Confirm the regulation assessment appears with its controls and score.
+2. Complete an action and confirm points apply.
+
+---
+
+## Use case 3 — Custom assessment
+
+*Extend a template with your own controls and actions for internal or niche requirements.*
+
+### Preconfig
+
+**Compliance Manager Administration/Assessor** role.
+
+### Configure
+
+1. **Assessment templates → Create/extend a template** — add your **custom controls** and **improvement actions**.
+2. Create an **assessment** from your custom template.
+
+### Validate the config
+
+1. Confirm the custom assessment and its controls appear.
+2. Confirm completing a custom action moves the score.
+
+---
+
+## Use case 4 — Connectors (non-Microsoft services)
+
+*Bring third-party services (e.g., Salesforce, Zoom) into your compliance posture.*
+
+### Preconfig
+
+The relevant **connector** available for your licensing.
+
+### Configure
+
+1. Activate the built-in **connector** for the service.
+2. Map its signals to the relevant **assessment(s)**.
+
+### Validate the config
+
+1. Confirm the connector is active and feeding data.
+2. Confirm the service's controls contribute to the score.
 
 ## Extensibility
 
