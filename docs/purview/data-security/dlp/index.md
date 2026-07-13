@@ -14,9 +14,9 @@ description: >-
 
 | Level | Audience | Estimated time | What you'll build |
 |---|---|---|---|
-| 200 · Intermediate | Security / Compliance administrator | ~4–5.5 hrs (all 6 surfaces) | A DLP policy that detects credit-card data and warns/blocks external sharing (in simulation mode), then confirm it fires |
+| 200 · Intermediate | Security / Compliance administrator | ~4.5–6 hrs (all 7 surfaces) | A DLP policy that detects credit-card data and warns/blocks external sharing (in simulation mode), then confirm it fires |
 
-!!! info "Complexity: Medium · Est. time: ~4–5.5 hrs total (all 6 surfaces); ~45 min for the first policy"
+!!! info "Complexity: Medium · Est. time: ~4.5–6 hrs total (all 7 surfaces); ~45 min for the first policy"
     A first Microsoft 365 DLP policy in **simulation mode** is quick (~45 min). Adding endpoint DLP (device onboarding), custom sensitive information types, or Adaptive Protection pushes it to **High**. This lab keeps it simple and safe: **simulation mode first**.
 
 ## Why this matters
@@ -45,7 +45,7 @@ In a DLP policy you define four things:
 | You define… | Examples |
 |---|---|
 | **What** sensitive information to monitor for | Financial, health, medical, and privacy data |
-| **Where** to monitor | Exchange, SharePoint, OneDrive, Teams, Windows/macOS devices, Fabric/Power BI, on-premises repositories |
+| **Where** to monitor | Exchange, SharePoint, OneDrive, Teams, Windows/macOS devices, Fabric/Power BI, on-premises repositories, and **inline web traffic** (unmanaged cloud & GenAI apps) |
 | **Conditions** that must match | Items containing credit card, driver's license, or national ID numbers |
 | **Actions** to take on a match | Audit, block the activity, or block with user override |
 
@@ -81,6 +81,7 @@ flowchart LR
     - **Base DLP** for Microsoft 365 (Exchange/SharePoint/OneDrive/Teams) is included in subscriptions such as **E1, E3, E5, F1, and G-plans**.
     - **Endpoint DLP** requires your organization to be licensed for it (typically **Microsoft 365 E5**, E5 Compliance, or **E5 Information Protection & Governance**).
     - **Aggregated (threshold-based) alerts** require **E5/G5/A5**, or an **E1/F1/G1/E3/G3** plan with an add-on such as the Microsoft Purview suite.
+    - **Inline web traffic** (Use case 7) is **licensed differently** — it's a **pay-as-you-go (PAYG)** capability, and the network path additionally needs **Microsoft Entra Internet Access** (or **Microsoft 365 E7**), or a non-Microsoft SASE/secure-browser integration. See the **Inline web traffic** tab.
 
     Confirm against the [Microsoft Purview service description](https://learn.microsoft.com/office365/servicedescriptions/microsoft-365-service-descriptions/microsoft-365-tenantlevel-services-licensing-guidance/microsoft-365-security-compliance-licensing-guidance).
 
@@ -105,6 +106,21 @@ flowchart LR
     - Turn on **Advanced classification** so files are scanned **on the device** (needed for content-based rules).
     - Install the **[Microsoft Purview extension](https://learn.microsoft.com/purview/dlp-chrome-learn-about)** for **Chrome/Firefox** (Edge for Business is built-in) to cover web egress.
 
+=== "Inline web traffic (for Use case 7)"
+
+    Required for **Use case 7** — protecting data shared to **unmanaged cloud & generative-AI apps** over the network and in **Microsoft Edge for Business**. Its licensing **differs from every other surface** in this lab:
+
+    - **Pay-as-you-go (PAYG) billing must be configured first.** Network data security and Edge-for-Business inline protection are **PAYG** capabilities that need the **Microsoft Purview pay-as-you-go billing model** (an **Azure subscription in the same tenant**). Set up PAYG **before** creating any inline/network DLP policy — see [Purview billing models](https://learn.microsoft.com/purview/purview-billing-models).
+    - **Network path via Microsoft Entra Global Secure Access** requires **one** of:
+        - **Microsoft 365 E7** per-seat licenses, **or**
+        - **Purview E5 (or equivalent)** per-seat licenses **and** **Microsoft Entra Internet Access** (or equivalent) licenses.
+    - **Network path via a non-Microsoft SASE / secure-browser** solution requires **Purview E5 (or equivalent)** per-seat licenses **plus** the PAYG billing model (add integrations from the **Security Store** in Purview DLP).
+    - **Edge for Business path** — protecting data shared from a **managed device to an unmanaged app** in Edge for Business is a **PAYG** feature (sharing within Entra-registered/managed apps is covered by **E5**).
+    - **Permissions:** a role such as **DLP Compliance Management** or **Information Protection Admin**.
+
+    !!! warning "Preview"
+        Inline web traffic / network data security — and the Global Secure Access **Scan with Purview** integration — is in **preview**. Verify current capabilities and licensing on Microsoft Learn for your tenant.
+
 ## What you'll accomplish
 
 By the end of this lab you will:
@@ -113,6 +129,7 @@ By the end of this lab you will:
 - [x] Stand up a **Microsoft 365 DLP** policy (simulation) and validate it
 - [x] Configure **Endpoint DLP** across USB, print, clipboard, browser/cloud, IM, webmail, and GenAI
 - [x] Extend DLP to **on-premises repositories**, **non-Microsoft cloud apps**, **Teams**, and **Microsoft 365 Copilot**
+- [x] Protect **inline web traffic** — block sensitive uploads to unmanaged cloud & **GenAI** apps (network + Edge for Business)
 
 ## Use cases covered
 
@@ -126,6 +143,7 @@ Each use case is one deployment surface, walked through as **preconfig → confi
 | 4 | **Instances** (non-Microsoft cloud apps) | DLP via Defender for Cloud Apps app instances | ~45 min |
 | 5 | **Teams** (chat & channel messages) | Block sensitive messages with policy tips | ~30 min |
 | 6 | **Microsoft 365 Copilot** | Exclude labeled content from Copilot processing | ~30 min |
+| 7 | **Inline web traffic** (unmanaged cloud & GenAI apps) | Network + Edge for Business inline protection (PAYG) | ~30–45 min |
 
 ---
 
@@ -529,6 +547,37 @@ Publish the **sensitivity labels** you want to gate on (for example *Highly Conf
 1. Apply a gated label (e.g., *Highly Confidential*) to a test file the user can access.
 2. In **Microsoft 365 Copilot / Copilot Chat**, ask it to summarize that file.
 3. Confirm the file's **content is excluded** from the response summary (it may still appear as a **citation**), proving the label-based exclusion works.
+
+---
+
+## Use case 7 — Inline web traffic DLP (unmanaged cloud & GenAI apps)
+
+*Stop an employee from pasting source code into **ChatGPT** or uploading a customer list to personal **Dropbox** in the browser — inspecting web traffic inline via **Microsoft Edge for Business** and **Microsoft Entra Global Secure Access**.*
+
+!!! info "Different licensing — see the *Inline web traffic* prerequisite"
+    Unlike the other surfaces, this one is **pay-as-you-go**, and the network path needs **Microsoft Entra Internet Access** (or **Microsoft 365 E7**) or a non-Microsoft SASE/secure-browser integration. **Configure PAYG billing first.** (Feature in **preview**.)
+
+### Preconfig
+
+1. **Configure Purview pay-as-you-go billing** for the tenant (an Azure subscription in the same tenant) — required **before** any inline/network policy. See [billing models](https://learn.microsoft.com/purview/purview-billing-models).
+2. Choose the inline path:
+    - **Network** — set up **Microsoft Entra Global Secure Access (Internet Access)** and, in the Entra admin center, create a **content policy** with the **Scan with Purview** action; *or* connect a **non-Microsoft SASE / secure-browser** solution from the **Security Store** in Purview DLP.
+    - **Edge for Business** — use managed devices with **Microsoft Edge for Business** (no device onboarding needed).
+3. Make sure your detection building blocks exist (**SITs / sensitivity labels**) and decide which **unmanaged cloud & GenAI apps** to scope (ChatGPT, Gemini, DeepSeek, Dropbox, Box, Google Drive, Gmail…).
+
+### Configure — an Inline web traffic DLP policy
+
+1. **Purview portal → Data Loss Prevention → Policies → ＋ Create policy**.
+2. For the location group, select **Inline web traffic** (not *Enterprise applications & devices*).
+3. Choose **Custom → Custom policy**, name it, and continue.
+4. Add a rule: **Content contains → SIT / sensitivity label**, scoped to the **unmanaged cloud apps** you chose.
+5. Set an **action** — *audit*, *block*, or *block with override* — for sharing to those apps. Start in **simulation / audit** first.
+
+### Validate
+
+1. From a scoped user (on a Global-Secure-Access-routed network, or in Edge for Business), try to **upload or paste** synthetic sensitive content into an unmanaged app — for example paste a test card number into **ChatGPT**, or upload `customer-export.csv` to **Dropbox**.
+2. Confirm the **block / policy tip** appears (or the audit event, in simulation).
+3. Review the match in **Data Loss Prevention → Alerts**, and in **Activity explorer** filtered for **Network DLP activities** (when using *Scan with Purview*). For basic Global Secure Access content policies, review **Entra admin center → Global Secure Access → Monitor → Traffic logs** instead.
 
 ---
 
