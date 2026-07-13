@@ -78,21 +78,23 @@ flowchart TB
 
 By the end of this lab you will:
 
-- [x] Populate assets via a **Data Map scan**
 - [x] Publish a **governance domain** and a **data product**
-- [x] Connect **business context** (glossary, OKRs)
-- [x] Run **profiling** and a **data-quality** rule
+- [x] Connect **business context** (glossary, CDEs, OKRs)
+- [x] Run **profiling** and **data-quality** rules for a trust score
 
 ## Use cases covered
 
-| # | Use case | Outcome | Time |
+Each use case is one governance surface, walked through as **preconfig → configure → validate**:
+
+| # | Surface | What you configure | Time |
 |---|---|---|---|
-| 1 | **Publish a domain & data product** | A published, discoverable data product | ~60–120 min |
-| 2 | **Verify discovery & quality** | Found product + a data-quality score | ~15 min |
+| 1 | **Governance domain + data product** | Publish a discoverable data product | ~60 min |
+| 2 | **Business context** | Glossary terms, CDEs, OKRs | ~30 min |
+| 3 | **Data quality** | Profiling + quality rules | ~45 min |
 
 ## Generate lab data
 
-Unified Catalog builds on **Data Map assets**, so first complete a [Data Map scan](data-map.md#use-case-1-register-and-scan-a-source) to populate assets. Then follow the Learn **sample setup** (a *Personal Health* domain example) to create your first governance domain and data product.
+Unified Catalog builds on **Data Map assets**, so first complete a [Data Map scan](data-map.md#use-case-1-cloud-source-scan) to populate assets. Then follow the Learn **sample setup** (a *Personal Health* domain example) to create your first governance domain and data product.
 
 !!! note "Portal-driven"
     There isn't a customer-facing script to "generate" catalog content — you curate it in the portal from scanned assets. Use the [Sample setup for data governance](https://learn.microsoft.com/purview/data-governance-setup-sample) tutorial as ready-made lab data.
@@ -109,24 +111,62 @@ Unified Catalog builds on **Data Map assets**, so first complete a [Data Map sca
 | Add **glossary terms / OKRs** | Give data business meaning |
 | Run **profiling** before rules | Base rules on real data shape |
 
-## Use case 1 — Publish a domain & data product
+## Use case 1 — Governance domain & data product
 
-1. In the **[Microsoft Purview portal](https://purview.microsoft.com)** → **Settings → Roles and scopes → Role groups → Data Governance**, add yourself/stewards.
-2. Open **Unified Catalog → Catalog management → Governance domains → New**. Name it (for example `Customer`) and assign an **owner**.
-3. **Publish** the governance domain.
-4. Go to **Data products** in the domain → **New data product**. Add **data assets** from Data Map, a description, and **usage** guidance. **Publish** it.
-5. Connect **business context** — add **glossary terms**, **critical data elements**, and **OKRs**.
-6. Open **Data quality**, connect the source, run **profiling**, then define and run **data quality rules** to produce a quality score.
+*Turn scanned assets into a trusted, published data product people can find.*
 
-## Use case 2 — Verify discovery & quality
+### Preconfig
 
-1. Confirm the **governance domain** and **data product** appear as **Published** in the catalog.
-2. As a business user (with discovery access), **search** the catalog and find the data product with its description and usage.
-3. Confirm **glossary terms/OKRs** are linked to the product.
-4. Confirm a **data quality** score appears after profiling + rules run.
+**Data Governance Administrator** role and **scanned assets** in Data Map ([run a scan](data-map.md#use-case-1-cloud-source-scan) first).
 
-!!! success "What 'good' looks like"
-    A published governance domain contains a discoverable data product with business context and a data-quality score — a trusted, findable asset rather than raw scanned metadata.
+### Configure
+
+1. **Settings → Roles and scopes → Role groups → Data Governance** — add yourself/stewards.
+2. **Unified Catalog → Catalog management → Governance domains → New** — name it (e.g., `Customer`), assign an **owner**, and **Publish**.
+3. **Data products → New data product** — add **assets** from Data Map, a description, and **usage** guidance. **Publish**.
+
+### Validate the config
+
+1. Confirm the **domain** and **data product** show as **Published**.
+2. As a business user with discovery access, **search** the catalog and find the product.
+
+---
+
+## Use case 2 — Business context (glossary, CDEs, OKRs)
+
+*Give data business meaning so people understand and trust it.*
+
+### Preconfig
+
+A published data product (Use case 1).
+
+### Configure
+
+1. Add **glossary terms** and **critical data elements (CDEs)**; link them to the data product.
+2. Define **OKRs** and associate the relevant data products.
+
+### Validate the config
+
+1. Confirm glossary terms / CDEs / OKRs are **linked** to the product and visible to discovery users.
+
+---
+
+## Use case 3 — Data quality (profiling + rules)
+
+*Measure and publish a trust score for a data product.*
+
+### Preconfig
+
+Source in **delta format (ADLS Gen2 or Microsoft Fabric)** and the Purview **Managed Identity** with read access.
+
+### Configure
+
+1. **Data quality** → connect the source and run **profiling**.
+2. Define **data quality rules** across dimensions (accuracy, completeness, conformity, consistency, timeliness, uniqueness) and run them.
+
+### Validate the config
+
+1. Confirm a **data-quality score** appears on the data product after rules run.
 
 ## Extensibility
 

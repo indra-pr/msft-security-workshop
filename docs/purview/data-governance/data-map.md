@@ -75,17 +75,21 @@ flowchart LR
 
 By the end of this lab you will:
 
-- [x] Create a sample Azure source with classifiable data
-- [x] **Register** the source and run a **scan**
-- [x] Confirm discovered **schema and classifications** in the map
-- [x] Know how to add on-prem sources, custom rule sets, and lineage
+- [x] Register and scan a **cloud source**; confirm classifications
+- [x] Scan an **on-premises** source via the self-hosted runtime
+- [x] Build a **custom scan rule set** with custom classifications
+- [x] Schedule **incremental** scans and view **lineage**
 
 ## Use cases covered
 
-| # | Use case | Outcome | Time |
+Each use case is one way to build the map, walked through as **preconfig → configure → validate**:
+
+| # | Surface | What you configure | Time |
 |---|---|---|---|
-| 1 | **Register and scan a source** | A scanned source with schema + classifications | ~60–90 min |
-| 2 | **Verify the map & classifications** | Confirmed assets + sensitive-column classifications | ~15 min |
+| 1 | **Cloud source scan** | Register + scan an Azure/cloud source | ~60 min |
+| 2 | **On-premises source** | Self-hosted runtime + on-prem scan | ~60–90 min |
+| 3 | **Custom scan rule sets** | Custom classifications for your data | ~30 min |
+| 4 | **Scheduled / incremental + lineage** | Recurring scans and lineage | ~30 min |
 
 ## Generate lab data
 
@@ -124,25 +128,85 @@ The `card` column contains a synthetic credit-card-format value so the scan's cl
 | Scope the scan | Faster, cheaper first run |
 | Schedule **incremental** scans | Keep the map current |
 
-## Use case 1 — Register and scan a source
+## Use case 1 — Cloud source scan
 
-1. In the **[Microsoft Purview portal](https://purview.microsoft.com)** → **Data Map → Data sources → Register**. Choose the source type (for example **Azure Blob Storage**) and map it to a **collection/domain**.
-2. (On-prem only) Install and register a **self-hosted integration runtime**.
-3. Select the source → **New scan**. Enter a **name**, pick a **credential** (for example **Managed Identity**), and choose the **collection/subcollection** to store metadata.
-4. **Test connection**, then **Continue**.
-5. **Scope** the scan (for Blob, pick folders), then choose a **scan rule set** (system default) — this defines which **classifications** are checked.
-6. Set a **schedule** (once, or recurring incremental) and **Save and run**.
-7. When complete, browse **Data Map** to see discovered assets, schema, and classifications.
+*Discover and classify data in a cloud source (Azure, AWS, GCP) — the fastest way to start the map.*
 
-## Use case 2 — Verify the map & classifications
+### Preconfig
+
+A **Microsoft Purview account**, **Data Source Administrator + Data Reader** roles, and a **credential** (Purview **Managed Identity** is simplest for Azure). Create a [sample cloud source](#generate-lab-data).
+
+### Configure
+
+1. **[Microsoft Purview portal](https://purview.microsoft.com)** → **Data Map → Data sources → Register**; choose the source type (e.g., **Azure Blob Storage**) and map it to a **collection/domain**.
+2. Select the source → **New scan**; pick a **credential** (Managed Identity), **Test connection**, **Continue**.
+3. **Scope** the scan, choose the **system default scan rule set**, set a **schedule**, and **Save and run**.
+
+### Validate the config
 
 1. Confirm the scan status is **Completed** with assets discovered.
-2. Browse the source in **Data Map** and open a scanned asset — confirm **schema** and **classifications** (for example a *Credit Card Number* classification on the `card` column).
-3. Search the catalog for the asset by name.
-4. Re-run an **incremental** scan and confirm it completes faster.
+2. Open a scanned asset and confirm **schema** + **classifications** (e.g., *Credit Card Number* on the `card` column).
 
-!!! success "What 'good' looks like"
-    Your source is registered, the scan completes, assets appear in the map with extracted schema, and sensitive columns carry the expected **classifications**.
+---
+
+## Use case 2 — On-premises source (self-hosted runtime)
+
+*Extend the map to on-prem file shares, SQL, and other private-network sources.*
+
+### Preconfig
+
+A **self-hosted integration runtime** installed on a machine with network access to the source, plus source **credentials** (key/secret or service principal).
+
+### Configure
+
+1. **Data Map → Integration runtimes** → install and register a **self-hosted integration runtime**.
+2. **Register** the on-prem source and map it to a collection.
+3. **New scan** → choose the **self-hosted runtime** and credential; scope and run.
+
+### Validate the config
+
+1. Confirm the scan completes via the self-hosted runtime.
+2. Confirm on-prem assets, schema, and classifications appear in the map.
+
+---
+
+## Use case 3 — Custom scan rule sets & classifications
+
+*Detect data unique to your business (e.g., national IDs, account formats) that built-in classifiers miss.*
+
+### Preconfig
+
+**Data curator** role; the pattern/keywords for your custom classification.
+
+### Configure
+
+1. **Data Map → Classification rules** → create a **custom classification** (regex/keyword-based).
+2. **Scan rule sets** → create a **custom scan rule set** that includes your classification.
+3. Run a scan using the custom rule set.
+
+### Validate the config
+
+1. Confirm scanned assets carry your **custom classification** where the pattern matches.
+
+---
+
+## Use case 4 — Scheduled / incremental scans & lineage
+
+*Keep the map current automatically and see how data moves.*
+
+### Preconfig
+
+A registered, previously-scanned source.
+
+### Configure
+
+1. On the source's scan, set a **recurring (incremental)** schedule.
+2. Where supported, enable **lineage** capture (e.g., via Data Factory / Fabric integration).
+
+### Validate the config
+
+1. Confirm a re-run **incremental** scan completes faster than the full scan.
+2. Confirm **lineage** shows how the asset is produced/consumed (where available).
 
 ## Extensibility
 
