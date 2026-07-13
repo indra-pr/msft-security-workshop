@@ -62,6 +62,8 @@ flowchart TB
 | **Recommendation** | A suggested action DSPM surfaces — often a one-click DLP/label policy |
 | **Oversharing** | Sensitive content accessible more broadly than it should be (key pre-Copilot risk) |
 | **DSPM for AI** | Posture management focused on Copilot, agents, and third-party AI apps |
+| **Content Explorer** | Browse where classified/labeled content lives (your data inventory) |
+| **Activity Explorer** | See actions taken on sensitive data (sharing, labeling, egress) |
 
 ## Prerequisites
 
@@ -155,6 +157,23 @@ Write-Host "Seeded $lab. Upload these to test SharePoint sites, then let DSPM sc
 
 !!! success "What 'good' looks like"
     DSPM shows your seeded sensitive content, flags oversharing on the test sites, and offers **actionable recommendations** (for example create a DLP policy or apply a label) that you can enact in one click.
+
+## What DSPM helps you assess
+
+Beyond the guided setup above, DSPM is how you answer the questions a data-security evaluation asks. These are the scenarios customers most often want to see:
+
+| Assessment area | What you can see / do | Where |
+|---|---|---|
+| **Data discovery** | Automatically find sensitive data across Microsoft 365 (SharePoint, OneDrive); add structured databases and multicloud sources by scanning | DSPM reports · [Data Map lab](../data-governance/data-map.md) |
+| **Classification** | Detect PII/PCI and **local patterns** (national ID, tax ID, account numbers) with SITs, custom SITs, regex, keyword dictionaries, and EDM | [DLP detection methods](dlp/index.md#how-dlp-detects-sensitive-data) |
+| **Labeling coverage** | Auto-apply sensitivity labels after discovery and spot unlabeled sensitive content | [Information Protection lab](information-protection/index.md) |
+| **Exposure & oversharing** | Detect publicly/anonymously shared files and external sharing, and score exposure severity | DSPM oversharing assessments · Activity Explorer |
+| **Encryption coverage** | See which sensitive content is (un)protected by label encryption and where the gaps are | DSPM recommendations · Information Protection |
+| **Data owner & inventory** | Map data owners and build a data inventory / topology | Content Explorer · Unified Catalog |
+| **Risk reporting** | Produce an enterprise data-risk baseline and classification-distribution reports | DSPM reports · Content Explorer |
+
+!!! note "Where DSPM ends and Defender / Entra begin"
+    DSPM is **data-centric**. Questions about **excessive permissions, dormant or over-privileged identities, attack paths, and cloud-storage/database encryption posture** are answered by **Microsoft Defender for Cloud** (DSPM for Cloud, CSPM, CIEM) and **Microsoft Entra** — pair them with Purview for full coverage.
 
 ## Extensibility
 
