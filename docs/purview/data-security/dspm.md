@@ -221,12 +221,12 @@ Beyond the guided setup above, DSPM is how you answer the questions a data-secur
 
 | Assessment area | What you can see / do | Where |
 |---|---|---|
-| **Data discovery** | Automatically find sensitive data across Microsoft 365 (SharePoint, OneDrive); add structured databases and multicloud sources by scanning | DSPM reports · [Data Map lab](../data-governance/data-map.md) |
+| **Data discovery** | Automatically find sensitive data across Microsoft 365 (SharePoint, OneDrive) and your **Microsoft Fabric** estate | DSPM reports · [OneLake catalog](../data-governance/onelake-discover-govern.md) |
 | **Classification** | Detect PII/PCI and **local patterns** (national ID, tax ID, account numbers) with SITs, custom SITs, regex, keyword dictionaries, and EDM | [DLP detection methods](dlp/index.md#how-dlp-detects-sensitive-data) |
 | **Labeling coverage** | Auto-apply sensitivity labels after discovery and spot unlabeled sensitive content | [Information Protection lab](information-protection/index.md) |
 | **Exposure & oversharing** | Detect publicly/anonymously shared files and external sharing, and score exposure severity | DSPM oversharing assessments · Activity Explorer |
 | **Encryption coverage** | See which sensitive content is (un)protected by label encryption and where the gaps are | DSPM recommendations · Information Protection |
-| **Data owner & inventory** | Map data owners and build a data inventory / topology | Content Explorer · Unified Catalog |
+| **Data owner & inventory** | Map data owners and build a data inventory / topology | Content Explorer · [OneLake catalog](../data-governance/onelake-discover-govern.md) |
 | **Risk reporting** | Produce an enterprise data-risk baseline and classification-distribution reports | DSPM reports · Content Explorer |
 
 !!! note "Where DSPM ends and Defender / Entra begin"

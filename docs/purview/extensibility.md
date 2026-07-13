@@ -53,7 +53,7 @@ description: >-
 
 Several capabilities are **shared across solutions**, so configuring them once benefits many:
 
-- **[Sensitivity labels](https://learn.microsoft.com/purview/sensitivity-labels)** — used by Information Protection, DLP, auto-labeling, and Data Map.
+- **[Sensitivity labels](https://learn.microsoft.com/purview/sensitivity-labels)** — used by Information Protection, DLP, auto-labeling, and Microsoft Fabric (OneLake catalog).
 - **[Classifiers (SITs + trainable)](https://learn.microsoft.com/purview/data-classification-overview)** — shared by DLP, Insider Risk, Communication Compliance, and classification reports.
 - **[Data connectors](https://learn.microsoft.com/purview/archive-third-party-data)** — import third-party data so compliance solutions can act on it.
 - **Retention labels/policies** — shared by Data Lifecycle Management and Records Management.
@@ -67,7 +67,7 @@ Several capabilities are **shared across solutions**, so configuring them once b
 | **[Microsoft Purview Information Protection SDK](https://learn.microsoft.com/information-protection/develop/overview)** | Read/write label metadata; apply encryption in custom apps | MIP SDK; app permissions |
 | **eDiscovery Graph APIs** | Automate cases, holds, searches, exports | Graph permissions; eDiscovery roles |
 | **Security & Compliance PowerShell** | Script DLP, labels, retention, IB, and more | `Connect-IPPSSession`; appropriate roles |
-| **Data governance REST APIs** | Automate Data Map registration/scan and catalog operations | Purview account; governance roles |
+| **[Fabric Catalog Search REST API](https://learn.microsoft.com/rest/api/fabric/core/catalog/search)** | Programmatically discover OneLake catalog metadata across workspaces | Fabric admin / workspace roles |
 
 ## Third-party & cross-product integrations
 
@@ -90,7 +90,7 @@ Several capabilities are **shared across solutions**, so configuring them once b
 
     - Sensitivity labels are stored in **document metadata**, so many **partner apps/services** can read and honor them.
     - **Compliance Manager connectors** assess non-Microsoft services (for example **Salesforce**, **Zoom**).
-    - **Data Map** connects to a broad set of **non-Microsoft sources** (for example Amazon Redshift/S3).
+    - **OneLake shortcuts** reference a broad set of **non-Microsoft sources** (for example Amazon S3, Google Cloud Storage, Dataverse) without copying data.
 
 ## How to approach an integration
 

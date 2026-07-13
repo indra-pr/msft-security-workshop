@@ -1,72 +1,80 @@
 ---
 title: Data Governance — Overview
 description: >-
-  Microsoft Purview data governance — Data Map and Unified Catalog — to map,
-  curate, and govern your data estate. Grounded in Microsoft Learn.
+  Govern your Microsoft Fabric data estate with the OneLake catalog — discover,
+  govern, and secure. Grounded in Microsoft Learn.
 ---
 
-# Microsoft Purview — Data Governance
+# Data Governance — the OneLake catalog
 
 !!! info "Complexity: Medium to read · Est. time: ~10 min"
-    This is the module map for Purview **data governance**. It differs from the Microsoft 365 security/compliance solutions: it governs your **broader data estate** (multicloud + on-premises) through a **Microsoft Purview account**, **Data Map**, and **Unified Catalog**.
+    This module governs your **Microsoft Fabric** data estate from the **OneLake catalog** — the built-in place to **discover**, **govern**, and **secure** Fabric data. Microsoft **Purview** stays in the picture as the **security & compliance overlay** (sensitivity labels, DLP, Audit, Insider Risk) on that data.
 
-## What "data governance" means in Purview
+## What "data governance" means here
 
-Microsoft Purview **data governance** helps you **map your data estate** and build a **federated** approach to governing data — delivering visibility, data confidence, and responsible innovation in the era of AI. It has two solutions that work together:
+In Microsoft Fabric, data governance lives in the **OneLake catalog** — a single experience that comes with every Fabric tenant and is embedded in **Teams, Excel, and Copilot Studio**. It has three tabs:
 
-- **Data Map** — the technical foundation: register and **scan** sources to capture metadata, extract schema, and apply **classifications**.
-- **Unified Catalog** — the business layer: organize data into **governance domains**, curate **data products**, add **glossary terms / OKRs**, and measure **data quality**.
+- **Explore** — find and inspect trusted items (filters, details, lineage, permissions).
+- **Govern** — governance-posture insights and recommended actions for the data you own (tenant-wide for admins).
+- **Secure** — audit access and manage **OneLake security roles** across workspaces and items.
 
 ```mermaid
 flowchart LR
-    S["Sources<br/>Azure · AWS · databases · Fabric · on-prem"] --> DM["Data Map<br/>register + scan + classify"]
-    DM --> UC["Unified Catalog<br/>governance domains · data products · quality"]
-    UC --> U["Business users<br/>discover trusted data"]
+    Est["Fabric data estate<br/>lakehouse · warehouse · semantic model"] --> Cat["OneLake catalog"]
+    Cat --> EX["Explore<br/>discover trusted data"]
+    Cat --> GOV["Govern<br/>insights + actions"]
+    Cat --> SEC["Secure<br/>access + OneLake roles"]
+    Pur["Purview overlay<br/>labels · DLP · Audit · IRM"] -. security & compliance .-> Est
 ```
 
-## Solutions in this module
+## Labs in this module
 
 <div class="grid cards" markdown>
 
--   :material-map-search:{ .lg .middle } __Data Map__
+-   :material-magnify:{ .lg .middle } __OneLake catalog — Discover & govern__
 
     ---
 
-    Register and scan on-premises, multicloud, and SaaS sources to build a unified map of your data estate with technical metadata and classifications.
+    Find trusted Fabric items in the **Explore** tab, organize with **domains**, **endorse** high-value data, and act on **Govern**-tab recommendations.
 
-    [:octicons-arrow-right-24: Open Data Map](data-map.md)
+    [:octicons-arrow-right-24: Open Discover & govern](onelake-discover-govern.md)
 
--   :material-book-open-variant:{ .lg .middle } __Unified Catalog__
+-   :material-shield-key:{ .lg .middle } __OneLake catalog — Secure__
 
     ---
 
-    Curate and govern data with governance domains, data products, glossary terms, OKRs, and data quality — so people can discover trusted data.
+    Audit **who has access** across workspaces and **manage OneLake security roles** on items — from the **Secure** tab.
 
-    [:octicons-arrow-right-24: Open Unified Catalog](unified-catalog.md)
+    [:octicons-arrow-right-24: Open Secure](onelake-secure.md)
 
 </div>
 
 ## The typical workflow
 
-1. Assign a user the **Data Governance Administrator** role.
-2. Use **Data Map** to **scan** your sources and capture metadata.
-3. In **Unified Catalog**, build **governance domains** and curate **data products**.
-4. Connect data to **business concepts** (OKRs, glossary terms, critical data elements).
-5. **Improve data quality** with profiling and rules.
+1. **Explore** the catalog to discover the items you need.
+2. Organize the estate into **domains** and **endorse** trusted items.
+3. Use the **Govern** tab to review posture and clear **recommended actions**.
+4. Use the **Secure** tab to audit access and manage **OneLake security roles**.
+5. Layer **Purview** security/compliance — **sensitivity labels**, **DLP for Fabric**, **Audit**, **Insider Risk** — on the same data.
 
-!!! note "Free vs. enterprise; one account per tenant"
-    You can start with the **free version** to test capabilities and **upgrade to enterprise** for full data-governance features. Only **one Microsoft Purview account** is created per tenant. Review [billing for data governance](https://learn.microsoft.com/purview/data-governance-billing) before you start.
+!!! note "Governance is built into Fabric"
+    The OneLake catalog comes with every Microsoft Fabric tenant — there's no separate governance service to deploy. Governance signals (labeling, DLP coverage, endorsement) surface directly on your Fabric items.
 
-## Compatibility
+## How Purview overlays security & compliance on Fabric
 
-- **Sources**: a broad set of **Azure**, other-cloud (for example **Amazon** sources), **database**, **Fabric**, and **on-premises** sources — see [Data sources that connect to Data Map](https://learn.microsoft.com/purview/data-map-data-sources).
-- **Data quality**: rules currently run on **delta-format tables in ADLS Gen2 and Microsoft Fabric**, using the Purview **Managed Identity**.
-- **Network**: choose the right **integration runtime** for your connectivity scenario.
+Governance (discovery, endorsement, quality posture, access) is delivered by the **OneLake catalog**. Microsoft **Purview** protects and monitors that same Fabric data:
+
+- **Information Protection** — apply **sensitivity labels** (and protection policies) to Fabric items.
+- **Data Loss Prevention** — DLP policies for **lakehouses, warehouses, and semantic models**.
+- **Audit** — Fabric user activity in the unified audit log.
+- **Insider Risk Management** — Fabric-specific risk indicators (Power BI, lakehouse/warehouse exfiltration).
+
+See [Information Protection](../data-security/information-protection/index.md), [DLP](../data-security/dlp/index.md), [Audit](../data-compliance/audit.md), and [Insider Risk Management](../data-security/insider-risk-management/index.md).
 
 ## Sources
 
-- [Microsoft Purview data governance solutions](https://learn.microsoft.com/purview/data-governance-overview)
-- [Data governance with Microsoft Purview](https://learn.microsoft.com/purview/data-governance-solution)
-- [Get started with Microsoft Purview data governance](https://learn.microsoft.com/purview/data-governance-get-started)
-- [Plan for data governance](https://learn.microsoft.com/purview/data-governance-plan)
-- [Data Map](https://learn.microsoft.com/purview/data-map) · [Unified Catalog](https://learn.microsoft.com/purview/unified-catalog)
+- [OneLake catalog overview](https://learn.microsoft.com/fabric/governance/onelake-catalog-overview)
+- [Find and explore data in the OneLake catalog](https://learn.microsoft.com/fabric/governance/onelake-catalog-explore)
+- [Govern Fabric data](https://learn.microsoft.com/fabric/governance/onelake-catalog-govern)
+- [Secure your Fabric data](https://learn.microsoft.com/fabric/governance/secure-your-data)
+- [Use Microsoft Purview to govern Microsoft Fabric](https://learn.microsoft.com/fabric/governance/microsoft-purview-fabric)

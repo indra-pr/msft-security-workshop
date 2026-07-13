@@ -309,14 +309,14 @@ Stand up the **Double Key Encryption service** (you host and control the second 
 - **[Double Key Encryption](https://learn.microsoft.com/purview/double-key-encryption)** and **[Customer Key](https://learn.microsoft.com/purview/customer-key-overview)** — for the strictest key-control needs.
 - **[Information Protection client & scanner](https://learn.microsoft.com/purview/information-protection-client)** — extend labeling to File Explorer/PowerShell and discover/label files in **on-premises** repositories.
 - **[Information Protection SDK](https://learn.microsoft.com/information-protection/develop/overview)** — third-party apps read/write label metadata and apply encryption.
-- **Data Map integration** — apply sensitivity labels to [schematized data assets](https://learn.microsoft.com/purview/data-map-sensitivity-labels-apply).
+- **Microsoft Fabric integration** — apply sensitivity labels to Fabric items (lakehouses, warehouses, semantic models) surfaced in the [OneLake catalog](https://learn.microsoft.com/fabric/governance/information-protection).
 
 | Integration | Requirement |
 |---|---|
 | Information Protection client/scanner | Windows 11 / 10 (x64) / Server 2019–2016; labeling subscription |
 | Double Key Encryption | You host and control the second key; DKE service configured |
 | SDK / partner apps | MIP SDK; app registration and permissions |
-| Data Map labeling | Microsoft 365 licensing in the same Entra tenant; pay-as-you-go for non-M365 sources |
+| Microsoft Fabric labeling | Sensitivity labels applied to Fabric items; Microsoft 365 licensing in the same Entra tenant |
 
 ## Industry use cases
 

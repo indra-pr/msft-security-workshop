@@ -123,8 +123,8 @@ nav:
           - Records Management: purview/data-compliance/records-management.md
       - Data Governance:
           - Data Governance overview: purview/data-governance/index.md
-          - Data Map: purview/data-governance/data-map.md
-          - Unified Catalog: purview/data-governance/unified-catalog.md
+          - OneLake catalog — Discover & govern: purview/data-governance/onelake-discover-govern.md
+          - OneLake catalog — Secure: purview/data-governance/onelake-secure.md
       - Extensibility & Integrations: purview/extensibility.md
       - Industry Use Cases: purview/use-cases.md
   - Microsoft Entra:

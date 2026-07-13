@@ -24,7 +24,7 @@ description: >-
 | **Compliance Manager** | PCI/SOX operationalization | Privacy/lawful-intercept | Gov security frameworks | NERC-CIP-style controls | ISO 27001 across BUs |
 | **Data Lifecycle / Records** | Regulated retention | CDR/subscriber retention | Public-records schedules | Safety/inspection records | Corporate records schedule |
 | **eDiscovery** | Regulator requests & litigation | Subpoenas & disputes | FOIA/legal requests | Contract/environmental litigation | IP/supplier disputes |
-| **Data Map / Unified Catalog** | Trusted risk/customer data | Federated network/billing/CRM | Accountable data domains | Production/sustainability data | Supply-chain/product data |
+| **OneLake catalog** | Trusted risk/customer data | Federated network/billing/CRM | Accountable data domains | Production/sustainability data | Supply-chain/product data |
 | **DSPM** | Reduce oversharing pre-Copilot | Data-centric risk map | Continuous exposure assessment | Unprotected IP discovery | Design/trade-secret prioritization |
 
 ## Financial services
@@ -44,7 +44,7 @@ Telecommunication companies hold **massive subscriber datasets and CDRs**:
 
 1. **DLP + endpoint DLP** to stop bulk export of subscriber PII from agent workstations.
 2. **Insider Risk** to detect abnormal mass-download by support staff.
-3. **Data Map / Unified Catalog** to federate governance across network, billing, and CRM domains.
+3. **OneLake catalog** to discover, endorse, and govern the Fabric data estate across network, billing, and CRM domains.
 4. **Records/DLM** for CDR and subscriber-agreement retention.
 5. **DSPM** for a data-centric risk map before AI adoption.
 
@@ -76,7 +76,7 @@ Diversified manufacturers manage **trade secrets across many business units**:
 1. **Auto-labeling** of CAD/BOM content (**Information Protection**).
 2. **DLP with admin units** to scope rules per business unit.
 3. **Information Barriers** to isolate BUs serving competing OEMs.
-4. **Data Map / Unified Catalog** to govern supply-chain and product data.
+4. **OneLake catalog** to govern supply-chain and product data in Microsoft Fabric.
 5. **DSPM** to prioritize protection where trade secrets concentrate.
 
 !!! note "Illustrative, not prescriptive"
@@ -87,5 +87,5 @@ Diversified manufacturers manage **trade secrets across many business units**:
 - [Learn about Microsoft Purview](https://learn.microsoft.com/purview/purview)
 - [Microsoft Purview data security solutions](https://learn.microsoft.com/purview/purview-security)
 - [Microsoft Purview data compliance solutions](https://learn.microsoft.com/purview/purview-compliance)
-- [Microsoft Purview data governance solutions](https://learn.microsoft.com/purview/data-governance-overview)
+- [OneLake catalog overview (Microsoft Fabric)](https://learn.microsoft.com/fabric/governance/onelake-catalog-overview)
 - [Where to start with Microsoft Purview](https://learn.microsoft.com/purview/purview-where-to-start)

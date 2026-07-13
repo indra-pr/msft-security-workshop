@@ -23,7 +23,7 @@ A hands-on, beginner-friendly learning series for the **Microsoft Security** pro
 
     ---
 
-    Unified **data security, compliance, and governance**. Protect and govern sensitive data across its lifecycle — Information Protection, DLP, Insider Risk, eDiscovery, Data Map & Unified Catalog, and more.
+    Unified **data security, compliance, and governance**. Protect and govern sensitive data across its lifecycle — Information Protection, DLP, Insider Risk, eDiscovery, OneLake catalog governance for Fabric, and more.
 
     [:octicons-arrow-right-24: Start with Purview](purview/index.md)
 

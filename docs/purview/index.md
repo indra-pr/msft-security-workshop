@@ -55,7 +55,7 @@ Purview combines solutions and services into a [unified platform](https://learn.
 
     ---
 
-    Map your data estate and build a federated approach to governing data and unlocking business innovation — Data Map and Unified Catalog.
+    Discover, govern, and secure your **Microsoft Fabric** data estate in the **OneLake catalog** — Explore, Govern, and Secure.
 
     [:octicons-arrow-right-24: Data Governance module](data-governance/index.md)
 
@@ -69,7 +69,7 @@ flowchart TB
         direction TB
         DS["Data Security<br/>Information Protection · DLP · Insider Risk<br/>Information Barriers · PAM · DSPM · Investigations"]
         DC["Data Compliance<br/>Audit · Communication Compliance · Compliance Manager<br/>Data Lifecycle · eDiscovery · Records Management"]
-        DG["Data Governance<br/>Data Map · Unified Catalog"]
+        DG["Data Governance<br/>OneLake catalog (Fabric)"]
     end
 
     subgraph Shared["Shared capabilities"]
@@ -125,8 +125,8 @@ Each solution below links to a deep-dive page that follows the same template: de
 
 | Solution | What it does | Deep dive |
 |---|---|---|
-| Data Map | Create a unified map of your data estate through scanning and classification. | [Open](data-governance/data-map.md) |
-| Unified Catalog | Catalog, curate, and govern data with business context, quality, and data products. | [Open](data-governance/unified-catalog.md) |
+| OneLake catalog — Discover & govern | Discover, organize, endorse, and improve the governance posture of your Microsoft Fabric data estate. | [Open](data-governance/onelake-discover-govern.md) |
+| OneLake catalog — Secure | Audit access and manage OneLake security roles across Fabric workspaces and items. | [Open](data-governance/onelake-secure.md) |
 
 ## Shared capabilities
 
@@ -145,7 +145,7 @@ Several capabilities are shared across multiple Purview solutions:
 
 === "Clouds & standalone"
 
-    Purview is delivered as a cloud service through the **Microsoft Purview portal** (`purview.microsoft.com`). Data governance (**Data Map** and **Unified Catalog**) extends discovery and cataloging across a **multicloud and on-premises** estate — including Azure, other clouds, databases, and file sources. Some solutions are available standalone or as part of Microsoft 365 E5/compliance suites; confirm entitlements per solution.
+    Purview is delivered as a cloud service through the **Microsoft Purview portal** (`purview.microsoft.com`). Data governance is delivered in **Microsoft Fabric** via the **OneLake catalog** — discover, govern, and secure your Fabric data estate — with **OneLake shortcuts** reaching data in **ADLS Gen2, Amazon S3, Google Cloud Storage, and Dataverse** without copying it. Some solutions are available standalone or as part of Microsoft 365 E5/compliance suites; confirm entitlements per solution.
 
 === "Connectors"
 
@@ -169,6 +169,6 @@ Purview spans many solutions, each with its own licensing. Do not assume a singl
 - [Learn about Microsoft Purview](https://learn.microsoft.com/purview/purview)
 - [Microsoft Purview data security solutions](https://learn.microsoft.com/purview/purview-security)
 - [Microsoft Purview data compliance solutions](https://learn.microsoft.com/purview/purview-compliance)
-- [Microsoft Purview data governance solutions](https://learn.microsoft.com/purview/data-governance-overview)
+- [OneLake catalog overview (Microsoft Fabric)](https://learn.microsoft.com/fabric/governance/onelake-catalog-overview)
 - [Learn about the Microsoft Purview portal](https://learn.microsoft.com/purview/purview-portal)
 - [Microsoft Purview service description](https://learn.microsoft.com/office365/servicedescriptions/microsoft-365-service-descriptions/microsoft-365-tenantlevel-services-licensing-guidance/microsoft-purview-service-description)
